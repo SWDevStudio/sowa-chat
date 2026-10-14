@@ -1,6 +1,7 @@
 {
   "name": "@sowa-chat/server-sdk",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "keywords": [],
   "author": "",

@@ -1,0 +1,25 @@
+{
+  "name": "sowa-chat",
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check-types": "turbo run check-types",
+    "infra:up": "docker compose -f deploy/compose/docker-compose.dev.yml up -d --wait",
+    "infra:down": "docker compose -f deploy/compose/docker-compose.dev.yml down"
+  },
+  "devDependencies": {
+    "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
+    "prettier": "3.9.6",
+    "turbo": "^2.11.8",
+    "typescript": "catalog:"
+  },
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=24"
+  }
+}

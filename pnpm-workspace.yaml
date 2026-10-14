@@ -1,0 +1,8 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+catalog:
+  typescript: ~6.0.2
+  oxlint: ^1.88.0
+  oxlint-tsgolint: ^7.0.2004

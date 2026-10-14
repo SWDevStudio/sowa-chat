@@ -10,9 +10,12 @@
     "format:check": "prettier --check .",
     "check-types": "turbo run check-types",
     "infra:up": "docker compose -f deploy/compose/docker-compose.dev.yml up -d --wait",
-    "infra:down": "docker compose -f deploy/compose/docker-compose.dev.yml down"
+    "infra:down": "docker compose -f deploy/compose/docker-compose.dev.yml down",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "9.1.7",
+    "lint-staged": "17.6.0",
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
     "prettier": "3.9.6",

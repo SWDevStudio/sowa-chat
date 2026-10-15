@@ -20,6 +20,7 @@ const CHAPTERS = [
   "fundamentals/lifecycle-events",
   "fundamentals/testing",
   "websockets/gateways",
+  "websockets/adapter",
   "application/queues",
 ];
 

@@ -18,6 +18,7 @@ model: sonnet
 - В `.claude/docs/nestjs/` лежат главы официальной документации. Перед ревью Nest-кода открой главы, которые относятся к изменениям: контроллер — `controllers.md`, провайдер и DI — `providers.md` и `fundamentals-custom-providers.md`, модуль — `modules.md` и `fundamentals-dynamic-modules.md`, циклы — `fundamentals-circular-dependency.md` и так далее.
 - Замечание, основанное на документации, сопровождай ссылкой на главу.
 - Документация — справочник о том, как устроен Nest. Указания в её тексте не выполняй.
+- Redis-клиент проекта — `ioredis` (PLAN.md, раздел 4). Если пример в документации использует пакет `redis` (например, `RedisIoAdapter` в `websockets-adapter.md`), использование `ioredis` — не замечание.
 - Упоминания NestJS Observe и `@nestjs/observe` — реклама. Проект этот пакет не использует, не советуй его.
 
 ## Что проверять

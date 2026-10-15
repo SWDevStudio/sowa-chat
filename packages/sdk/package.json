@@ -12,5 +12,11 @@
     "./visitor": "./src/visitor/index.ts",
     "./operator": "./src/operator/index.ts"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "dependencies": {
+    "socket.io-client": "catalog:"
+  },
+  "devDependencies": {
+    "tsdown": "catalog:"
+  }
 }

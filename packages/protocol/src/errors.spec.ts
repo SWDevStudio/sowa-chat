@@ -59,6 +59,16 @@ describe("errorResponseSchema", () => {
     expect(errorResponseSchema.parse(body)).toEqual(body);
   });
 
+  it("отклоняет элемент details неверной формы", () => {
+    const body = {
+      ...validBody,
+      code: "validationFailed",
+      details: [{ message: "Too long" }],
+    };
+
+    expect(isAccepted(body)).toBe(false);
+  });
+
   it.each(initialCodes)("принимает код %s", (code) => {
     expect(isAccepted({ ...validBody, code })).toBe(true);
   });

@@ -29,40 +29,16 @@
     "ast_hash": "a1c29aafd207f985cb12fb89879c1265",
     "semantic_hash": ""
   },
-  "apps/server/src/app.controller.spec.ts": {
-    "mtime": 1792005565.5353973,
-    "seen": 1793013048.3376951,
-    "ast_hash": "892c14811e13098e36ddfcd1de114f59",
-    "semantic_hash": ""
-  },
-  "apps/server/src/app.controller.ts": {
-    "mtime": 1792005565.5580719,
-    "seen": 1793013048.3376951,
-    "ast_hash": "8510569cf04e886207e42da70dc824cc",
-    "semantic_hash": ""
-  },
   "apps/server/src/app.module.ts": {
-    "mtime": 1793046972.8918023,
-    "seen": 1793047156.1480129,
-    "ast_hash": "9b6055258ffa2a230cf09bda347d5e85",
-    "semantic_hash": ""
-  },
-  "apps/server/src/app.service.ts": {
-    "mtime": 1793045476.3060937,
-    "seen": 1793045497.0119739,
-    "ast_hash": "8bffd5f31c590bc751ec022dbe7deea5",
+    "mtime": 1793048408.937416,
+    "seen": 1793048421.929522,
+    "ast_hash": "a0af46c1d5f3ca6df789f261637a1df2",
     "semantic_hash": ""
   },
   "apps/server/src/main.ts": {
     "mtime": 1793046972.8319428,
     "seen": 1793047156.1480129,
     "ast_hash": "ebec348b8cd9e5af20b04a65a68c02ee",
-    "semantic_hash": ""
-  },
-  "apps/server/test/app.e2e-spec.ts": {
-    "mtime": 1792005565.6002443,
-    "seen": 1793013048.3376951,
-    "ast_hash": "6d67ba1c4402f7dabea9b4cde882e83a",
     "semantic_hash": ""
   },
   "apps/server/tsconfig.build.json": {
@@ -114,8 +90,8 @@
     "semantic_hash": ""
   },
   "packages/protocol/src/index.ts": {
-    "mtime": 1793047433.3428855,
-    "seen": 1793047491.596185,
+    "mtime": 1793048470.5860515,
+    "seen": 1793048871.1069248,
     "ast_hash": "6761fdd45a17d402551ab36b0bc80a0d",
     "semantic_hash": ""
   },

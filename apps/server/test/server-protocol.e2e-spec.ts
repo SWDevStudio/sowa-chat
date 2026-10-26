@@ -63,7 +63,7 @@ async function startBuiltServer(): Promise<{ started: boolean; output: string }>
   const port = await findFreePort();
   const server = spawn(process.execPath, ["dist/main.js"], {
     cwd: serverDirectory,
-    env: { ...process.env, PORT: String(port) },
+    env: { ...process.env, SOWA_PUBLIC_PORT: String(port) },
   });
   let output = "";
   let stopped = false;

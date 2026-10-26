@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4e2e63fa`
+- Built from commit: `eb967fb9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -74,9 +74,9 @@
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 20 edges
-2. `rules` - 12 edges
-3. `scripts` - 12 edges
-4. `JsonObjectValidator` - 12 edges
+2. `JsonObjectValidator` - 13 edges
+3. `rules` - 12 edges
+4. `scripts` - 12 edges
 5. `scripts` - 11 edges
 6. `catalog` - 11 edges
 7. `AppService` - 7 edges
@@ -182,12 +182,12 @@ Cohesion: 0.29
 Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.json
 
 ### Community 43 - "json-object-schema.ts"
-Cohesion: 0.17
-Nodes (10): defaultLimits, forbiddenKeys, isPlainObject(), IssuePath, jsonObjectBaseSchema, JsonObjectValidator, Violation, JsonObjectLimits (+2 more)
+Cohesion: 0.30
+Nodes (3): JsonObjectValidator, encoder, utf8ByteLength()
 
 ### Community 115 - "json-object-limits.spec.ts"
-Cohesion: 0.07
-Nodes (23): ErrorCode, errorCodes, errorDetailSchema, ErrorResponse, errorResponseSchema, initialCodes, validBody, createEventEnvelopeSchema() (+15 more)
+Cohesion: 0.06
+Nodes (29): ErrorCode, errorCodes, errorDetailSchema, ErrorResponse, errorResponseSchema, initialCodes, validBody, createEventEnvelopeSchema() (+21 more)
 
 ## Knowledge Gaps
 - **5 isolated node(s):** `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`
@@ -207,7 +207,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.041) - this node is a cross-community bridge._
 - **Should `server-protocol.e2e-spec.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.0766488413547237 - nodes in this community are weakly interconnected._
-- **Why does `jsonObjectSchema` connect `json-object-limits.spec.ts` to `json-object-schema.ts`, `Providers`?**
-  _High betweenness centrality (0.023) - this node is a cross-community bridge._
+- **Why does `jsonObjectSchema` connect `json-object-limits.spec.ts` to `Providers`?**
+  _High betweenness centrality (0.022) - this node is a cross-community bridge._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._

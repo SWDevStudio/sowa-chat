@@ -288,9 +288,9 @@
     "semantic_hash": ""
   },
   "packages/protocol/src/json-object-schema.ts": {
-    "mtime": 1793044744.3306434,
-    "seen": 1793044766.5513961,
-    "ast_hash": "1b6e298993c9a16f7a0a14129a8977b9",
+    "mtime": 1793044835.2934387,
+    "seen": 1793044837.9171565,
+    "ast_hash": "3f1c9d34f78bfc1c0b617027d27c4c69",
     "semantic_hash": ""
   },
   "packages/protocol/src/json-types.ts": {

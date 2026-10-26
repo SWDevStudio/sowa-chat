@@ -22,14 +22,6 @@ const allowedKeyPattern = /^[A-Za-z0-9_-]+$/;
 const forbiddenKeys = new Set(["__proto__", "constructor", "prototype"]);
 const jsonObjectBaseSchema = z.unknown().meta({ type: "object" }) as z.ZodType<JsonObject>;
 
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-  if (typeof value !== "object" || value === null) {
-    return false;
-  }
-  const prototype = Object.getPrototypeOf(value);
-  return prototype === Object.prototype || prototype === null;
-}
-
 class JsonObjectValidator {
   private readonly violations: Violation[] = [];
   private keyCount = 0;
@@ -38,7 +30,7 @@ class JsonObjectValidator {
   constructor(private readonly limits: JsonObjectLimits) {}
 
   validate(root: unknown): Violation[] {
-    if (!isPlainObject(root)) {
+    if (!this.isPlainObject(root)) {
       this.report([], "Must be a JSON object");
       return this.violations;
     }
@@ -47,6 +39,14 @@ class JsonObjectValidator {
       this.validateTotalSize(root);
     }
     return this.violations;
+  }
+
+  private isPlainObject(value: unknown): value is Record<string, unknown> {
+    if (typeof value !== "object" || value === null) {
+      return false;
+    }
+    const prototype = Object.getPrototypeOf(value);
+    return prototype === Object.prototype || prototype === null;
   }
 
   private validateValue(value: unknown, path: IssuePath, depth: number): void {
@@ -65,7 +65,7 @@ class JsonObjectValidator {
       this.validateArray(value, path, depth);
       return;
     }
-    if (isPlainObject(value)) {
+    if (this.isPlainObject(value)) {
       this.validateObject(value, path, depth);
       return;
     }

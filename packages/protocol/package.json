@@ -12,7 +12,8 @@
   },
   "sideEffects": false,
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "check-types": "tsc --noEmit"
   },
   "devDependencies": {
     "tsdown": "catalog:",

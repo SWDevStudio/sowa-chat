@@ -1,17 +1,17 @@
 # Graph Report - hector-chat  (2026-10-26)
 
 ## Corpus Check
-- 47 files · ~5,575 words
+- 48 files · ~5,642 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 7, .example 1)
 
 ## Summary
-- 504 nodes · 625 edges · 61 communities (24 shown, 37 thin omitted)
+- 505 nodes · 633 edges · 61 communities (24 shown, 37 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `ca445f26`
+- Built from commit: `187d0985`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -186,11 +186,11 @@ Nodes (5): isPlainObject(), JsonObjectValidator, isHighSurrogate(), isLowSurroga
 
 ### Community 115 - "json-object-limits.spec.ts"
 Cohesion: 0.06
-Nodes (20): initialCodes, validBody, MessageCreatedEnvelope, messageCreatedSchema, validEnvelope, createJsonObjectSchema(), defaultLimits, forbiddenKeys (+12 more)
+Nodes (23): initialCodes, validBody, createEventEnvelopeSchema(), EventEnvelope, eventEnvelopeSchema, MessageCreatedEnvelope, messageCreatedSchema, validEnvelope (+15 more)
 
 ## Knowledge Gaps
 - **5 isolated node(s):** `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`
-  These have ≤1 connection - possible missing edges. (Counts symbols only; 241 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges. (Counts symbols only; 238 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **37 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions

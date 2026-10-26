@@ -1,0 +1,9 @@
+.claude/
+.vscode/
+.changeset/
+.husky/
+docs/
+deploy/
+graphify-out/
+*.md
+*.svg

@@ -1,1 +1,8 @@
 pnpm exec lint-staged
+
+if command -v graphify >/dev/null 2>&1; then
+  GRAPHIFY_BACKEND=none graphify update . --force >/dev/null
+  git add graphify-out
+else
+  echo "graphify is not installed, skipping graph rebuild"
+fi

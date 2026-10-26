@@ -1,4 +1,7 @@
 {
+  "permissions": {
+    "allow": ["Bash(pnpm exec ctx7 library:*)", "Bash(pnpm exec ctx7 docs:*)"]
+  },
   "hooks": {
     "PostToolUse": [
       {
@@ -8,6 +11,28 @@
             "type": "command",
             "command": "node \"${CLAUDE_PROJECT_DIR}/.claude/hooks/format.mjs\"",
             "timeout": 30
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Grep",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "graphify hook-guard search",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Glob",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "graphify hook-guard read",
+            "timeout": 10
           }
         ]
       }

@@ -1,7 +1,7 @@
 # Graph Report - hector-chat  (2026-10-27)
 
 ## Corpus Check
-- 50 files · ~5,757 words
+- 50 files · ~5,818 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 7, .example 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `eb967fb9`
+- Built from commit: `fec49951`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

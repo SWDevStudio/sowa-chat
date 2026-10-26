@@ -141,6 +141,14 @@ class JsonObjectValidator {
   }
 }
 
+/**
+ * @description Создает схему с определенными правилами
+ * @param limits
+ * @returns
+ */
+/**
+ * @description Создает схему JsonObject с заданными лимитами. Проверка выполняется при каждом разборе: значение должно быть простым объектом, не превышать лимиты глубины, ключей, размера и длины строк или массивов, а ключи не могут быть `__proto__`, `constructor` и `prototype`. Ошибки содержат путь до проблемного значения.
+ */
 export function createJsonObjectSchema(limits: JsonObjectLimits) {
   return jsonObjectBaseSchema.check((context) => {
     const violations = new JsonObjectValidator(limits).validate(context.value);

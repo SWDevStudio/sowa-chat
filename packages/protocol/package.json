@@ -11,8 +11,12 @@
     ".": "./src/index.ts"
   },
   "sideEffects": false,
+  "scripts": {
+    "test": "vitest run"
+  },
   "devDependencies": {
     "tsdown": "catalog:",
+    "vitest": "catalog:",
     "zod": "catalog:"
   },
   "peerDependencies": {

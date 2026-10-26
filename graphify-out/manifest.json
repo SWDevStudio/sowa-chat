@@ -114,9 +114,9 @@
     "semantic_hash": ""
   },
   "packages/protocol/src/index.ts": {
-    "mtime": 1793024933.380207,
-    "seen": 1793024959.1638756,
-    "ast_hash": "0227202aa093d2a868f97fd4c7ded011",
+    "mtime": 1793025870.0426018,
+    "seen": 1793025889.477855,
+    "ast_hash": "0a4f733327fba58d0a95d71531b652d3",
     "semantic_hash": ""
   },
   "packages/sdk/package.json": {
@@ -285,6 +285,12 @@
     "mtime": 1793024931.873362,
     "seen": 1793024959.1638756,
     "ast_hash": "3756f670b03e0e9362461d959454af47",
+    "semantic_hash": ""
+  },
+  "packages/protocol/src/errors.ts": {
+    "mtime": 1793025864.1324577,
+    "seen": 1793025889.477855,
+    "ast_hash": "87b4cbd1f1a6739b302c9fa149629daa",
     "semantic_hash": ""
   }
 }

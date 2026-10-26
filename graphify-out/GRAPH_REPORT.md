@@ -1,17 +1,17 @@
 # Graph Report - hector-chat  (2026-10-26)
 
 ## Corpus Check
-- 48 files · ~5,644 words
+- 49 files · ~5,789 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 7, .example 1)
 
 ## Summary
-- 505 nodes · 633 edges · 61 communities (24 shown, 37 thin omitted)
+- 507 nodes · 644 edges · 62 communities (25 shown, 37 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `471b65fc`
+- Built from commit: `05a8363f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,6 +60,7 @@
 - @socket.io/redis-adapter@^8.3.0
 - server-sdk/tsconfig.json
 - JsonObjectValidator
+- scripts
 - cache-manager@^7.2.9
 - jose@^6.2.12
 - @nestjs/bullmq@^12.0.0
@@ -90,15 +91,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (61 total, 37 thin omitted)
+## Communities (62 total, 37 thin omitted)
 
 ### Community 1 - "bot-sdk/tsconfig.json"
 Cohesion: 0.29
 Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.json
 
 ### Community 2 - "package.json"
-Cohesion: 0.07
-Nodes (35): devDependencies, @changesets/cli@^3.0.3, ctx7@0.8.2, husky@9.1.7, lint-staged@17.6.0, oxlint@catalog:, oxlint-tsgolint@catalog:, prettier@3.9.6 (+27 more)
+Cohesion: 0.11
+Nodes (24): devDependencies, @changesets/cli@^3.0.3, ctx7@0.8.2, husky@9.1.7, lint-staged@17.6.0, oxlint@catalog:, oxlint-tsgolint@catalog:, prettier@3.9.6 (+16 more)
 
 ### Community 3 - "server-protocol.e2e-spec.ts"
 Cohesion: 0.08
@@ -184,13 +185,17 @@ Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.js
 Cohesion: 0.28
 Nodes (5): isPlainObject(), JsonObjectValidator, isHighSurrogate(), isLowSurrogate(), utf8ByteLength()
 
+### Community 45 - "scripts"
+Cohesion: 0.18
+Nodes (11): scripts, build, check-types, dev, format, format:check, infra:down, infra:up (+3 more)
+
 ### Community 115 - "json-object-limits.spec.ts"
-Cohesion: 0.06
-Nodes (23): initialCodes, validBody, createEventEnvelopeSchema(), EventEnvelope, eventEnvelopeSchema, MessageCreatedEnvelope, messageCreatedSchema, validEnvelope (+15 more)
+Cohesion: 0.07
+Nodes (28): ErrorCode, errorCodes, errorDetailSchema, ErrorResponse, errorResponseSchema, initialCodes, validBody, createEventEnvelopeSchema() (+20 more)
 
 ## Knowledge Gaps
 - **5 isolated node(s):** `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`
-  These have ≤1 connection - possible missing edges. (Counts symbols only; 238 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges. (Counts symbols only; 235 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **37 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -201,12 +206,12 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json` to the rest of the system?**
   _5 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.06984126984126984 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11 - nodes in this community are weakly interconnected._
 - **Why does `scripts` connect `scripts` to `server/package.json`?**
   _High betweenness centrality (0.013) - this node is a cross-community bridge._
 - **Should `server-protocol.e2e-spec.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.0766488413547237 - nodes in this community are weakly interconnected._
 - **Why does `@nestjs/common` connect `Providers` to `server/package.json`, `dependencies`?**
-  _High betweenness centrality (0.011) - this node is a cross-community bridge._
+  _High betweenness centrality (0.010) - this node is a cross-community bridge._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._

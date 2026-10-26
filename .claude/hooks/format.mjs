@@ -53,16 +53,26 @@ async function formatWithPrettier(file) {
   if (formatted !== source) writeFileSync(file, formatted);
 }
 
+function normalizeLineEndings(file) {
+  const source = readFileSync(file, "utf8");
+  if (source.includes("\r\n")) writeFileSync(file, source.replaceAll("\r\n", "\n"));
+}
+
+async function formatFile(file) {
+  if (LINTABLE.has(path.extname(file))) {
+    runRootBin("oxlint", ["--fix", file]);
+  }
+  await formatWithPrettier(file);
+  normalizeLineEndings(file);
+}
+
 try {
   const input = readStdin();
   const raw = input.tool_input?.file_path;
   if (raw) {
     const file = path.resolve(root, raw);
     if (file !== root && isInsideRoot(file) && existsSync(file)) {
-      if (LINTABLE.has(path.extname(file))) {
-        runRootBin("oxlint", ["--fix", file]);
-      }
-      await formatWithPrettier(file);
+      await formatFile(file);
     }
   }
 } catch (error) {

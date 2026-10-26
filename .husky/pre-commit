@@ -2,6 +2,7 @@ pnpm exec lint-staged
 
 if command -v graphify >/dev/null 2>&1; then
   GRAPHIFY_BACKEND=none graphify update . --force >/dev/null
+  git ls-files -z -- "graphify-out/*.json" "graphify-out/*.md" | xargs -0 perl -pi -e 's/\r$//'
   git add graphify-out
 else
   echo "graphify is not installed, skipping graph rebuild"

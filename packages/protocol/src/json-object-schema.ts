@@ -1,19 +1,6 @@
 import { z } from "zod";
+import type { JsonObject, JsonObjectLimits } from "./json-types.js";
 import { utf8ByteLength } from "./utf8-byte-length.js";
-
-export type JsonValue =
-  string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
-
-export type JsonObject = { [key: string]: JsonValue };
-
-export interface JsonObjectLimits {
-  maxBytes: number;
-  maxDepth: number;
-  maxKeys: number;
-  maxKeyLength: number;
-  maxStringBytes: number;
-  maxArrayLength: number;
-}
 
 type IssuePath = (string | number)[];
 

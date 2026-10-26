@@ -11,6 +11,7 @@ allowBuilds:
 
 catalog:
   typescript: ~6.0.2
+  "@types/node": ^24.0.0
   oxlint: ^1.88.0
   oxlint-tsgolint: ^7.0.2004
   vitest: ^4.1.2

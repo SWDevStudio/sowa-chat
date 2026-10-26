@@ -204,9 +204,9 @@
     "semantic_hash": ""
   },
   "packages/protocol/src/json-object.spec.ts": {
-    "mtime": 1793021975.9182825,
-    "seen": 1793022051.4853086,
-    "ast_hash": "2c05b197f898a20decf085bd54774a4c",
+    "mtime": 1793043508.9022233,
+    "seen": 1793043547.9389937,
+    "ast_hash": "6cbeb2bd0b90241bc37b4b54d4290be8",
     "semantic_hash": ""
   },
   "packages/protocol/vitest.config.ts": {

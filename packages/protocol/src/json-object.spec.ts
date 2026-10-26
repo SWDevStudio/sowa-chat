@@ -1,4 +1,5 @@
 import { describe, expect, expectTypeOf, it } from "vitest";
+import { z } from "zod";
 import { jsonObjectSchema } from "./index.js";
 import type { JsonObject, JsonValue } from "./index.js";
 
@@ -139,6 +140,12 @@ describe("jsonObjectSchema: ошибка", () => {
 
   it("указывает путь к недопустимому ключу", () => {
     expect(issuePaths({ profile: { bad$key: 1 } })).toContain("profile.bad$key");
+  });
+});
+
+describe("jsonObjectSchema: JSON Schema", () => {
+  it("переводится в JSON Schema как объект", () => {
+    expect(z.toJSONSchema(jsonObjectSchema)).toMatchObject({ type: "object" });
   });
 });
 

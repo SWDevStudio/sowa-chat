@@ -1,5 +1,6 @@
 /**
- * @description Zod-схема JsonObject с проверкой лимитов и запрещенных ключей. Используется для проверки context, visitorData и payload.
+ * @description Zod-схема JsonObject с проверкой лимитов и запрещенных ключей.
+ * Используется для проверки context, visitorData и payload.
  */
 import { z } from "zod";
 import type { JsonObject, JsonObjectLimits } from "./json-types.js";
@@ -145,8 +146,11 @@ class JsonObjectValidator {
 }
 
 /**
- * @description Создает схему JsonObject с заданными лимитами.
- * Проверка выполняется при каждом разборе: значение должно быть простым объектом, не превышать лимиты глубины, ключей, размера и длины строк или массивов, а ключи не могут быть `__proto__`, `constructor` и `prototype`. Ошибки содержат путь до проблемного значения.
+ * @description Создает схему JsonObject с заданными лимитами. Проверка
+ * выполняется при каждом разборе: значение должно быть простым объектом, не
+ * превышать лимиты глубины, ключей, размера и длины строк или массивов, а ключи
+ * не могут быть `__proto__`, `constructor` и `prototype`. Ошибки содержат путь
+ * до проблемного значения.
  */
 export function createJsonObjectSchema(limits: JsonObjectLimits) {
   return jsonObjectBaseSchema.check((context) => {

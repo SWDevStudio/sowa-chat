@@ -186,9 +186,9 @@
     "semantic_hash": ""
   },
   "packages/protocol/src/errors.spec.ts": {
-    "mtime": 1793025111.7647302,
-    "seen": 1793025128.5008588,
-    "ast_hash": "621bb04f2730cc9b03910ae5c375f825",
+    "mtime": 1793025466.4911094,
+    "seen": 1793025528.1644316,
+    "ast_hash": "55dadfd9e13fdb63d731fc294bf046b0",
     "semantic_hash": ""
   },
   "packages/protocol/src/event-envelope.spec.ts": {

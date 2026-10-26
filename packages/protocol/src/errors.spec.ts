@@ -70,16 +70,31 @@ describe("errorResponseSchema", () => {
     },
   );
 
-  it.each(["statusCode", "message", "code"] as const)("отклоняет тело без %s", (field) => {
-    const body: Record<string, unknown> = { ...validBody };
-    delete body[field];
+  it.each(["statusCode", "message", "code", "requestId"] as const)(
+    "отклоняет тело без %s",
+    (field) => {
+      const body: Record<string, unknown> = { ...validBody };
+      delete body[field];
 
-    expect(isAccepted(body)).toBe(false);
+      expect(isAccepted(body)).toBe(false);
+    },
+  );
+
+  it("отклоняет statusCode строкой", () => {
+    expect(isAccepted({ ...validBody, statusCode: "404" })).toBe(false);
   });
+
+  it.each(["", "request-1", "3f2a1b0c9d8e4f7a8b6c5d4e3f2a1b0c"])(
+    "отклоняет requestId не в формате UUID: %s",
+    (requestId) => {
+      expect(isAccepted({ ...validBody, requestId })).toBe(false);
+    },
+  );
 
   it("тип ErrorResponse использует ErrorCode", () => {
     expectTypeOf<ErrorResponse["statusCode"]>().toEqualTypeOf<number>();
     expectTypeOf<ErrorResponse["message"]>().toEqualTypeOf<string>();
     expectTypeOf<ErrorResponse["code"]>().toEqualTypeOf<ErrorCode>();
+    expectTypeOf<ErrorResponse["requestId"]>().toEqualTypeOf<string>();
   });
 });

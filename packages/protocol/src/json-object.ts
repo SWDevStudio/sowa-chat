@@ -33,6 +33,7 @@ const defaultLimits: JsonObjectLimits = {
 
 const allowedKeyPattern = /^[A-Za-z0-9_-]+$/;
 const forbiddenKeys = new Set(["__proto__", "constructor", "prototype"]);
+const jsonObjectBaseSchema = z.unknown().meta({ type: "object" }) as z.ZodType<JsonObject>;
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   if (typeof value !== "object" || value === null) {
@@ -62,19 +63,26 @@ class JsonObjectValidator {
   }
 
   private validateValue(value: unknown, path: IssuePath, depth: number): void {
+    if (typeof value === "boolean" || value === null) {
+      return;
+    }
     if (typeof value === "string") {
       this.validateString(value, path);
-    } else if (typeof value === "number") {
-      this.validateNumber(value, path);
-    } else if (typeof value === "boolean" || value === null) {
       return;
-    } else if (Array.isArray(value)) {
-      this.validateArray(value, path, depth);
-    } else if (isPlainObject(value)) {
-      this.validateObject(value, path, depth);
-    } else {
-      this.report(path, "Must be a JSON value");
     }
+    if (typeof value === "number") {
+      this.validateNumber(value, path);
+      return;
+    }
+    if (Array.isArray(value)) {
+      this.validateArray(value, path, depth);
+      return;
+    }
+    if (isPlainObject(value)) {
+      this.validateObject(value, path, depth);
+      return;
+    }
+    this.report(path, "Must be a JSON value");
   }
 
   private validateString(value: string, path: IssuePath): void {
@@ -147,7 +155,7 @@ class JsonObjectValidator {
 }
 
 export function createJsonObjectSchema(limits: JsonObjectLimits) {
-  return z.custom<JsonObject>().check((context) => {
+  return jsonObjectBaseSchema.check((context) => {
     const violations = new JsonObjectValidator(limits).validate(context.value);
     for (const violation of violations) {
       context.issues.push({

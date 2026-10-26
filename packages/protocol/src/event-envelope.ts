@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const eventEnvelopeSchema = z.object({
   eventId: z.uuid(),
-  type: z.string(),
+  type: z.string().min(1),
   occurredAt: z.iso.datetime(),
   projectId: z.uuid(),
   conversationId: z.uuid().optional(),
@@ -11,10 +11,10 @@ export const eventEnvelopeSchema = z.object({
 
 export type EventEnvelope = z.infer<typeof eventEnvelopeSchema>;
 
-export function createEventEnvelopeSchema<T extends string, P extends z.ZodObject>(
-  type: T,
-  payloadSchema: P,
-) {
+export function createEventEnvelopeSchema<
+  EventType extends string,
+  PayloadSchema extends z.ZodObject,
+>(type: EventType, payloadSchema: PayloadSchema) {
   return eventEnvelopeSchema.extend({
     type: z.literal(type),
     payload: payloadSchema,

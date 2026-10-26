@@ -114,9 +114,9 @@
     "semantic_hash": ""
   },
   "packages/protocol/src/index.ts": {
-    "mtime": 1793021949.874066,
-    "seen": 1793022051.4853086,
-    "ast_hash": "e2ebd7ddedcadeeadbf819c35985c768",
+    "mtime": 1793024380.5783777,
+    "seen": 1793024415.3703883,
+    "ast_hash": "c603a9ee7b05cf1191d2281852057944",
     "semantic_hash": ""
   },
   "packages/sdk/package.json": {
@@ -267,6 +267,18 @@
     "mtime": 1793024203.9917946,
     "seen": 1793024255.2312338,
     "ast_hash": "62c9fd04e741e8760664740b944404d0",
+    "semantic_hash": ""
+  },
+  "packages/protocol/src/json-object.ts": {
+    "mtime": 1793024396.1341324,
+    "seen": 1793024415.3703883,
+    "ast_hash": "bc03ec4c70a3b7fcd0644cd126659d73",
+    "semantic_hash": ""
+  },
+  "packages/protocol/src/utf8-byte-length.ts": {
+    "mtime": 1793024379.2031736,
+    "seen": 1793024415.3703883,
+    "ast_hash": "3fa00a4b6de355f99616ea402b8df739",
     "semantic_hash": ""
   }
 }

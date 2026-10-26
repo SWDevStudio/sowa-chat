@@ -13,6 +13,9 @@
     "./operator": "./src/operator/index.ts"
   },
   "sideEffects": false,
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
   "dependencies": {
     "socket.io-client": "catalog:"
   },

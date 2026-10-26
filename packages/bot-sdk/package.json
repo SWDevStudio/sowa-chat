@@ -11,7 +11,12 @@
     ".": "./src/index.ts"
   },
   "sideEffects": false,
+  "scripts": {
+    "build": "tsdown",
+    "check-types": "tsc --noEmit"
+  },
   "devDependencies": {
+    "@types/node": "catalog:",
     "tsdown": "catalog:"
   }
 }

@@ -12,6 +12,7 @@
   },
   "sideEffects": false,
   "scripts": {
+    "build": "tsdown",
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {

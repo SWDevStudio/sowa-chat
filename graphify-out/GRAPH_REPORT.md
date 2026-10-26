@@ -1,17 +1,17 @@
 # Graph Report - hector-chat  (2026-10-26)
 
 ## Corpus Check
-- 41 files · ~4,775 words
+- 45 files · ~4,883 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 8 file(s) not represented in the graph (top: (none) 7, .example 1)
 
 ## Summary
-- 474 nodes · 561 edges · 59 communities (23 shown, 36 thin omitted)
+- 483 nodes · 569 edges · 61 communities (24 shown, 37 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS · INFERRED: 2 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3bc16a52`
+- Built from commit: `431a6a8b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -59,6 +59,7 @@
 - sharp@^0.35.5
 - @socket.io/redis-adapter@^8.3.0
 - server-sdk/tsconfig.json
+- scripts
 - cache-manager@^7.2.9
 - jose@^6.2.12
 - @nestjs/bullmq@^12.0.0
@@ -91,15 +92,15 @@
 ## Import Cycles
 - None detected.
 
-## Communities (59 total, 36 thin omitted)
+## Communities (61 total, 37 thin omitted)
 
 ### Community 1 - "bot-sdk/tsconfig.json"
 Cohesion: 0.29
 Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.json
 
 ### Community 2 - "package.json"
-Cohesion: 0.07
-Nodes (35): devDependencies, @changesets/cli@^3.0.3, ctx7@0.8.2, husky@9.1.7, lint-staged@17.6.0, oxlint@catalog:, oxlint-tsgolint@catalog:, prettier@3.9.6 (+27 more)
+Cohesion: 0.11
+Nodes (24): devDependencies, @changesets/cli@^3.0.3, ctx7@0.8.2, husky@9.1.7, lint-staged@17.6.0, oxlint@catalog:, oxlint-tsgolint@catalog:, prettier@3.9.6 (+16 more)
 
 ### Community 3 - "server-protocol.e2e-spec.ts"
 Cohesion: 0.08
@@ -127,7 +128,7 @@ Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.js
 
 ### Community 12 - "sdk/package.json"
 Cohesion: 0.10
-Nodes (20): author, dependencies, socket.io-client@catalog:, description, devDependencies, tsdown@catalog:, exports, ./operator (+12 more)
+Nodes (21): author, dependencies, socket.io-client@catalog:, description, devDependencies, tsdown@catalog:, exports, ./operator (+13 more)
 
 ### Community 13 - "server/package.json"
 Cohesion: 0.14
@@ -135,7 +136,7 @@ Nodes (13): author, @nestjs/cache-manager@^12.0.1, @nestjs/platform-socket.io@^1
 
 ### Community 14 - "protocol/package.json"
 Cohesion: 0.10
-Nodes (22): author, description, devDependencies, tsdown@catalog:, vitest@catalog:, zod@catalog:, exports, tsdown (+14 more)
+Nodes (23): author, description, devDependencies, tsdown@catalog:, vitest@catalog:, zod@catalog:, exports, tsdown (+15 more)
 
 ### Community 15 - "catalog"
 Cohesion: 0.11
@@ -159,11 +160,11 @@ Nodes (15): overrides, plugins, rules, complexity, import/no-cycle, max-depth, m
 
 ### Community 20 - "bot-sdk/package.json"
 Cohesion: 0.12
-Nodes (17): author, description, devDependencies, tsdown@catalog:, @types/node@catalog:, exports, tsdown, @types/node (+9 more)
+Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@catalog:, exports, tsdown, @types/node (+10 more)
 
 ### Community 21 - "server-sdk/package.json"
 Cohesion: 0.12
-Nodes (17): author, description, devDependencies, tsdown@catalog:, @types/node@catalog:, exports, tsdown, @types/node (+9 more)
+Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@catalog:, exports, tsdown, @types/node (+10 more)
 
 ### Community 25 - "scripts"
 Cohesion: 0.17
@@ -181,29 +182,33 @@ Nodes (5): collection, compilerOptions, deleteOutDir, $schema, sourceRoot
 Cohesion: 0.29
 Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.json
 
+### Community 43 - "scripts"
+Cohesion: 0.18
+Nodes (11): scripts, build, check-types, dev, format, format:check, infra:down, infra:up (+3 more)
+
 ### Community 115 - "json-object-limits.spec.ts"
 Cohesion: 0.05
 Nodes (10): initialCodes, validBody, MessageCreatedEnvelope, messageCreatedSchema, validEnvelope, defaultLimits, isAccepted(), jsonLength() (+2 more)
 
 ## Knowledge Gaps
 - **5 isolated node(s):** `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`
-  These have ≤1 connection - possible missing edges. (Counts symbols only; 232 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **36 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges. (Counts symbols only; 240 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **37 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `dependencies` connect `dependencies` to `@nest-lab/throttler-storage-redis@^1.2.0`, `@nestjs/event-emitter@^12.0.1`, `@nestjs/microservices@^12.1.3`, `@nestjs/platform-express@^12.0.1`, `server/package.json`, `rxjs@^7.8.1`, `zod@catalog:`, `bullmq@^6.3.15`, `helmet@^8.3.0`, `nest-commander@^3.21.0`, `@nestjs/core`, `@nestjs/typeorm@^12.0.2`, `@aws-sdk/client-s3@^3.1151.0`, `prom-client@^15.1.3`, `socket.io@^4.8.4`, `typeorm@^1.1.2`, `@aws-sdk/s3-request-presigner@^3.1151.0`, `@nestjs/config@^12.0.1`, `pg@^8.23.1`, `pino-http@^11.0.0`, `sharp@^0.35.5`, `@socket.io/redis-adapter@^8.3.0`, `cache-manager@^7.2.9`, `jose@^6.2.12`, `@nestjs/bullmq@^12.0.0`, `nestjs-cls@^7.0.1`, `@nestjs-cls/transactional-adapter-typeorm@^2.0.1`, `nestjs-pino@^5.3.1`, `@nestjs/terminus@^12.1.0`, `@nestjs/throttler@^6.7.1`, `pino@^10.4.0`?**
-  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+  _High betweenness centrality (0.029) - this node is a cross-community bridge._
 - **What connects `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json` to the rest of the system?**
   _5 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
-  _Cohesion score 0.06984126984126984 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.11 - nodes in this community are weakly interconnected._
 - **Why does `scripts` connect `scripts` to `server/package.json`?**
   _High betweenness centrality (0.014) - this node is a cross-community bridge._
 - **Should `server-protocol.e2e-spec.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.0766488413547237 - nodes in this community are weakly interconnected._
 - **Why does `@nestjs/common` connect `Providers` to `server/package.json`, `dependencies`?**
-  _High betweenness centrality (0.012) - this node is a cross-community bridge._
+  _High betweenness centrality (0.011) - this node is a cross-community bridge._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.0625 - nodes in this community are weakly interconnected._

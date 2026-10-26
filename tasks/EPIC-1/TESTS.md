@@ -7,7 +7,7 @@
 | `packages/protocol/src/json-object.spec.ts` | TASK-3 | форма: на верхнем уровне массив, строка, `null`, число отклоняются, значения не из JSON отклоняются; ключ: 64 символа проходит, 65 и недопустимые символы отклоняются; `__proto__` из `JSON.parse`, `constructor`, `prototype` отклоняются; глубина 10 000 отклоняется без падения; ошибка содержит путь к ключу; типы `JsonValue` и `JsonObject` |
 | `packages/protocol/src/json-object-limits.spec.ts` | TASK-3 | границы правил: размер 16 КБ в байтах UTF-8, глубина 5, 100 ключей на всех уровнях, строка 2 КБ в байтах UTF-8, массив 100 элементов; схема со своими лимитами применяет их |
 | `packages/protocol/src/event-envelope.spec.ts` | TASK-4 | корректный конверт проходит; без `eventId`, с неверным UUID, с `occurredAt` не в ISO 8601 (и не в UTC) отклоняется; без `conversationId` проходит; конверт конкретного события отклоняет неверный `payload` |
-| `packages/protocol/src/errors.spec.ts` | TASK-5 | коды доступны как константы и как тип-объединение строк; схема тела ошибки принимает корректное тело и отклоняет неизвестный код |
+| `packages/protocol/src/errors.spec.ts` | TASK-5 | коды доступны как константы и как тип-объединение строк; схема тела ошибки `{ statusCode, message, code, requestId, details? }` принимает корректное тело и отклоняет неизвестный код; тело без `statusCode`, `message` или `code` отклоняется |
 | `apps/server/test/server-protocol.e2e-spec.ts` | TASK-6 | `pnpm check-types` и `pnpm build` проходят; `node apps/server/dist/main.js` стартует и отвечает по HTTP без ошибок загрузки модулей; несовместимое изменение `protocol` роняет `pnpm check-types` на сервере; зависимость `workspace:*` и импорт только через `@sowa-chat/protocol` |
 
 ## Проверяется вручную

@@ -4,4 +4,4 @@ import { AppConfigModule } from "./infra/config/config.module.js";
 @Module({
   imports: [AppConfigModule],
 })
-export class AppModule {}
+export class ApiModule {}

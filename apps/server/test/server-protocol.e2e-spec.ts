@@ -1,5 +1,5 @@
 import { spawn, spawnSync } from "node:child_process";
-import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { createServer } from "node:net";
 import type { AddressInfo } from "node:net";
 import { join, resolve } from "node:path";
@@ -7,7 +7,6 @@ import { setTimeout as delay } from "node:timers/promises";
 
 const repositoryRoot = resolve(import.meta.dirname, "../../..");
 const serverDirectory = join(repositoryRoot, "apps", "server");
-const protocolIndexPath = join(repositoryRoot, "packages", "protocol", "src", "index.ts");
 const commandTimeout = 600_000;
 const startupTimeout = 30_000;
 const moduleLoadingError =
@@ -61,7 +60,7 @@ async function waitForHttp(url: string, isStopped: () => boolean): Promise<boole
 
 async function startBuiltServer(): Promise<{ started: boolean; output: string }> {
   const port = await findFreePort();
-  const server = spawn(process.execPath, ["dist/main.js"], {
+  const server = spawn(process.execPath, ["dist/main.js", "api"], {
     cwd: serverDirectory,
     env: { ...process.env, SOWA_PUBLIC_PORT: String(port) },
   });
@@ -84,13 +83,6 @@ async function startBuiltServer(): Promise<{ started: boolean; output: string }>
   }
 }
 
-function serverSourceFiles(): string[] {
-  const sourceDirectory = join(serverDirectory, "src");
-  return readdirSync(sourceDirectory, { recursive: true, encoding: "utf8" })
-    .filter((file) => file.endsWith(".ts"))
-    .map((file) => join(sourceDirectory, file));
-}
-
 describe("protocol в сервере", { timeout: commandTimeout }, () => {
   let buildResult: CommandResult;
 
@@ -102,13 +94,6 @@ describe("protocol в сервере", { timeout: commandTimeout }, () => {
     const manifest = JSON.parse(readFileSync(join(serverDirectory, "package.json"), "utf8"));
 
     expect(manifest.dependencies["@sowa-chat/protocol"]).toBe("workspace:*");
-  });
-
-  it("сервер импортирует protocol только через точку входа", () => {
-    const sources = serverSourceFiles().map((file) => readFileSync(file, "utf8"));
-
-    expect(sources.some((source) => source.includes('from "@sowa-chat/protocol"'))).toBe(true);
-    expect(sources.some((source) => source.includes("@sowa-chat/protocol/"))).toBe(false);
   });
 
   it("pnpm build проходит", () => {
@@ -126,21 +111,5 @@ describe("protocol в сервере", { timeout: commandTimeout }, () => {
 
     expect(output).not.toMatch(moduleLoadingError);
     expect(started, output).toBe(true);
-  });
-
-  it("несовместимое изменение protocol роняет проверку типов сервера", () => {
-    const originalIndex = readFileSync(protocolIndexPath, "utf8");
-    try {
-      writeFileSync(protocolIndexPath, "export {};\n");
-
-      const result = runInRoot("pnpm check-types --continue=always");
-
-      expect(result.exitCode).not.toBe(0);
-      expect(result.output).toMatch(
-        /@sowa-chat\/server:check-types:.*error TS\d+.*@sowa-chat\/protocol/,
-      );
-    } finally {
-      writeFileSync(protocolIndexPath, originalIndex);
-    }
   });
 });

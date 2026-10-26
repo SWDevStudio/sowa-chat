@@ -50,7 +50,7 @@ function serverEnvironment(overrides: Env): Env {
 
 function runServer(env: Env, workingDirectory: string): Promise<RunResult> {
   return new Promise((resolveRun) => {
-    const server = spawn(process.execPath, [serverEntry], { cwd: workingDirectory, env });
+    const server = spawn(process.execPath, [serverEntry, "api"], { cwd: workingDirectory, env });
     let output = "";
     const collectOutput = (chunk: Buffer) => {
       output += chunk.toString();

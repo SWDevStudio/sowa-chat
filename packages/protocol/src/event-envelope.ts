@@ -1,3 +1,6 @@
+/**
+ * @description Конверт исходящих событий: общие поля события, которые сервер отправляет подписчикам (боты, вебхуки). Конкретное событие задает свой payload через createEventEnvelopeSchema.
+ */
 import { z } from "zod";
 
 export const eventEnvelopeSchema = z.object({

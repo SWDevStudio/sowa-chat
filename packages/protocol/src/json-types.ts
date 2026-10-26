@@ -1,3 +1,6 @@
+/**
+ * @description Типы JSON-значений и JSON-объекта для данных, которые передает интегратор (context, visitorData, payload), и лимиты, которыми эти данные проверяются.
+ */
 export type JsonValue =
   string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
 

@@ -15,6 +15,7 @@ const initialCodes = [
 ] as const;
 
 const validBody = {
+  statusCode: 404,
   code: "notFound",
   message: "Conversation not found",
   requestId: "3f2a1b0c-9d8e-4f7a-8b6c-5d4e3f2a1b0c",
@@ -69,7 +70,7 @@ describe("errorResponseSchema", () => {
     },
   );
 
-  it.each(["code", "message", "requestId"] as const)("отклоняет тело без %s", (field) => {
+  it.each(["statusCode", "message", "code"] as const)("отклоняет тело без %s", (field) => {
     const body: Record<string, unknown> = { ...validBody };
     delete body[field];
 
@@ -77,8 +78,8 @@ describe("errorResponseSchema", () => {
   });
 
   it("тип ErrorResponse использует ErrorCode", () => {
-    expectTypeOf<ErrorResponse["code"]>().toEqualTypeOf<ErrorCode>();
+    expectTypeOf<ErrorResponse["statusCode"]>().toEqualTypeOf<number>();
     expectTypeOf<ErrorResponse["message"]>().toEqualTypeOf<string>();
-    expectTypeOf<ErrorResponse["requestId"]>().toEqualTypeOf<string>();
+    expectTypeOf<ErrorResponse["code"]>().toEqualTypeOf<ErrorCode>();
   });
 });

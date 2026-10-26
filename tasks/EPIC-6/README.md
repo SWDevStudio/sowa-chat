@@ -8,8 +8,8 @@
 
 | № | Задача | Исполнитель | Зависит от | Статус |
 |---|---|---|---|---|
-| 1 | Подключение к Redis через ioredis с закрытием при остановке | haiku | — | не начата |
-| 2 | Valkey в e2e-окружении | haiku | 1 | не начата |
-| 3 | `/health/live` и `/health/ready` | haiku | 1 | не начата |
-| 4 | `/metrics` с метриками процесса | haiku | — | не начата |
-| 5 | `/status`: версия, аптайм, состояние PostgreSQL и Redis | haiku | 1 | не начата |
+| 1 | [Подключение к Redis через ioredis с закрытием при остановке](TASK-1.md) | haiku | — | не начата |
+| 2 | [Valkey в e2e-окружении](TASK-2.md) | haiku | 1 | не начата |
+| 3 | [`/health/live` и `/health/ready`](TASK-3.md) | haiku | 1 | не начата |
+| 4 | [`/metrics` с метриками процесса](TASK-4.md) | haiku | — | не начата |
+| 5 | [`/status`: версия, аптайм, состояние PostgreSQL и Redis](TASK-5.md) | haiku | 1 | не начата |

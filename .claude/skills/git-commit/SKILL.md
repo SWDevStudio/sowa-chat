@@ -46,7 +46,7 @@ description: Разбирает незакоммиченные изменени�
 | `BOT-SDK` | `packages/bot-sdk/` |
 | `SERVER-SDK` | `packages/server-sdk/` |
 | `DEPLOY` | `deploy/` (compose, nginx, образы) |
-| `DOCS` | `docs/`, `PLAN.md` |
+| `DOCS` | `docs/`, `tasks/`, `PLAN.md`, `README.md` |
 | `CORE` | корень монорепо: `package.json`, `pnpm-workspace.yaml`, `pnpm-lock.yaml`, `turbo.json`, `.prettierrc`, `.prettierignore`, `.oxlintrc.json`, `.gitignore`, `.gitattributes`, `.vscode/`, `.claude/`, `CLAUDE.md` |
 
 - `pnpm-lock.yaml` идёт в тот же коммит, что и изменение `package.json`, которое его поменяло, с префиксом этого пакета.

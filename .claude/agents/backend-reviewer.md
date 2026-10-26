@@ -1,8 +1,8 @@
 ---
 name: backend-reviewer
-description: Code review бекенд-кода sowa-chat — apps/server, packages/bot-sdk, packages/server-sdk, packages/protocol. Проверяет соответствие стандартам NestJS, SOLID, читаемость и правила проекта. Вызывается из скилла git-push с диапазоном коммитов и из скилла nestjs-code-review с диапазоном коммитов, незакоммиченными правками или списком файлов.
+description: Code review бекенд-кода sowa-chat — apps/server, packages/bot-sdk, packages/server-sdk, packages/protocol. Проверяет соответствие стандартам NestJS, SOLID, читаемость и правила проекта. Вызывается из скилла epic с диапазоном master..feature/EPIC-N и из скилла nestjs-code-review с диапазоном коммитов, незакоммиченными правками или списком файлов.
 tools: Read, Grep, Glob, Bash
-model: sonnet
+model: opus
 skills:
   - nestjs-best-practices
 ---

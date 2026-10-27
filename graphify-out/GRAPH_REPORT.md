@@ -1,17 +1,17 @@
 # Graph Report - hector-chat  (2026-10-27)
 
 ## Corpus Check
-- 72 files · ~11,755 words
+- 79 files · ~13,707 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: (none) 8, .example 1)
 
 ## Summary
-- 707 nodes · 988 edges · 64 communities (35 shown, 29 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 17 edges (avg confidence: 0.85)
+- 771 nodes · 1102 edges · 74 communities (42 shown, 32 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 20 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `39d4551f`
+- Built from commit: `d5391655`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -40,7 +40,7 @@
 - server-sdk/package.json
 - file-type@^22.1.1
 - bullmq@^6.3.15
-- helmet@^8.3.0
+- env.schema.ts
 - scripts
 - packages-build.e2e-spec.ts
 - ref_node_fs
@@ -53,38 +53,48 @@
 - @nestjs/event-emitter@^12.0.1
 - main.ts
 - tsconfig.build.json
-- @nestjs/microservices@^12.1.3
+- log-settings.e2e-spec.ts
 - config.module.ts
 - nest-cli.json
 - @nestjs/cache-manager@^12.0.1
 - nest-commander@^3.21.0
 - server-sdk/tsconfig.json
 - json-object-schema.ts
-- @nestjs-cls/transactional@^4.0.1
+- logger.module.ts
 - @nestjs/swagger@^12.0.2
 - @nestjs/terminus@^12.1.0
 - @nestjs/websockets@^12.1.3
 - socket.io@^4.8.4
 - @nestjs/throttler@^6.7.1
 - logging.e2e-spec.ts
-- pg@^8.23.1
-- prom-client@^15.1.3
+- log-level.spec.ts
+- RedactionProbeController
 - pino-http@^11.0.0
 - sharp@^0.35.5
-- typeorm@^1.1.2
+- api.module.ts
+- LevelProbeController
+- app-cls.module.ts
+- redact-paths.ts
+- @nest-lab/throttler-storage-redis@^1.2.0
+- @nestjs/platform-express@^12.0.1
+- nestjs-zod@^5.5.0
+- rxjs@^7.8.1
+- @socket.io/redis-adapter@^8.3.0
+- @sowa-chat/protocol@workspace:*
+- zod@catalog:
 - json-object-limits.spec.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `compilerOptions` - 20 edges
-2. `scripts` - 13 edges
-3. `JsonObjectValidator` - 13 edges
-4. `rules` - 12 edges
-5. `parseEnv()` - 12 edges
-6. `@nestjs/common` - 11 edges
-7. `scripts` - 11 edges
-8. `catalog` - 11 edges
-9. `@nestjs/config` - 10 edges
-10. `nestjs-pino` - 6 edges
+2. `@nestjs/common` - 14 edges
+3. `parseEnv()` - 14 edges
+4. `scripts` - 13 edges
+5. `@nestjs/config` - 13 edges
+6. `JsonObjectValidator` - 13 edges
+7. `rules` - 12 edges
+8. `scripts` - 11 edges
+9. `catalog` - 11 edges
+10. `nestjs-pino` - 9 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `schemaWith()` --calls--> `createJsonObjectSchema()`  [EXTRACTED]
@@ -95,13 +105,13 @@
   apps/server/src/infra/config/app.config.ts → apps/server/src/infra/config/parse-env.ts
 - `databaseConfig` --calls--> `parseEnv()`  [EXTRACTED]
   apps/server/src/infra/config/database.config.ts → apps/server/src/infra/config/parse-env.ts
-- `portsConfig` --calls--> `parseEnv()`  [EXTRACTED]
-  apps/server/src/infra/config/ports.config.ts → apps/server/src/infra/config/parse-env.ts
+- `loggingConfig` --calls--> `parseEnv()`  [EXTRACTED]
+  apps/server/src/infra/config/logging.config.ts → apps/server/src/infra/config/parse-env.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (64 total, 29 thin omitted)
+## Communities (74 total, 32 thin omitted)
 
 ### Community 1 - "bot-sdk/tsconfig.json"
 Cohesion: 0.29
@@ -112,8 +122,8 @@ Cohesion: 0.07
 Nodes (35): devDependencies, @changesets/cli@^3.0.3, ctx7@0.8.2, husky@9.1.7, lint-staged@17.6.0, oxlint@catalog:, oxlint-tsgolint@catalog:, prettier@3.9.6 (+27 more)
 
 ### Community 3 - "log-redaction.spec.ts"
-Cohesion: 0.07
-Nodes (16): @nestjs/testing@^12.0.1, allOutput(), CapturedLogs, createProbeApp(), fieldValueOf(), integratorDataFields, LogEntry, logFromService() (+8 more)
+Cohesion: 0.16
+Nodes (12): allOutput(), CapturedLogs, createProbeApp(), fieldValueOf(), integratorDataFields, LogEntry, logFromService(), messageAndContactFields (+4 more)
 
 ### Community 4 - "devDependencies"
 Cohesion: 0.06
@@ -125,7 +135,7 @@ Nodes (13): Env, fetchStatus(), findFreePort(), findZonePorts(), modes, reposito
 
 ### Community 6 - "dependencies"
 Cohesion: 0.08
-Nodes (26): dependencies, @aws-sdk/client-s3@^3.1151.0, ioredis@^6.0.0, @nest-lab/throttler-storage-redis@^1.2.0, @nestjs/common@^12.0.1, @nestjs/config@^12.0.1, @nestjs/core@^12.0.1, nestjs-pino@^5.3.1 (+18 more)
+Nodes (24): dependencies, helmet@^8.3.0, @nestjs-cls/transactional@^4.0.1, @nestjs-cls/transactional-adapter-typeorm@^2.0.1, @nestjs/common@^12.0.1, @nestjs/config@^12.0.1, @nestjs/core@^12.0.1, @nestjs/microservices@^12.1.3 (+16 more)
 
 ### Community 7 - "log-redaction.e2e-spec.ts"
 Cohesion: 0.21
@@ -152,8 +162,8 @@ Cohesion: 0.10
 Nodes (21): author, dependencies, socket.io-client@catalog:, description, devDependencies, tsdown@catalog:, exports, ./operator (+13 more)
 
 ### Community 13 - "server/package.json"
-Cohesion: 0.11
-Nodes (17): author, nestjs-cls@^7.0.1, @nestjs-cls/transactional-adapter-typeorm@^2.0.1, @socket.io/redis-adapter@^8.3.0, @sowa-chat/protocol@workspace:*, zod@catalog:, description, zod (+9 more)
+Cohesion: 0.12
+Nodes (15): author, @aws-sdk/client-s3@^3.1151.0, ioredis@^6.0.0, nestjs-cls@^7.0.1, typeorm@^1.1.2, description, license, name (+7 more)
 
 ### Community 14 - "protocol/package.json"
 Cohesion: 0.10
@@ -187,6 +197,10 @@ Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@c
 Cohesion: 0.12
 Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@catalog:, exports, tsdown, @types/node (+10 more)
 
+### Community 24 - "env.schema.ts"
+Cohesion: 0.09
+Nodes (16): checkPrettyLogFormat(), Env, EnvObject, envObjectSchema, envSchema, findPortWithSameValue(), logFormats, Env (+8 more)
+
 ### Community 25 - "scripts"
 Cohesion: 0.15
 Nodes (13): scripts, build, check-types, start:api, start:api:dev, start:prod, start:worker, start:worker:dev (+5 more)
@@ -204,24 +218,28 @@ Cohesion: 0.24
 Nodes (8): CommandResult, librariesWithOwnChecks, plannedCheckTypesTasks(), PlannedTask, probePath(), repositoryRoot, runInRoot(), writeProbe()
 
 ### Community 30 - "request-id.spec.ts"
-Cohesion: 0.10
-Nodes (14): supertest@^7.0.0, createProbeApp(), entriesOf(), expectRequestIdInAllEntries(), isRequestEntryOf(), isServiceEntryOf(), LogEntry, ProbeController (+6 more)
+Cohesion: 0.11
+Nodes (12): createProbeApp(), entriesOf(), expectRequestIdInAllEntries(), isRequestEntryOf(), isServiceEntryOf(), LogEntry, ProbeController, ProbeResponse (+4 more)
 
 ### Community 33 - "request-id.e2e-spec.ts"
 Cohesion: 0.17
 Nodes (12): entriesForPath(), isResponding(), logEntries(), LogEntry, parseLogLine(), ProbeResult, repositoryRoot, RunningServer (+4 more)
 
 ### Community 35 - "main.ts"
-Cohesion: 0.08
-Nodes (26): ApiModule, CliModule, AppClsModule, AppConfigModule, createLoggerModule(), currentRequestId(), redactPaths, sensitiveFields (+18 more)
+Cohesion: 0.14
+Nodes (13): CliModule, createContext(), mode, runCli(), runMigrate(), runners, runToCompletion(), runWorker() (+5 more)
 
 ### Community 36 - "tsconfig.build.json"
 Cohesion: 0.29
 Nodes (6): compilerOptions, rootDir, exclude, extends, include, ./tsconfig.json
 
+### Community 37 - "log-settings.e2e-spec.ts"
+Cohesion: 0.16
+Nodes (15): ApiRun, Env, fetchStatus(), findFreePort(), LogEntry, repositoryRoot, runApiWithRequest(), RunningServer (+7 more)
+
 ### Community 38 - "config.module.ts"
-Cohesion: 0.13
-Nodes (19): appConfig, compileConfigModule(), testEnv, databaseConfig, Env, EnvObject, envObjectSchema, envSchema (+11 more)
+Cohesion: 0.22
+Nodes (11): appConfig, compileConfigModule(), testEnv, databaseConfig, loggingConfig, parseEnv(), portsConfig, redisConfig (+3 more)
 
 ### Community 39 - "nest-cli.json"
 Cohesion: 0.33
@@ -235,9 +253,29 @@ Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.js
 Cohesion: 0.30
 Nodes (3): JsonObjectValidator, encoder, utf8ByteLength()
 
+### Community 45 - "logger.module.ts"
+Cohesion: 0.28
+Nodes (9): AppConfigModule, createStdoutDestination(), baseOptions(), createLoggerModule(), currentRequestId(), jsonOptions(), prettyOptions(), @nestjs/common (+1 more)
+
 ### Community 51 - "logging.e2e-spec.ts"
 Cohesion: 0.14
 Nodes (17): Env, expectOnlyJsonLines(), fetchStatus(), findFreePort(), logEntries(), LogEntry, outputLines(), parseLogLine() (+9 more)
+
+### Community 52 - "log-level.spec.ts"
+Cohesion: 0.15
+Nodes (10): nestjs-pino@^5.3.1, @nestjs/testing@^12.0.1, supertest@^7.0.0, createProbeApp(), LogEntry, redirectLogsTo(), testEnv, nestjs-pino (+2 more)
+
+### Community 56 - "api.module.ts"
+Cohesion: 0.22
+Nodes (4): ApiModule, createApp(), LogDestination, testEnv
+
+### Community 58 - "app-cls.module.ts"
+Cohesion: 0.36
+Nodes (4): AppClsModule, echoRequestId(), requestIdHeader, resolveRequestId()
+
+### Community 59 - "redact-paths.ts"
+Cohesion: 0.50
+Nodes (3): redactPaths, sensitiveFields, sensitiveHeaders
 
 ### Community 115 - "json-object-limits.spec.ts"
 Cohesion: 0.06
@@ -245,23 +283,23 @@ Nodes (29): ErrorCode, errorCodes, errorDetailSchema, ErrorResponse, errorRespon
 
 ## Knowledge Gaps
 - **5 isolated node(s):** `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`
-  These have ≤1 connection - possible missing edges. (Counts symbols only; 326 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **29 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges. (Counts symbols only; 359 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **32 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `main.ts` to `log-redaction.spec.ts`, `config.module.ts`, `dependencies`, `server/package.json`, `request-id.spec.ts`?**
-  _High betweenness centrality (0.055) - this node is a cross-community bridge._
+- **Why does `@nestjs/common` connect `logger.module.ts` to `log-redaction.spec.ts`, `main.ts`, `config.module.ts`, `dependencies`, `server/package.json`, `log-level.spec.ts`, `api.module.ts`, `request-id.spec.ts`?**
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
 - **What connects `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json` to the rest of the system?**
   _5 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06984126984126984 - nodes in this community are weakly interconnected._
-- **Why does `@nestjs/config` connect `config.module.ts` to `main.ts`, `server/package.json`, `dependencies`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
-- **Should `log-redaction.spec.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.07311827956989247 - nodes in this community are weakly interconnected._
-- **Why does `dependencies` connect `dependencies` to `cache-manager@^7.2.9`, `server/package.json`, `file-type@^22.1.1`, `bullmq@^6.3.15`, `helmet@^8.3.0`, `@aws-sdk/s3-request-presigner@^3.1151.0`, `jose@^6.2.12`, `@nestjs/bullmq@^12.0.0`, `@nestjs/event-emitter@^12.0.1`, `@nestjs/microservices@^12.1.3`, `@nestjs/cache-manager@^12.0.1`, `nest-commander@^3.21.0`, `@nestjs-cls/transactional@^4.0.1`, `@nestjs/swagger@^12.0.2`, `@nestjs/terminus@^12.1.0`, `@nestjs/websockets@^12.1.3`, `socket.io@^4.8.4`, `@nestjs/throttler@^6.7.1`, `pg@^8.23.1`, `prom-client@^15.1.3`, `pino-http@^11.0.0`, `sharp@^0.35.5`, `typeorm@^1.1.2`?**
+- **Why does `@nestjs/config` connect `config.module.ts` to `main.ts`, `logger.module.ts`, `server/package.json`, `dependencies`?**
   _High betweenness centrality (0.042) - this node is a cross-community bridge._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
+- **Why does `dependencies` connect `dependencies` to `cache-manager@^7.2.9`, `server/package.json`, `file-type@^22.1.1`, `bullmq@^6.3.15`, `@aws-sdk/s3-request-presigner@^3.1151.0`, `jose@^6.2.12`, `@nestjs/bullmq@^12.0.0`, `@nestjs/event-emitter@^12.0.1`, `@nestjs/cache-manager@^12.0.1`, `nest-commander@^3.21.0`, `@nestjs/swagger@^12.0.2`, `@nestjs/terminus@^12.1.0`, `@nestjs/websockets@^12.1.3`, `socket.io@^4.8.4`, `@nestjs/throttler@^6.7.1`, `log-level.spec.ts`, `pino-http@^11.0.0`, `sharp@^0.35.5`, `@nest-lab/throttler-storage-redis@^1.2.0`, `@nestjs/platform-express@^12.0.1`, `nestjs-zod@^5.5.0`, `rxjs@^7.8.1`, `@socket.io/redis-adapter@^8.3.0`, `@sowa-chat/protocol@workspace:*`, `zod@catalog:`?**
+  _High betweenness centrality (0.039) - this node is a cross-community bridge._
+- **Should `server-modes.e2e-spec.ts` be split into smaller, more focused modules?**
+  _Cohesion score 0.13071895424836602 - nodes in this community are weakly interconnected._

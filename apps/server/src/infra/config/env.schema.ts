@@ -11,6 +11,10 @@ type PortVariable = (typeof portVariables)[number];
 
 const nonEmptyString = z.string().min(1);
 
+const logLevels = ["trace", "debug", "info", "warn", "error", "fatal"] as const;
+
+const logFormats = ["json", "pretty"] as const;
+
 function port(defaultValue: number) {
   return z
     .string()
@@ -33,12 +37,25 @@ const envObjectSchema = z.object({
   SOWA_S3_ACCESS_KEY: nonEmptyString,
   SOWA_S3_SECRET_KEY: nonEmptyString,
   SOWA_S3_BUCKET: nonEmptyString,
+  SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),
+  SOWA_LOG_FORMAT: z.enum(logFormats).default("json"),
 });
 
 type EnvObject = z.infer<typeof envObjectSchema>;
 
 function findPortWithSameValue(env: EnvObject, variable: PortVariable): PortVariable | undefined {
   return portVariables.find((other) => other !== variable && env[other] === env[variable]);
+}
+
+function checkPrettyLogFormat(env: EnvObject, context: z.RefinementCtx): void {
+  if (env.SOWA_LOG_FORMAT !== "pretty" || env.SOWA_ENV !== "production") {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_LOG_FORMAT"],
+    message: "pretty is allowed only when SOWA_ENV is development",
+  });
 }
 
 export const envSchema = envObjectSchema.superRefine((env, context) => {
@@ -52,6 +69,7 @@ export const envSchema = envObjectSchema.superRefine((env, context) => {
       });
     }
   }
+  checkPrettyLogFormat(env, context);
 });
 
 export type Env = z.infer<typeof envSchema>;

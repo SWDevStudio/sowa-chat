@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/config.module.ts": {
-    "mtime": 1793092939.8548684,
-    "seen": 1793093083.6069255,
-    "ast_hash": "14f6c8167229fbbbaf2350d522c248e6",
+    "mtime": 1793099927.0011961,
+    "seen": 1793100064.4864564,
+    "ast_hash": "46a38efd5111a62dc0710757248e23d4",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/database.config.ts": {
@@ -300,9 +300,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/env.schema.ts": {
-    "mtime": 1793092939.8598711,
-    "seen": 1793093083.6069255,
-    "ast_hash": "7010f54f6026b9c0a5e9d67b3e5a47be",
+    "mtime": 1793099881.2319343,
+    "seen": 1793100064.4864564,
+    "ast_hash": "6ed03183329b90cf16a247a85e982831",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/parse-env.ts": {
@@ -384,9 +384,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/logging/logger.module.ts": {
-    "mtime": 1793098684.707895,
-    "seen": 1793098726.7685988,
-    "ast_hash": "e81e13903d687d0aa6a6c1f90eda13c4",
+    "mtime": 1793099989.0310268,
+    "seen": 1793100064.4864564,
+    "ast_hash": "432b52775c83e4ffd75609521ce71b7b",
     "semantic_hash": ""
   },
   "apps/server/test/request-id.e2e-spec.ts": {
@@ -429,6 +429,48 @@
     "mtime": 1793098683.1845531,
     "seen": 1793098726.7685988,
     "ast_hash": "1d767d2ce6cd7f259275ca26f561abf8",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/env.schema.logging.spec.ts": {
+    "mtime": 1793099069.5694246,
+    "seen": 1793100064.4864564,
+    "ast_hash": "9b0dc218c031db1ab46f0fc2a7ec3fbf",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/logging.config.ts": {
+    "mtime": 1793099926.5112014,
+    "seen": 1793100064.4864564,
+    "ast_hash": "d95381b5745776dcc20c37cf6aecedf2",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/logging/log-destination.spec.ts": {
+    "mtime": 1793099095.814243,
+    "seen": 1793100064.4864564,
+    "ast_hash": "bcedb02d2f267034c09046b1177687f1",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/logging/log-destination.ts": {
+    "mtime": 1793099881.6931734,
+    "seen": 1793100064.4864564,
+    "ast_hash": "54f16724f1c08ff1b866772e05362763",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/logging/log-level.spec.ts": {
+    "mtime": 1793099130.7284372,
+    "seen": 1793100064.4864564,
+    "ast_hash": "d242db35ad3e33933f6455176b3a1285",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/logging/root-log-level.ts": {
+    "mtime": 1793099987.9109116,
+    "seen": 1793100064.4864564,
+    "ast_hash": "140d728e1cfd7072187d2eb86e2b7a11",
+    "semantic_hash": ""
+  },
+  "apps/server/test/log-settings.e2e-spec.ts": {
+    "mtime": 1793099116.1510315,
+    "seen": 1793100064.4864564,
+    "ast_hash": "718f0012a4db077d55a73a7515f517c6",
     "semantic_hash": ""
   }
 }

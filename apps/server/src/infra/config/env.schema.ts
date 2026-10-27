@@ -13,6 +13,8 @@ const nonEmptyString = z.string().min(1);
 
 const logLevels = ["trace", "debug", "info", "warn", "error", "fatal"] as const;
 
+export type LogLevel = (typeof logLevels)[number];
+
 const logFormats = ["json", "pretty"] as const;
 
 function port(defaultValue: number) {

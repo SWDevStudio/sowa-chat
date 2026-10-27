@@ -10,25 +10,8 @@ import {
   Post,
 } from "@nestjs/common";
 import type { INestApplication } from "@nestjs/common";
-import { Test } from "@nestjs/testing";
-import { Logger, PinoLogger } from "nestjs-pino";
-import { pino } from "pino";
 import request from "supertest";
-
-const testEnv = {
-  NODE_ENV: "test",
-  SOWA_ENV: "development",
-  SOWA_PUBLIC_PORT: "18080",
-  SOWA_OPERATOR_PORT: "18081",
-  SOWA_INTERNAL_PORT: "18082",
-  SOWA_MANAGEMENT_PORT: "19090",
-  DATABASE_URL: "postgres://test:test@127.0.0.1:5432/test",
-  REDIS_URL: "redis://127.0.0.1:6380",
-  SOWA_S3_ENDPOINT: "http://127.0.0.1:9333",
-  SOWA_S3_ACCESS_KEY: "test-access",
-  SOWA_S3_SECRET_KEY: "test-secret",
-  SOWA_S3_BUCKET: "test-bucket",
-};
+import { createProbeApp, stubTestEnv } from "../../../test/support/unit-probe.js";
 
 const redacted = "[Redacted]";
 const setCookieSecret = "set-cookie-secret-value";
@@ -86,34 +69,15 @@ class RedactionProbeController {
   }
 }
 
-function stubTestEnv(): void {
-  for (const [name, value] of Object.entries(testEnv)) {
-    vi.stubEnv(name, value);
-  }
-}
-
-function redirectLogsTo(logs: CapturedLogs): void {
-  const captureStream = {
-    write: (line: string) => {
+function createRedactionProbeApp(logs: CapturedLogs): Promise<INestApplication> {
+  return createProbeApp({
+    controllers: [RedactionProbeController],
+    providers: [RedactionProbeService],
+    onLogLine: (line) => {
       logs.lines.push(line);
       logs.entries.push(JSON.parse(line) as LogEntry);
     },
-  };
-  Reflect.set(PinoLogger.root, pino.symbols.streamSym, captureStream);
-}
-
-async function createProbeApp(logs: CapturedLogs): Promise<INestApplication> {
-  const { ApiModule } = await import("../../api.module.js");
-  const moduleRef = await Test.createTestingModule({
-    imports: [ApiModule],
-    controllers: [RedactionProbeController],
-    providers: [RedactionProbeService],
-  }).compile();
-  redirectLogsTo(logs);
-  const app = moduleRef.createNestApplication({ bufferLogs: true });
-  app.useLogger(app.get(Logger));
-  await app.init();
-  return app;
+  });
 }
 
 function secretValueOf(field: string, place: string): string {
@@ -157,8 +121,7 @@ describe("скрытие секретов и персональных данны
 
   beforeAll(async () => {
     stubTestEnv();
-    vi.resetModules();
-    app = await createProbeApp(logs);
+    app = await createRedactionProbeApp(logs);
   });
 
   afterAll(async () => {

@@ -1,46 +1,25 @@
-import { spawn, spawnSync } from "node:child_process";
-import type { ChildProcessWithoutNullStreams } from "node:child_process";
-import { createServer } from "node:net";
-import type { AddressInfo } from "node:net";
-import { join, resolve } from "node:path";
+import { spawnSync } from "node:child_process";
+import { resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
+import { findFreePort, parseLogLine, spawnServer } from "./support/e2e-server.js";
+import type { Env, RunningServer } from "./support/e2e-server.js";
+import { pino } from "pino";
 
 const repositoryRoot = resolve(import.meta.dirname, "../../..");
-const serverDirectory = join(repositoryRoot, "apps", "server");
 const commandTimeout = 600_000;
 const startupTimeout = 30_000;
 const nestStartMessage = "Starting Nest application";
 const requestedPath = "/no-such-path";
-const infoLevel = 30;
-
-type Env = Record<string, string | undefined>;
+const infoLevel = pino.levels.values.info;
 
 interface LogEntry {
   level?: unknown;
   msg?: unknown;
 }
 
-interface RunningServer {
-  process: ChildProcessWithoutNullStreams;
-  output: () => string;
-  isStopped: () => boolean;
-  stop: () => Promise<void>;
-}
-
 interface RunResult {
   exitCode: number | null;
   output: string;
-}
-
-function findFreePort(): Promise<number> {
-  return new Promise((resolvePort, reject) => {
-    const probe = createServer();
-    probe.once("error", reject);
-    probe.listen(0, "127.0.0.1", () => {
-      const { port } = probe.address() as AddressInfo;
-      probe.close(() => resolvePort(port));
-    });
-  });
 }
 
 async function serverEnvironment(overrides: Env): Promise<Env> {
@@ -54,41 +33,9 @@ async function serverEnvironment(overrides: Env): Promise<Env> {
   };
 }
 
-function spawnServer(env: Env): RunningServer {
-  const server = spawn(process.execPath, ["dist/main.js", "api"], {
-    cwd: serverDirectory,
-    env,
-  });
-  let output = "";
-  let stopped = false;
-  const collectOutput = (chunk: Buffer) => {
-    output += chunk.toString();
-  };
-  server.stdout.on("data", collectOutput);
-  server.stderr.on("data", collectOutput);
-  const closed = new Promise<void>((resolveClose) => {
-    server.on("close", () => {
-      stopped = true;
-      resolveClose();
-    });
-  });
-
-  return {
-    process: server,
-    output: () => output,
-    isStopped: () => stopped,
-    stop: async () => {
-      if (!stopped) {
-        server.kill();
-      }
-      await closed;
-    },
-  };
-}
-
 function runToExit(env: Env): Promise<RunResult> {
   return new Promise((resolveRun) => {
-    const server = spawnServer(env);
+    const server = spawnServer("api", env);
     const timer = setTimeout(() => server.process.kill(), startupTimeout);
     server.process.on("close", (exitCode) => {
       clearTimeout(timer);
@@ -99,18 +46,6 @@ function runToExit(env: Env): Promise<RunResult> {
 
 function outputLines(output: string): string[] {
   return output.split(/\r?\n/).filter((line) => line.trim() !== "");
-}
-
-function parseLogLine(line: string): LogEntry | undefined {
-  try {
-    const parsed: unknown = JSON.parse(line);
-    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
-      return parsed as LogEntry;
-    }
-    return undefined;
-  } catch {
-    return undefined;
-  }
 }
 
 async function fetchStatus(url: string): Promise<number | undefined> {
@@ -151,7 +86,7 @@ interface ApiRun {
 
 async function runApiWithRequest(overrides: Env, waitForText?: string): Promise<ApiRun> {
   const env = await serverEnvironment(overrides);
-  const server = spawnServer(env);
+  const server = spawnServer("api", env);
   try {
     const status = await waitForHttpStatus(
       `http://127.0.0.1:${env.SOWA_PUBLIC_PORT}${requestedPath}`,
@@ -187,7 +122,7 @@ describe("уровень и формат логов из конфига", { time
 
     expect(run.status, run.output).toBe(404);
     for (const line of outputLines(run.output)) {
-      const entry = parseLogLine(line);
+      const entry = parseLogLine<LogEntry>(line);
       expect(entry, line).toBeDefined();
       expect(entry?.level, line).not.toBe(infoLevel);
     }
@@ -203,7 +138,7 @@ describe("уровень и формат логов из конфига", { time
     expect(run.status, run.output).toBe(404);
     expect(run.output).toContain(nestStartMessage);
     for (const line of outputLines(run.output)) {
-      expect(parseLogLine(line), line).toBeUndefined();
+      expect(parseLogLine<LogEntry>(line), line).toBeUndefined();
     }
   });
 

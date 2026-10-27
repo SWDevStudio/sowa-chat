@@ -1,26 +1,9 @@
 import { Controller, Get, Inject, Injectable, Logger as NestLogger, Query } from "@nestjs/common";
 import type { INestApplication } from "@nestjs/common";
-import { Test } from "@nestjs/testing";
 import { ClsServiceManager } from "nestjs-cls";
-import { Logger, PinoLogger } from "nestjs-pino";
 import { setTimeout as delay } from "node:timers/promises";
-import { pino } from "pino";
 import request from "supertest";
-
-const testEnv = {
-  NODE_ENV: "test",
-  SOWA_ENV: "development",
-  SOWA_PUBLIC_PORT: "18080",
-  SOWA_OPERATOR_PORT: "18081",
-  SOWA_INTERNAL_PORT: "18082",
-  SOWA_MANAGEMENT_PORT: "19090",
-  DATABASE_URL: "postgres://test:test@127.0.0.1:5432/test",
-  REDIS_URL: "redis://127.0.0.1:6380",
-  SOWA_S3_ENDPOINT: "http://127.0.0.1:9333",
-  SOWA_S3_ACCESS_KEY: "test-access",
-  SOWA_S3_SECRET_KEY: "test-secret",
-  SOWA_S3_BUCKET: "test-bucket",
-};
+import { createProbeApp, stubTestEnv } from "../../../test/support/unit-probe.js";
 
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const probeStartedMessage = "probe started";
@@ -60,33 +43,12 @@ class ProbeController {
   }
 }
 
-function stubTestEnv(): void {
-  for (const [name, value] of Object.entries(testEnv)) {
-    vi.stubEnv(name, value);
-  }
-}
-
-function redirectLogsTo(entries: LogEntry[]): void {
-  const captureStream = {
-    write: (line: string) => {
-      entries.push(JSON.parse(line) as LogEntry);
-    },
-  };
-  Reflect.set(PinoLogger.root, pino.symbols.streamSym, captureStream);
-}
-
-async function createProbeApp(entries: LogEntry[]): Promise<INestApplication> {
-  const { ApiModule } = await import("../../api.module.js");
-  const moduleRef = await Test.createTestingModule({
-    imports: [ApiModule],
+function createRequestIdProbeApp(entries: LogEntry[]): Promise<INestApplication> {
+  return createProbeApp({
     controllers: [ProbeController],
     providers: [ProbeService],
-  }).compile();
-  redirectLogsTo(entries);
-  const app = moduleRef.createNestApplication({ bufferLogs: true });
-  app.useLogger(app.get(Logger));
-  await app.init();
-  return app;
+    onLogLine: (line) => entries.push(JSON.parse(line) as LogEntry),
+  });
 }
 
 function isServiceEntryOf(entry: LogEntry, tag: string): boolean {
@@ -138,8 +100,7 @@ describe("сквозной requestId внутри запроса", () => {
 
   beforeAll(async () => {
     stubTestEnv();
-    vi.resetModules();
-    app = await createProbeApp(entries);
+    app = await createRequestIdProbeApp(entries);
   });
 
   afterAll(async () => {

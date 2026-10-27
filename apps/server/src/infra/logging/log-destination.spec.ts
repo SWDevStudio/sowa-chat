@@ -1,23 +1,7 @@
 import type { INestApplication } from "@nestjs/common";
-import { Test } from "@nestjs/testing";
-import { Logger, PinoLogger } from "nestjs-pino";
+import { PinoLogger } from "nestjs-pino";
 import { pino } from "pino";
-
-const testEnv = {
-  NODE_ENV: "test",
-  SOWA_ENV: "development",
-  SOWA_PUBLIC_PORT: "18080",
-  SOWA_OPERATOR_PORT: "18081",
-  SOWA_INTERNAL_PORT: "18082",
-  SOWA_MANAGEMENT_PORT: "19090",
-  DATABASE_URL: "postgres://test:test@127.0.0.1:5432/test",
-  REDIS_URL: "redis://127.0.0.1:6380",
-  SOWA_S3_ENDPOINT: "http://127.0.0.1:9333",
-  SOWA_S3_ACCESS_KEY: "test-access",
-  SOWA_S3_SECRET_KEY: "test-secret",
-  SOWA_S3_BUCKET: "test-bucket",
-  SOWA_LOG_FORMAT: "json",
-};
+import { createProbeApp, stubTestEnv } from "../../../test/support/unit-probe.js";
 
 const stdoutDescriptor = 1;
 
@@ -27,22 +11,6 @@ interface LogDestination {
   maxLength?: unknown;
   write: (line: string) => boolean;
   once: (event: "drop", listener: (data: string) => void) => void;
-}
-
-function stubTestEnv(): void {
-  for (const [name, value] of Object.entries(testEnv)) {
-    vi.stubEnv(name, value);
-  }
-}
-
-async function createApp(): Promise<INestApplication> {
-  vi.resetModules();
-  const { ApiModule } = await import("../../api.module.js");
-  const moduleRef = await Test.createTestingModule({ imports: [ApiModule] }).compile();
-  const app = moduleRef.createNestApplication({ bufferLogs: true });
-  app.useLogger(app.get(Logger));
-  await app.init();
-  return app;
 }
 
 function currentDestination(): LogDestination {
@@ -62,8 +30,8 @@ describe("буфер записи логов в stdout", () => {
   let destination: LogDestination;
 
   beforeAll(async () => {
-    stubTestEnv();
-    app = await createApp();
+    stubTestEnv({ SOWA_LOG_FORMAT: "json" });
+    app = await createProbeApp();
     destination = currentDestination();
   });
 

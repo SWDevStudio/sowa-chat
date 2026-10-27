@@ -1,12 +1,10 @@
-import { spawn, spawnSync } from "node:child_process";
-import type { ChildProcessWithoutNullStreams } from "node:child_process";
-import { createServer } from "node:net";
-import type { AddressInfo } from "node:net";
-import { join, resolve } from "node:path";
+import { spawnSync } from "node:child_process";
+import { resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
+import { findFreePort, parseLogLine, spawnServer } from "./support/e2e-server.js";
+import type { RunningServer } from "./support/e2e-server.js";
 
 const repositoryRoot = resolve(import.meta.dirname, "../../..");
-const serverDirectory = join(repositoryRoot, "apps", "server");
 const commandTimeout = 600_000;
 const startupTimeout = 30_000;
 const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -16,78 +14,16 @@ interface LogEntry {
   req?: { url?: unknown };
 }
 
-interface RunningServer {
-  process: ChildProcessWithoutNullStreams;
-  output: () => string;
-  isStopped: () => boolean;
-  stop: () => Promise<void>;
-}
-
 interface ProbeResult {
   status: number;
   requestIdHeader: string | null;
   logEntries: LogEntry[];
 }
 
-function findFreePort(): Promise<number> {
-  return new Promise((resolvePort, reject) => {
-    const probe = createServer();
-    probe.once("error", reject);
-    probe.listen(0, "127.0.0.1", () => {
-      const { port } = probe.address() as AddressInfo;
-      probe.close(() => resolvePort(port));
-    });
-  });
-}
-
-function spawnServer(env: Record<string, string | undefined>): RunningServer {
-  const server = spawn(process.execPath, ["dist/main.js", "api"], {
-    cwd: serverDirectory,
-    env,
-  });
-  let output = "";
-  let stopped = false;
-  const collectOutput = (chunk: Buffer) => {
-    output += chunk.toString();
-  };
-  server.stdout.on("data", collectOutput);
-  server.stderr.on("data", collectOutput);
-  const closed = new Promise<void>((resolveClose) => {
-    server.on("close", () => {
-      stopped = true;
-      resolveClose();
-    });
-  });
-
-  return {
-    process: server,
-    output: () => output,
-    isStopped: () => stopped,
-    stop: async () => {
-      if (!stopped) {
-        server.kill();
-      }
-      await closed;
-    },
-  };
-}
-
-function parseLogLine(line: string): LogEntry | undefined {
-  try {
-    const parsed: unknown = JSON.parse(line);
-    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
-      return parsed as LogEntry;
-    }
-    return undefined;
-  } catch {
-    return undefined;
-  }
-}
-
 function logEntries(output: string): LogEntry[] {
   return output
     .split(/\r?\n/)
-    .map(parseLogLine)
+    .map(parseLogLine<LogEntry>)
     .filter((entry) => entry !== undefined);
 }
 
@@ -161,7 +97,7 @@ describe("сквозной requestId в HTTP-запросах api", { timeout: c
     expect(build.status, `${build.stdout}${build.stderr}`).toBe(0);
 
     const publicPort = await findFreePort();
-    server = spawnServer({
+    server = spawnServer("api", {
       ...process.env,
       SOWA_PUBLIC_PORT: String(publicPort),
       SOWA_OPERATOR_PORT: String(await findFreePort()),

@@ -1,19 +1,15 @@
-import { spawn, spawnSync } from "node:child_process";
-import type { ChildProcessWithoutNullStreams } from "node:child_process";
-import { createServer } from "node:net";
-import type { AddressInfo } from "node:net";
-import { join, resolve } from "node:path";
+import { spawnSync } from "node:child_process";
+import { resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
+import { findFreePort, parseLogLine, spawnServer } from "./support/e2e-server.js";
+import type { Env, RunningServer } from "./support/e2e-server.js";
 
 const repositoryRoot = resolve(import.meta.dirname, "../../..");
-const serverDirectory = join(repositoryRoot, "apps", "server");
 const commandTimeout = 600_000;
 const startupTimeout = 30_000;
 const serviceName = "sowa-chat-server";
 const nestStartMessage = "Starting Nest application";
 const requestedPath = "/no-such-path";
-
-type Env = Record<string, string | undefined>;
 
 interface LogEntry {
   "service.name"?: unknown;
@@ -23,27 +19,9 @@ interface LogEntry {
   res?: { statusCode?: unknown };
 }
 
-interface RunningServer {
-  process: ChildProcessWithoutNullStreams;
-  output: () => string;
-  isStopped: () => boolean;
-  stop: () => Promise<void>;
-}
-
 interface RunResult {
   exitCode: number | null;
   output: string;
-}
-
-function findFreePort(): Promise<number> {
-  return new Promise((resolvePort, reject) => {
-    const probe = createServer();
-    probe.once("error", reject);
-    probe.listen(0, "127.0.0.1", () => {
-      const { port } = probe.address() as AddressInfo;
-      probe.close(() => resolvePort(port));
-    });
-  });
 }
 
 async function serverEnvironment(): Promise<Env> {
@@ -53,38 +31,6 @@ async function serverEnvironment(): Promise<Env> {
     SOWA_OPERATOR_PORT: String(await findFreePort()),
     SOWA_INTERNAL_PORT: String(await findFreePort()),
     SOWA_MANAGEMENT_PORT: String(await findFreePort()),
-  };
-}
-
-function spawnServer(mode: string, env: Env): RunningServer {
-  const server = spawn(process.execPath, ["dist/main.js", mode], {
-    cwd: serverDirectory,
-    env,
-  });
-  let output = "";
-  let stopped = false;
-  const collectOutput = (chunk: Buffer) => {
-    output += chunk.toString();
-  };
-  server.stdout.on("data", collectOutput);
-  server.stderr.on("data", collectOutput);
-  const closed = new Promise<void>((resolveClose) => {
-    server.on("close", () => {
-      stopped = true;
-      resolveClose();
-    });
-  });
-
-  return {
-    process: server,
-    output: () => output,
-    isStopped: () => stopped,
-    stop: async () => {
-      if (!stopped) {
-        server.kill();
-      }
-      await closed;
-    },
   };
 }
 
@@ -103,21 +49,9 @@ function outputLines(output: string): string[] {
   return output.split(/\r?\n/).filter((line) => line.trim() !== "");
 }
 
-function parseLogLine(line: string): LogEntry | undefined {
-  try {
-    const parsed: unknown = JSON.parse(line);
-    if (typeof parsed === "object" && parsed !== null && !Array.isArray(parsed)) {
-      return parsed as LogEntry;
-    }
-    return undefined;
-  } catch {
-    return undefined;
-  }
-}
-
 function logEntries(output: string): LogEntry[] {
   return outputLines(output)
-    .map(parseLogLine)
+    .map(parseLogLine<LogEntry>)
     .filter((entry) => entry !== undefined);
 }
 
@@ -133,7 +67,7 @@ function expectOnlyJsonLines(output: string, mode: string) {
   const lines = outputLines(output);
   expect(lines.length, output).toBeGreaterThan(0);
   for (const line of lines) {
-    const entry = parseLogLine(line);
+    const entry = parseLogLine<LogEntry>(line);
     expect(entry, line).toBeDefined();
     expect(entry?.["service.name"], line).toBe(serviceName);
     expect(entry?.mode, line).toBe(mode);

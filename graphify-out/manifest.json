@@ -412,5 +412,11 @@
     "seen": 1793097900.7912264,
     "ast_hash": "7d7c3e36a7985ddbf30ef559fe98b289",
     "semantic_hash": ""
+  },
+  "apps/server/test/log-redaction.e2e-spec.ts": {
+    "mtime": 1793098032.9176934,
+    "seen": 1793098054.6683986,
+    "ast_hash": "5d84835d5cfdb9884942700660fdd1a3",
+    "semantic_hash": ""
   }
 }

@@ -1,17 +1,17 @@
 # Graph Report - hector-chat  (2026-10-27)
 
 ## Corpus Check
-- 69 files · ~10,398 words
+- 70 files · ~10,992 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 9 file(s) not represented in the graph (top: (none) 8, .example 1)
 
 ## Summary
-- 661 nodes · 924 edges · 63 communities (33 shown, 30 thin omitted)
-- Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 13 edges (avg confidence: 0.85)
+- 674 nodes · 944 edges · 62 communities (32 shown, 30 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 16 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `38338543`
+- Built from commit: `66a458ec`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -19,7 +19,6 @@
 - cache-manager@^7.2.9
 - bot-sdk/tsconfig.json
 - package.json
-- server-protocol.e2e-spec.ts
 - devDependencies
 - server-modes.e2e-spec.ts
 - dependencies
@@ -100,7 +99,7 @@
 ## Import Cycles
 - None detected.
 
-## Communities (63 total, 30 thin omitted)
+## Communities (62 total, 30 thin omitted)
 
 ### Community 1 - "bot-sdk/tsconfig.json"
 Cohesion: 0.29
@@ -109,10 +108,6 @@ Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.js
 ### Community 2 - "package.json"
 Cohesion: 0.07
 Nodes (35): devDependencies, @changesets/cli@^3.0.3, ctx7@0.8.2, husky@9.1.7, lint-staged@17.6.0, oxlint@catalog:, oxlint-tsgolint@catalog:, prettier@3.9.6 (+27 more)
-
-### Community 3 - "server-protocol.e2e-spec.ts"
-Cohesion: 0.24
-Nodes (7): CommandResult, findFreePort(), repositoryRoot, respondsToHttp(), serverDirectory, startBuiltServer(), waitForHttp()
 
 ### Community 4 - "devDependencies"
 Cohesion: 0.06
@@ -183,7 +178,7 @@ Cohesion: 0.15
 Nodes (13): scripts, build, check-types, start:api, start:api:dev, start:prod, start:worker, start:worker:dev (+5 more)
 
 ### Community 26 - "packages-build.e2e-spec.ts"
-Cohesion: 0.22
+Cohesion: 0.25
 Nodes (7): builtFiles, CommandResult, entriesByPackage, plannedBuildTasks(), PlannedTask, repositoryRoot, runInRoot()
 
 ### Community 27 - "ref_node_fs"
@@ -191,7 +186,7 @@ Cohesion: 0.28
 Nodes (4): filesReadingProcessEnv(), sourceDirectory, sourceFiles(), testEnv
 
 ### Community 28 - "workspace-check-types.e2e-spec.ts"
-Cohesion: 0.28
+Cohesion: 0.24
 Nodes (8): CommandResult, librariesWithOwnChecks, plannedCheckTypesTasks(), PlannedTask, probePath(), repositoryRoot, runInRoot(), writeProbe()
 
 ### Community 30 - "request-id.spec.ts"
@@ -199,8 +194,8 @@ Cohesion: 0.09
 Nodes (16): @nestjs/testing@^12.0.1, supertest@^7.0.0, createProbeApp(), entriesOf(), expectRequestIdInAllEntries(), isRequestEntryOf(), isServiceEntryOf(), LogEntry (+8 more)
 
 ### Community 33 - "request-id.e2e-spec.ts"
-Cohesion: 0.17
-Nodes (12): entriesForPath(), isResponding(), logEntries(), LogEntry, parseLogLine(), ProbeResult, repositoryRoot, RunningServer (+4 more)
+Cohesion: 0.07
+Nodes (29): isRequestEntry(), isResponding(), logEntries(), LogEntry, parseLogLine(), repositoryRoot, RunningServer, serverDirectory (+21 more)
 
 ### Community 35 - "main.ts"
 Cohesion: 0.09
@@ -236,20 +231,20 @@ Nodes (29): ErrorCode, errorCodes, errorDetailSchema, ErrorResponse, errorRespon
 
 ## Knowledge Gaps
 - **5 isolated node(s):** `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`
-  These have ≤1 connection - possible missing edges. (Counts symbols only; 302 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+  These have ≤1 connection - possible missing edges. (Counts symbols only; 308 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **30 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `@nestjs/config` connect `config.module.ts` to `main.ts`, `server/package.json`, `dependencies`?**
-  _High betweenness centrality (0.051) - this node is a cross-community bridge._
+  _High betweenness centrality (0.049) - this node is a cross-community bridge._
 - **What connects `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json` to the rest of the system?**
   _5 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06984126984126984 - nodes in this community are weakly interconnected._
 - **Why does `@nestjs/common` connect `main.ts` to `config.module.ts`, `server/package.json`, `dependencies`, `request-id.spec.ts`?**
-  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+  _High betweenness centrality (0.045) - this node is a cross-community bridge._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
 - **Why does `dependencies` connect `dependencies` to `cache-manager@^7.2.9`, `ioredis@^6.0.0`, `@nest-lab/throttler-storage-redis@^1.2.0`, `server/package.json`, `file-type@^22.1.1`, `bullmq@^6.3.15`, `helmet@^8.3.0`, `nestjs-cls`, `@nestjs/platform-socket.io@^12.1.3`, `@nestjs/typeorm@^12.0.2`, `@nestjs/event-emitter@^12.0.1`, `main.ts`, `@nestjs/microservices@^12.1.3`, `@nestjs/cache-manager@^12.0.1`, `nest-commander@^3.21.0`, `pino`, `reflect-metadata@^0.2.2`, `@nestjs/terminus@^12.1.0`, `rxjs@^7.8.1`, `socket.io@^4.8.4`, `@nestjs/throttler@^6.7.1`, `@socket.io/redis-adapter@^8.3.0`, `prom-client@^15.1.3`, `@sowa-chat/protocol@workspace:*`, `zod@catalog:`?**

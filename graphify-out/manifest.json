@@ -384,9 +384,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/logging/logger.module.ts": {
-    "mtime": 1793095256.8376956,
-    "seen": 1793095281.381745,
-    "ast_hash": "05358feafe4eda0452e639c47b93cccb",
+    "mtime": 1793098684.707895,
+    "seen": 1793098726.7685988,
+    "ast_hash": "e81e13903d687d0aa6a6c1f90eda13c4",
     "semantic_hash": ""
   },
   "apps/server/test/request-id.e2e-spec.ts": {
@@ -417,6 +417,18 @@
     "mtime": 1793098032.9176934,
     "seen": 1793098054.6683986,
     "ast_hash": "5d84835d5cfdb9884942700660fdd1a3",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/logging/log-redaction.spec.ts": {
+    "mtime": 1793098070.9396236,
+    "seen": 1793098114.826916,
+    "ast_hash": "fba532bc2bbfe92f0179d55c43e1b09e",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/logging/redact-paths.ts": {
+    "mtime": 1793098683.1845531,
+    "seen": 1793098726.7685988,
+    "ast_hash": "1d767d2ce6cd7f259275ca26f561abf8",
     "semantic_hash": ""
   }
 }

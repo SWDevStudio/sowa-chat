@@ -1,6 +1,7 @@
 import type { Type } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
+import { Logger } from "nestjs-pino";
 import { ApiModule } from "./api.module.js";
 import { CliModule } from "./cli.module.js";
 import { portsConfig } from "./infra/config/ports.config.js";
@@ -9,18 +10,25 @@ import { parseServerMode, serverModes } from "./server-mode.js";
 import type { ServerMode } from "./server-mode.js";
 import { WorkerModule } from "./worker.module.js";
 
+async function createContext(rootModule: Type) {
+  const app = await NestFactory.createApplicationContext(rootModule, { bufferLogs: true });
+  app.useLogger(app.get(Logger));
+  return app;
+}
+
 async function runApi() {
-  const app = await NestFactory.create(ApiModule);
+  const app = await NestFactory.create(ApiModule, { bufferLogs: true });
+  app.useLogger(app.get(Logger));
   const ports = app.get<ConfigType<typeof portsConfig>>(portsConfig.KEY);
   await app.listen(ports.public);
 }
 
 async function runWorker() {
-  await NestFactory.createApplicationContext(WorkerModule);
+  await createContext(WorkerModule);
 }
 
 async function runToCompletion(rootModule: Type) {
-  const app = await NestFactory.createApplicationContext(rootModule);
+  const app = await createContext(rootModule);
   await app.close();
 }
 

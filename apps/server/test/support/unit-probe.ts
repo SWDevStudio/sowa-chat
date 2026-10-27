@@ -37,6 +37,7 @@ export function redirectLogsTo(onLogLine: (line: string) => void): void {
 export async function createProbeApp(options: ProbeAppOptions = {}): Promise<INestApplication> {
   vi.resetModules();
   const { ApiModule } = await import("../../src/api.module.js");
+  const { useClsMiddleware } = await import("../../src/infra/cls/cls-middleware.js");
   const moduleRef = await Test.createTestingModule({
     imports: [ApiModule],
     controllers: options.controllers,
@@ -46,6 +47,7 @@ export async function createProbeApp(options: ProbeAppOptions = {}): Promise<INe
     redirectLogsTo(options.onLogLine);
   }
   const app = moduleRef.createNestApplication({ bufferLogs: true });
+  useClsMiddleware(app);
   app.useLogger(app.get(Logger));
   await app.init();
   return app;

@@ -1,24 +1,30 @@
-import type { Type } from "@nestjs/common";
+import type { INestApplicationContext, Type } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { Logger } from "nestjs-pino";
 import { ApiModule } from "./api.module.js";
 import { CliModule } from "./cli.module.js";
+import { useClsMiddleware } from "./infra/cls/cls-middleware.js";
 import { portsConfig } from "./infra/config/ports.config.js";
 import { MigrateModule } from "./migrate.module.js";
 import { parseServerMode, serverModes } from "./server-mode.js";
 import type { ServerMode } from "./server-mode.js";
 import { WorkerModule } from "./worker.module.js";
 
+function useAppLogger(app: INestApplicationContext): void {
+  app.useLogger(app.get(Logger));
+}
+
 async function createContext(rootModule: Type) {
   const app = await NestFactory.createApplicationContext(rootModule, { bufferLogs: true });
-  app.useLogger(app.get(Logger));
+  useAppLogger(app);
   return app;
 }
 
 async function runApi() {
   const app = await NestFactory.create(ApiModule, { bufferLogs: true });
-  app.useLogger(app.get(Logger));
+  useClsMiddleware(app);
+  useAppLogger(app);
   const ports = app.get<ConfigType<typeof portsConfig>>(portsConfig.KEY);
   await app.listen(ports.public);
 }

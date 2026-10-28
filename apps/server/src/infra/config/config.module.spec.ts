@@ -62,7 +62,11 @@ describe("AppConfigModule", () => {
   it("отдаёт группу database", () => {
     const database = moduleRef.get<ConfigType<typeof databaseConfig>>(databaseConfig.KEY);
 
-    expect(database).toEqual({ url: testEnv.DATABASE_URL });
+    expect(database).toEqual({
+      url: testEnv.DATABASE_URL,
+      poolSize: 10,
+      migrationUrl: testEnv.DATABASE_URL,
+    });
   });
 
   it("отдаёт группу redis", () => {
@@ -91,5 +95,54 @@ describe("AppConfigModule", () => {
       .toHaveProperty("management")
       .toEqualTypeOf<number>();
     expectTypeOf<ConfigType<typeof databaseConfig>>().toHaveProperty("url").toEqualTypeOf<string>();
+    expectTypeOf<ConfigType<typeof databaseConfig>>()
+      .toHaveProperty("poolSize")
+      .toEqualTypeOf<number>();
+    expectTypeOf<ConfigType<typeof databaseConfig>>()
+      .toHaveProperty("migrationUrl")
+      .toEqualTypeOf<string>();
+  });
+});
+
+describe("AppConfigModule, группа database с переменными базы", () => {
+  const migrationUrl = "postgres://migrator:secret@127.0.0.1:5432/test";
+  let moduleRef: TestingModule;
+
+  async function compileWith(
+    extraEnv: Record<string, string>,
+  ): Promise<ConfigType<typeof databaseConfig>> {
+    stubTestEnv();
+    for (const [name, value] of Object.entries(extraEnv)) {
+      vi.stubEnv(name, value);
+    }
+    moduleRef = await compileConfigModule();
+    return moduleRef.get<ConfigType<typeof databaseConfig>>(databaseConfig.KEY);
+  }
+
+  afterEach(async () => {
+    await moduleRef.close();
+    vi.unstubAllEnvs();
+  });
+
+  it("отдаёт poolSize из SOWA_DB_POOL_SIZE", async () => {
+    const database = await compileWith({ SOWA_DB_POOL_SIZE: "25" });
+
+    expect(database.poolSize).toBe(25);
+  });
+
+  it("отдаёт migrationUrl из SOWA_MIGRATION_DATABASE_URL", async () => {
+    const database = await compileWith({ SOWA_MIGRATION_DATABASE_URL: migrationUrl });
+
+    expect(database).toEqual({
+      url: testEnv.DATABASE_URL,
+      poolSize: 10,
+      migrationUrl,
+    });
+  });
+
+  it("при пустом SOWA_MIGRATION_DATABASE_URL отдаёт migrationUrl равный DATABASE_URL", async () => {
+    const database = await compileWith({ SOWA_MIGRATION_DATABASE_URL: "" });
+
+    expect(database.migrationUrl).toBe(testEnv.DATABASE_URL);
   });
 });

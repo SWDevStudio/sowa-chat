@@ -134,6 +134,64 @@ describe("envSchema", () => {
     });
   });
 
+  describe("SOWA_DB_POOL_SIZE", () => {
+    it("по умолчанию 10", () => {
+      expect(envSchema.parse(requiredEnv).SOWA_DB_POOL_SIZE).toBe(10);
+    });
+
+    it("превращает строку в целое число", () => {
+      const env = { ...requiredEnv, SOWA_DB_POOL_SIZE: "25" };
+
+      expect(envSchema.parse(env).SOWA_DB_POOL_SIZE).toBe(25);
+    });
+
+    it.each(["1", "100"])("принимает граничное значение %s", (value) => {
+      const env = { ...requiredEnv, SOWA_DB_POOL_SIZE: value };
+
+      expect(envSchema.parse(env).SOWA_DB_POOL_SIZE).toBe(Number(value));
+    });
+
+    it.each(["abc", "0", "101", "-1", "10.5", ""])(
+      "отклоняет %j и называет переменную",
+      (value) => {
+        const env = { ...requiredEnv, SOWA_DB_POOL_SIZE: value };
+
+        expect(isAccepted(env)).toBe(false);
+        expect(describeErrors(env)).toContain("SOWA_DB_POOL_SIZE");
+      },
+    );
+  });
+
+  describe("SOWA_MIGRATION_DATABASE_URL", () => {
+    const migrationUrl = "postgres://migrator:secret@127.0.0.1:5432/sowa";
+
+    it("необязательна", () => {
+      const result = envSchema.parse(requiredEnv);
+
+      expect(result.SOWA_MIGRATION_DATABASE_URL).toBeUndefined();
+    });
+
+    it("принимает заданный URL как есть", () => {
+      const env = { ...requiredEnv, SOWA_MIGRATION_DATABASE_URL: migrationUrl };
+
+      expect(envSchema.parse(env).SOWA_MIGRATION_DATABASE_URL).toBe(migrationUrl);
+    });
+
+    it("считает пустую строку незаданной переменной", () => {
+      const env = { ...requiredEnv, SOWA_MIGRATION_DATABASE_URL: "" };
+
+      expect(isAccepted(env)).toBe(true);
+      expect(envSchema.parse(env).SOWA_MIGRATION_DATABASE_URL).toBeUndefined();
+    });
+
+    it.each(["not-a-url", "postgres"])("отклоняет %j и называет переменную", (value) => {
+      const env = { ...requiredEnv, SOWA_MIGRATION_DATABASE_URL: value };
+
+      expect(isAccepted(env)).toBe(false);
+      expect(describeErrors(env)).toContain("SOWA_MIGRATION_DATABASE_URL");
+    });
+  });
+
   describe("значения по умолчанию", () => {
     it("подставляет их, если необязательных переменных нет", () => {
       expect(envSchema.parse(requiredEnv)).toMatchObject({

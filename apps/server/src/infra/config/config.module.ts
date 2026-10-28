@@ -7,12 +7,21 @@ import { parseEnv } from "./parse-env.js";
 import { portsConfig } from "./ports.config.js";
 import { redisConfig } from "./redis.config.js";
 import { s3Config } from "./s3.config.js";
+import { slowOperationsConfig } from "./slow-operations.config.js";
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [appConfig, portsConfig, databaseConfig, redisConfig, s3Config, loggingConfig],
+      load: [
+        appConfig,
+        portsConfig,
+        databaseConfig,
+        redisConfig,
+        s3Config,
+        loggingConfig,
+        slowOperationsConfig,
+      ],
       validate: parseEnv,
     }),
   ],

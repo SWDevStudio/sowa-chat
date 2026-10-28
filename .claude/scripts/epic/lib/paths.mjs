@@ -2,12 +2,14 @@ import fs from "node:fs";
 import path from "node:path";
 import { runOrFail } from "./shell.mjs";
 
+const taskWorktreesMarker = "/.claude/worktrees/";
+
 export function mainRoot() {
-  const commonDir = runOrFail(
-    "git rev-parse --path-format=absolute --git-common-dir",
-    process.cwd(),
-  );
-  return path.dirname(commonDir);
+  const topLevel = runOrFail("git rev-parse --show-toplevel", process.cwd()).replaceAll("\\", "/");
+  const markerIndex = topLevel.indexOf(taskWorktreesMarker);
+  return markerIndex === -1
+    ? path.normalize(topLevel)
+    : path.normalize(topLevel.slice(0, markerIndex));
 }
 
 export function epicBranch(epic) {

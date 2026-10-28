@@ -1234,5 +1234,17 @@
     "seen": 1793211880.6887536,
     "ast_hash": "4a5f1cd46c1f6c2af641349e03fdc04e",
     "semantic_hash": ""
+  },
+  "apps/server/src/domain/visitors/visitor.entity.spec.ts": {
+    "mtime": 1793212188.1640391,
+    "seen": 1793212243.5628316,
+    "ast_hash": "68678046c100174562923a6191aef788",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/visitors/visitor.entity.ts": {
+    "mtime": 1793212188.1675692,
+    "seen": 1793212243.5636525,
+    "ast_hash": "191ee4e906209d0f4d06bc6a6eadc1c1",
+    "semantic_hash": ""
   }
 }

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { encryptionKeysSchema } from "./encryption-keys.schema.js";
 
 const portVariables = [
   "SOWA_PUBLIC_PORT",
@@ -49,6 +50,7 @@ const envObjectSchema = z.object({
   SOWA_S3_ACCESS_KEY: nonEmptyString,
   SOWA_S3_SECRET_KEY: nonEmptyString,
   SOWA_S3_BUCKET: nonEmptyString,
+  SOWA_ENCRYPTION_KEYS: encryptionKeysSchema,
   SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),
   SOWA_LOG_FORMAT: z.enum(logFormats).default("json"),
 });

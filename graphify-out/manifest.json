@@ -24,15 +24,15 @@
     "semantic_hash": ""
   },
   "apps/server/package.json": {
-    "mtime": 1793219320.200014,
-    "seen": 1793220602.2862282,
-    "ast_hash": "9711d2ab9983749c27b4931da250dcba",
+    "mtime": 1793223678.6984637,
+    "seen": 1793223700.84448,
+    "ast_hash": "13353c057f4bd2661186a7bb92a8daad",
     "semantic_hash": ""
   },
   "apps/server/src/main.ts": {
-    "mtime": 1793219320.3532891,
-    "seen": 1793220602.2872214,
-    "ast_hash": "2d278ce9438c0b2653edad07b43e63c4",
+    "mtime": 1793223678.7090242,
+    "seen": 1793223700.84448,
+    "ast_hash": "af9fe0dfb2901fdf34f3c90ba2b91453",
     "semantic_hash": ""
   },
   "apps/server/tsconfig.build.json": {
@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793219320.203554,
-    "seen": 1793220602.2862282,
-    "ast_hash": "785a736b58aa05dd7e25a4b80d9918e4",
+    "mtime": 1793223678.7000072,
+    "seen": 1793223700.84448,
+    "ast_hash": "364cfb5f4a0a96dc9e26999385bce64c",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -378,9 +378,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/logging.e2e-spec.ts": {
-    "mtime": 1793221746.2795053,
-    "seen": 1793221764.3847444,
-    "ast_hash": "e436c6f2cb3d44073691492ca88d7763",
+    "mtime": 1793223678.7151113,
+    "seen": 1793223700.84448,
+    "ast_hash": "739a931ead005268d0c0f3c23f9689e8",
     "semantic_hash": ""
   },
   "apps/server/src/infra/logging/logger.module.ts": {
@@ -1539,6 +1539,48 @@
     "mtime": 1793222545.822582,
     "seen": 1793222563.3891082,
     "ast_hash": "5604663b8bf4ef57a5b5c7c335f1bf8d",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/cli-output.spec.ts": {
+    "mtime": 1793223678.7030814,
+    "seen": 1793223700.84448,
+    "ast_hash": "88dae7b8223ce18c5c0a685900735b79",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/cli-output.ts": {
+    "mtime": 1793223678.704092,
+    "seen": 1793223700.84448,
+    "ast_hash": "2be5a199b70cf0bd8abae4e2b4eff3b9",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/cli-runner.ts": {
+    "mtime": 1793223678.7050974,
+    "seen": 1793223700.84448,
+    "ast_hash": "9c1d705a250ba0db86e476929ebbd9db",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/keys/key-generate.command.ts": {
+    "mtime": 1793223678.706147,
+    "seen": 1793223700.84448,
+    "ast_hash": "e5b3b5108565fdca12760eec5e9f1c1d",
+    "semantic_hash": ""
+  },
+  "apps/server/src/sowa-chat.ts": {
+    "mtime": 1793223678.7105334,
+    "seen": 1793223700.84448,
+    "ast_hash": "6b5b6d69181cc6c992db11fed53e32e2",
+    "semantic_hash": ""
+  },
+  "apps/server/test/cli-mode.e2e-spec.ts": {
+    "mtime": 1793223678.7130911,
+    "seen": 1793223700.84448,
+    "ast_hash": "cd07dda2e5b1e8006904b4e6c8f810d1",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/cli-run.ts": {
+    "mtime": 1793223678.7171028,
+    "seen": 1793223700.84448,
+    "ast_hash": "231353da48db225a890b7cc04ac364be",
     "semantic_hash": ""
   }
 }

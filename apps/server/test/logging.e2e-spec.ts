@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process";
 import { resolve } from "node:path";
 import { setTimeout as delay } from "node:timers/promises";
+import { parseKey } from "../src/domain/keys/key-format.js";
 import { findFreePort, parseLogLine, spawnServer } from "./support/e2e-server.js";
 import type { Env, RunningServer } from "./support/e2e-server.js";
 
@@ -36,9 +37,9 @@ async function serverEnvironment(): Promise<Env> {
   };
 }
 
-function runToExit(mode: string, env: Env): Promise<RunResult> {
+function runToExit(mode: string, env: Env, args: string[] = []): Promise<RunResult> {
   return new Promise((resolveRun) => {
-    const server = spawnServer(mode, env);
+    const server = spawnServer(mode, env, args);
     const timer = setTimeout(() => server.process.kill(), startupTimeout);
     server.process.on("close", (exitCode) => {
       clearTimeout(timer);
@@ -187,25 +188,32 @@ describe("JSON-логи сервера", { timeout: commandTimeout }, () => {
     expect(logEntries(result.stderr).some(isServiceLogEntry), result.output).toBe(false);
   });
 
-  it("cli пишет JSON-логи в stderr", async () => {
-    const result = await runToExit("cli", await serverEnvironment());
+  it("cli key:generate пишет JSON-логи в stderr", async () => {
+    const result = await runToExit("cli", await serverEnvironment(), ["key:generate"]);
 
+    expect(result.exitCode, result.output).toBe(0);
     expectOnlyJsonLines(result.stderr, "cli");
     expect(logEntries(result.stderr).some(isNestStartEntry), result.output).toBe(true);
   });
 
-  it("cli не пишет логи в stdout", async () => {
-    const result = await runToExit("cli", await serverEnvironment());
+  it("cli key:generate выводит в stdout ровно одну строку с serverKey, без логов", async () => {
+    const result = await runToExit("cli", await serverEnvironment(), ["key:generate"]);
+    const lines = outputLines(result.stdout);
 
+    expect(result.exitCode, result.output).toBe(0);
+    expect(lines, result.stdout).toHaveLength(1);
+    expect(lines[0]?.startsWith("sk_"), result.stdout).toBe(true);
+    expect(parseKey(lines[0] ?? "", "serverKey"), result.stdout).toBeDefined();
     expect(logEntries(result.stdout).some(isServiceLogEntry), result.stdout).toBe(false);
     expect(result.stdout).not.toContain(nestStartMessage);
   });
 
   it("cli с форматом pretty пишет логи в stderr, а не в stdout", async () => {
-    const result = await runToExit("cli", {
-      ...(await serverEnvironment()),
-      SOWA_LOG_FORMAT: "pretty",
-    });
+    const result = await runToExit(
+      "cli",
+      { ...(await serverEnvironment()), SOWA_LOG_FORMAT: "pretty" },
+      ["key:generate"],
+    );
 
     expect(result.stderr).toContain(nestStartMessage);
     expect(result.stdout).not.toContain(nestStartMessage);

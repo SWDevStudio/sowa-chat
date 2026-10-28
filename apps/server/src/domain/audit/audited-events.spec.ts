@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import type { ApiKeyEvent } from "../../telemetry/events/domain-events.js";
+import type { ApiKeyEvent, ProjectCreatedEvent } from "../../telemetry/events/domain-events.js";
 import { auditedEventNames } from "./audit-rule.js";
 import { auditedEvents } from "./audited-events.js";
 
@@ -69,4 +69,67 @@ describe("auditedEvents apiKey rules", () => {
       expect(JSON.stringify(record)).not.toContain("sk-leak");
     },
   );
+});
+
+const projectCreatedEvent: ProjectCreatedEvent = {
+  projectId: "project-1",
+  name: "main",
+  actorKind: "cli",
+};
+
+describe("auditedEvents project.created rule", () => {
+  it("lists project.created", () => {
+    expect(auditedEventNames(auditedEvents)).toContain("project.created");
+  });
+
+  it("maps cli event to record with project target and name in data", () => {
+    const rule = auditedEvents["project.created"];
+
+    expect(rule).toBeDefined();
+    expect(rule?.(projectCreatedEvent)).toEqual({
+      projectId: "project-1",
+      actorKind: "cli",
+      actorId: null,
+      targetKind: "project",
+      targetId: "project-1",
+      data: { name: "main" },
+    });
+  });
+
+  it("keeps system actorKind", () => {
+    const record = auditedEvents["project.created"]?.({
+      projectId: "project-2",
+      name: "shop",
+      actorKind: "system",
+    });
+
+    expect(record).toEqual({
+      projectId: "project-2",
+      actorKind: "system",
+      actorId: null,
+      targetKind: "project",
+      targetId: "project-2",
+      data: { name: "shop" },
+    });
+  });
+
+  it("data has only name", () => {
+    const record = auditedEvents["project.created"]?.({
+      ...projectCreatedEvent,
+      serverKey: "sk-leak",
+      publicKey: "pk-leak",
+    } as ProjectCreatedEvent);
+
+    expect(Object.keys(record?.data ?? {})).toEqual(["name"]);
+    expect(JSON.stringify(record)).not.toContain("sk-leak");
+    expect(JSON.stringify(record)).not.toContain("pk-leak");
+  });
+
+  it("keeps apiKey rules", () => {
+    const names = auditedEventNames(auditedEvents);
+
+    expect(names).toEqual(
+      expect.arrayContaining(["apiKey.issued", "apiKey.revoked", "project.created"]),
+    );
+  });
 });

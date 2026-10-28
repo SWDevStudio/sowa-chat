@@ -7,9 +7,16 @@ export interface ApiKeyEvent {
   actorKind: "cli" | "system";
 }
 
+export interface ProjectCreatedEvent {
+  projectId: string;
+  name: string;
+  actorKind: "cli" | "system";
+}
+
 export interface DomainEvents {
   "apiKey.issued": ApiKeyEvent;
   "apiKey.revoked": ApiKeyEvent;
+  "project.created": ProjectCreatedEvent;
 }
 
 export type DomainEventName = keyof DomainEvents & string;

@@ -45,7 +45,7 @@
 | [EPIC-5](EPIC-5/README.md) | База данных и миграции | на ревью |
 | [EPIC-6](EPIC-6/README.md) | Redis и служебная зона | на ревью |
 | [EPIC-7](EPIC-7/README.md) | Обработка HTTP-запросов | на ревью |
-| [EPIC-8](EPIC-8/README.md) | Шина событий и журнал аудита | не начат |
+| [EPIC-8](EPIC-8/README.md) | Шина событий и журнал аудита | на ревью |
 | [EPIC-9](EPIC-9/README.md) | Ключи и шифрование секретов | не начат |
 | [EPIC-10](EPIC-10/README.md) | CLI | не начат |
 | [EPIC-11](EPIC-11/README.md) | Режимы development и production | не начат |

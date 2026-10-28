@@ -76,7 +76,7 @@
 - E2e: модуль `Test.createTestingModule({ imports: [AppConfigModule, RedisModule] })` после `init()` отдаёт клиент, `ping()` возвращает `PONG`, а `CLIENT LIST` с клиента теста содержит `name=sowa-chat-server`. После `app.close()` у клиента `status` = `end`, и `CLIENT LIST` больше не содержит `name=sowa-chat-server`.
 - E2e: `api`, запущенный из `dist/main.js` с Valkey контейнера, отвечает 404 на `/no-such-path` публичного порта, и `CLIENT LIST` содержит `name=sowa-chat-server`.
 - E2e: `api` и `worker` с `REDIS_URL` = `redis://:unreachable-redis-password-5c1d@127.0.0.1:<свободный порт>` завершаются с кодом 1 быстрее 20 секунд; в выводе есть `ECONNREFUSED` и нет `unreachable-redis-password-5c1d`.
-- Unit: `waitForRedis` для клиента на свободный порт отклоняется не позже чем через `timeoutMs` + 1 с с ошибкой `Redis is unavailable: connect ECONNREFUSED ...`, после чего `status` клиента — `end`. Весь `pnpm --filter @sowa-chat/server test` проходит без запущенного Redis.
+- Unit: `waitForRedis` для клиента на свободный порт отклоняется не позже чем через `timeoutMs` + 1 с с ошибкой `Redis is unavailable: connect ECONNREFUSED ...`; `vi.spyOn(client, "disconnect")` вызван один раз, `status` клиента не `ready`. Статус `end` не проверять: в ioredis 6 `disconnect()` в статусе `reconnecting` снимает таймер переподключения, но статус остаётся `reconnecting` (стрим уже закрыт, `closeHandler` не вызывается). Клиент при этом остановлен и больше не подключается. Весь `pnpm --filter @sowa-chat/server test` проходит без запущенного Redis.
 
 ## Чего не делать
 
@@ -87,4 +87,4 @@
 
 ## История доработок
 
-—
+- 28.10.2026: unit-критерий про `end` после `waitForRedis` заменён проверкой вызова `disconnect()` (ответ на вопрос исполнителя, см. `decisions.md`).

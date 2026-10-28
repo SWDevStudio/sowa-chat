@@ -48,3 +48,8 @@
 - Вопрос: Express для строкового ответа отдаёт `text/plain; charset=utf-8; version=0.0.4`, тест ждал начало `text/plain; version=0.0.4`.
 - Решение: оставить `@Header("Content-Type", Registry.PROMETHEUS_CONTENT_TYPE)` и возврат строки, поправить тест. `Registry.PROMETHEUS_CONTENT_TYPE` в prom-client — `text/plain; version=0.0.4; charset=utf-8`, Express только переставляет параметры по алфавиту. Prometheus разбирает MIME-тип с параметрами, порядок параметров для него не важен. `@Res()` с ручным `setHeader` и `end` хуже читается и отключает обычную обработку ответа Nest.
 - Тест проверяет `Content-Type` по `^text/plain;` и наличию `version=0.0.4`.
+
+## 28.10.2026, TASK-3. Вопрос о статусе `end` после `waitForRedis`
+
+- Вопрос: тест ждал `status` = `end` после отклонения `waitForRedis`, но клиент остаётся в `reconnecting`. В ioredis 6 `disconnect()` в статусе `reconnecting` снимает таймер переподключения и закрывает уже закрытый стрим, `closeHandler` не вызывается.
+- Решение: код `waitForRedis` не менять, поправить тест: `disconnect` вызван один раз (`vi.spyOn`), `status` не `ready`. Клиент остановлен: таймера нет, стрим закрыт. Вызов `connect()` ради статуса `end` опирается на внутренности ioredis. `retryStrategy`, который не переподключается до первого `ready`, ронял бы старт на первой же ошибке вместо ожидания 5 секунд, и задача его запрещает.

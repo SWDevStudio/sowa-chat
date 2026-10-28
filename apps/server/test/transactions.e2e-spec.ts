@@ -33,12 +33,16 @@ class TransactionScenarios {
   ) {}
 
   @Transactional()
-  async createTwo(firstName: string, secondName: string, shouldFail: boolean): Promise<void> {
+  async createTwo(firstName: string, secondName: string): Promise<void> {
     await this.projects.create({ name: firstName });
     await this.secondProjects.create(secondName);
-    if (shouldFail) {
-      throw new ScenarioError("rollback");
-    }
+  }
+
+  @Transactional()
+  async createTwoThenFail(firstName: string, secondName: string): Promise<void> {
+    await this.projects.create({ name: firstName });
+    await this.secondProjects.create(secondName);
+    throw new ScenarioError("rollback");
   }
 
   async createOneWithoutTransaction(name: string): Promise<void> {
@@ -102,7 +106,7 @@ describe("транзакции @Transactional()", () => {
     const firstName = uniqueName();
     const secondName = uniqueName();
 
-    await expect(scenarios.createTwo(firstName, secondName, true)).rejects.toBeInstanceOf(
+    await expect(scenarios.createTwoThenFail(firstName, secondName)).rejects.toBeInstanceOf(
       ScenarioError,
     );
 
@@ -114,7 +118,7 @@ describe("транзакции @Transactional()", () => {
     const firstName = uniqueName();
     const secondName = uniqueName();
 
-    await scenarios.createTwo(firstName, secondName, false);
+    await scenarios.createTwo(firstName, secondName);
 
     expect(await exists(firstName)).toBe(true);
     expect(await exists(secondName)).toBe(true);

@@ -12,8 +12,7 @@ export class ProjectsRepository {
 
   async create(input: { name: string }): Promise<Project> {
     const repository = this.txHost.tx.getRepository(Project);
-    const saved = await repository.save(repository.create(input));
-    return repository.findOneByOrFail({ id: saved.id });
+    return repository.save(repository.create(input));
   }
 
   async findByName(name: string): Promise<Project | null> {

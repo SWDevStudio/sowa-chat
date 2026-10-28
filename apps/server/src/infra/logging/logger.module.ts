@@ -7,21 +7,16 @@ import type { DestinationStream } from "pino";
 import type { ServerMode } from "../../server-mode.js";
 import type { LogLevel } from "../config/env.schema.js";
 import { loggingConfig } from "../config/logging.config.js";
-import { resolveRequestId } from "../request-id/request-id.js";
 import { createStdoutDestination } from "./log-destination.js";
 import { redactPaths } from "./redact-paths.js";
 
 const serviceName = "sowa-chat-server";
 
-function currentRequestId(cls: ClsService): string | undefined {
-  return cls.getId();
-}
-
 function baseOptions(mode: ServerMode, level: LogLevel, cls: ClsService): Options {
   return {
     level,
     base: { "service.name": serviceName, mode },
-    genReqId: (request) => currentRequestId(cls) ?? resolveRequestId(request),
+    genReqId: () => cls.getId(),
     customAttributeKeys: { reqId: "requestId" },
     quietReqLogger: true,
     redact: redactPaths,

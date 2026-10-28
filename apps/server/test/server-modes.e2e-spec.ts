@@ -162,12 +162,11 @@ describe("режимы запуска сервера", { timeout: commandTimeout
     const ports = await findZonePorts();
     const server = spawnServer(["api"], serverEnvironment(zonePortsEnv(ports)));
     try {
-      const status = await waitForHttpStatus(
-        `http://127.0.0.1:${ports.public}/no-such-path`,
-        server,
-      );
+      for (const [zone, port] of Object.entries(ports)) {
+        const status = await waitForHttpStatus(`http://127.0.0.1:${port}/no-such-path`, server);
 
-      expect(status, server.output()).toBe(404);
+        expect(status, `${zone}: ${server.output()}`).toBe(404);
+      }
     } finally {
       await server.stop();
     }

@@ -1,44 +1,59 @@
-# EPIC-7 / TASK-2. Фильтр ошибок с кодами из protocol
+# EPIC-7 / TASK-2. Общая схема параметра limit для списков в protocol
 
-Исполнитель: sonnet
+Исполнитель: haiku
 Зависит от: —
+Владеет: packages/protocol/src/page-query.ts, packages/protocol/src/page-query.spec.ts, packages/protocol/src/index.ts
 Ветка: feature/EPIC-7
 
 ## Что сделать
 
-Глобальный фильтр исключений, который превращает любую ошибку в единое тело ответа из `protocol`: `{ code, message, requestId, details? }`.
+1. `packages/protocol/src/page-query.ts`:
 
-1. HTTP-исключения Nest переводятся в коды по статусу: 400 → `validationFailed`, 401 → `unauthorized`, 403 → `forbidden`, 404 → `notFound`, 409 → `conflict`, 413 → `payloadTooLarge`, 429 → `rateLimited`.
-2. Ошибка проверки zod-схемы (`ZodValidationException`) → 400, `validationFailed`, в `details` — список полей и что с ними не так.
-3. Код может задать сам сервис: нужен способ бросить исключение с конкретным кодом из `protocol`.
-4. Любая другая ошибка → 500, `internalError`. В логах — стек и подробности. В ответе: в `production` — только общий текст, без стека и внутренних деталей; в `development` можно добавить стек.
-5. `requestId` берётся из контекста запроса.
-6. Фильтр подключается через `APP_FILTER`.
+   ```ts
+   import { z } from "zod";
+
+   export const pageQuerySchema = z.object({
+     limit: z.coerce.number<number>().int().min(1).max(100).default(50),
+   });
+
+   export type PageQuery = z.infer<typeof pageQuerySchema>;
+   ```
+
+   `z.coerce` — потому что query приходит строками. `<number>` задаёт входной тип `number`: SDK, которые импортируют тип, передают число.
+
+2. В `packages/protocol/src/index.ts` добавить реэкспорт:
+
+   ```ts
+   export { pageQuerySchema } from "./page-query.js";
+   export type { PageQuery } from "./page-query.js";
+   ```
+
+Эндпоинты со списками в своих эпиках расширяют схему своими курсорами: `pageQuerySchema.extend({ ... })`.
 
 ## Где
 
-- `apps/server/src/infra/http/`.
+- `packages/protocol/src/page-query.ts` — новый файл, `packages/protocol/src/index.ts`.
+- Тест: `packages/protocol/src/page-query.spec.ts`, импорт из `./index.js` (как в `errors.spec.ts`). Запуск: `pnpm --filter @sowa-chat/protocol test`.
 
 ## Требования из плана
 
-- В production ответы об ошибках без стек-трейсов и внутренних деталей.
-- Коды ошибок — часть контракта, они описаны в `protocol`.
+- Все списки отдаются страницами. `limit` — от 1 до 100, по умолчанию 50; значение вне диапазона даёт `400`, его отсекает схема запроса на Zod. Ограничение держит сервер: запрос с огромным `limit` можно отправить в обход SDK.
+- Имена `pageQuerySchema` и `PageQuery` — решение в `decisions.md`.
 
 ## Документация
 
-- https://docs.nestjs.com/exception-filters
-- https://docs.nestjs.com/faq/request-lifecycle
+- https://zod.dev/api?id=coercion
 
 ## Критерии приёмки
 
-- Неверное тело — 400 с `code: validationFailed` и списком полей.
-- Исключение «не найдено» — 404, `notFound`.
-- Необработанная ошибка в `production` — 500 без стека и текста исходной ошибки; в логе есть стек.
-- В каждом ответе с ошибкой есть `requestId`, совпадающий с заголовком `X-Request-Id`.
+- `pageQuerySchema.parse({})` даёт `{ limit: 50 }`; `{ limit: "20" }` даёт `{ limit: 20 }`; `"1"` и `"100"` проходят.
+- `"0"`, `"101"`, `"abc"`, `"1.5"` не проходят (`safeParse(...).success === false`).
+- `PageQuery["limit"]` — `number`; `z.input<typeof pageQuerySchema>["limit"]` — `number | undefined` (`expectTypeOf`).
 
 ## Чего не делать
 
-- Не ловить ошибки WebSocket — у сокетов свой фильтр в эпике WebSocket.
+- Не делать курсоры страниц — у каждого списка они свои.
+- Не писать комментарии в файле.
 
 ## История доработок
 

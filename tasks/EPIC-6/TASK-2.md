@@ -49,7 +49,7 @@
 
 ## Критерии приёмки
 
-- `GET /metrics` на служебном порту отвечает 200, `Content-Type` начинается с `text/plain; version=0.0.4`, в теле есть `process_cpu_user_seconds_total`.
+- `GET /metrics` на служебном порту отвечает 200, `Content-Type` начинается с `text/plain;` и содержит `version=0.0.4`, в теле есть `process_cpu_user_seconds_total`.
 - `GET /metrics` на публичном порту отвечает 404, `GET /v1/metrics` на служебном — 404.
 - `app.get(Registry)` возвращает тот же реестр, что отдаёт `/metrics`: метрика, зарегистрированная в нём в тесте (`new Counter({ name: "probe_total", help: "probe", registers: [registry] })`), появляется в ответе.
 
@@ -61,4 +61,4 @@
 
 ## История доработок
 
-—
+- 28.10.2026, вопрос исполнителя о `Content-Type`. `@Header` и возврат строки остаются, `@Res()` не используется. Express переставляет параметры: `text/plain; charset=utf-8; version=0.0.4`, Prometheus порядок параметров не важен. Тест проверяет `^text/plain;` и наличие `version=0.0.4`.

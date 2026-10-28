@@ -42,3 +42,9 @@
 - `/status`: `reason` — текст `message` из результата Terminus (ошибка драйвера или таймаут). Тексты ошибок соединения `pg` и `ioredis` не содержат пароль и строку подключения. `mode` всегда `"api"`. Версия — из `apps/server/package.json` по пути относительно `import.meta.url`.
 - Поля ответа `/status` (`version`, `mode`, `uptimeSeconds`, `postgres`, `redis`, `status`, `reason`) взяты из прежней редакции задачи, camelCase по правилам CLAUDE.md. Значения `up` и `down` — значения Terminus.
 - Внутренние имена: `HealthModule`, `HealthController`, `StatusController`, `StatusService`, `DependencyChecks`, `ReplicaReadiness`, `readServerVersion`, `ServerStatus`, `DependencyStatus`.
+
+## 28.10.2026, TASK-2. Вопрос о `Content-Type` `/metrics`
+
+- Вопрос: Express для строкового ответа отдаёт `text/plain; charset=utf-8; version=0.0.4`, тест ждал начало `text/plain; version=0.0.4`.
+- Решение: оставить `@Header("Content-Type", Registry.PROMETHEUS_CONTENT_TYPE)` и возврат строки, поправить тест. `Registry.PROMETHEUS_CONTENT_TYPE` в prom-client — `text/plain; version=0.0.4; charset=utf-8`, Express только переставляет параметры по алфавиту. Prometheus разбирает MIME-тип с параметрами, порядок параметров для него не важен. `@Res()` с ручным `setHeader` и `end` хуже читается и отключает обычную обработку ответа Nest.
+- Тест проверяет `Content-Type` по `^text/plain;` и наличию `version=0.0.4`.

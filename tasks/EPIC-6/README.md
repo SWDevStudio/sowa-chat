@@ -10,7 +10,7 @@
 
 | № | Задача | Исполнитель | Тесты | Сложность | Зависит от | Статус |
 |---|---|---|---|---|---|---|
-| 1 | [Valkey в e2e-окружении](TASK-1.md) | haiku | sonnet | обычная | — | не начата |
-| 2 | [`/metrics` с метриками процесса](TASK-2.md) | haiku | sonnet | обычная | — | не начата |
+| 1 | [Valkey в e2e-окружении](TASK-1.md) | haiku | sonnet | обычная | — | готова |
+| 2 | [`/metrics` с метриками процесса](TASK-2.md) | haiku | sonnet | обычная | — | в работе |
 | 3 | [Подключение к Redis через ioredis с закрытием при остановке](TASK-3.md) | sonnet | sonnet | обычная | 1 | не начата |
 | 4 | [`/health/live`, `/health/ready` и `/status` с состоянием PostgreSQL и Redis](TASK-4.md) | sonnet | opus | обычная | 3 | не начата |

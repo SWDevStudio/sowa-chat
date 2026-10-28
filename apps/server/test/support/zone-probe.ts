@@ -1,4 +1,5 @@
 import type { INestApplication, Type } from "@nestjs/common";
+import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Test } from "@nestjs/testing";
 import type { ZonePorts } from "../../src/infra/zones/zone.js";
 import { findFreePort } from "./e2e-server.js";
@@ -9,7 +10,10 @@ export interface ZoneProbeApp {
   ports: ZonePorts;
 }
 
-export async function startZoneProbeApp(controllers: Type[]): Promise<ZoneProbeApp> {
+export async function startZoneProbeApp(
+  controllers: Type[],
+  env: Record<string, string> = {},
+): Promise<ZoneProbeApp> {
   const ports: ZonePorts = {
     public: await findFreePort(),
     operator: await findFreePort(),
@@ -21,6 +25,7 @@ export async function startZoneProbeApp(controllers: Type[]): Promise<ZoneProbeA
     SOWA_OPERATOR_PORT: String(ports.operator),
     SOWA_INTERNAL_PORT: String(ports.internal),
     SOWA_MANAGEMENT_PORT: String(ports.management),
+    ...env,
   });
   vi.resetModules();
   const { ApiModule } = await import("../../src/api.module.js");
@@ -30,7 +35,7 @@ export async function startZoneProbeApp(controllers: Type[]): Promise<ZoneProbeA
     imports: [ApiModule],
     controllers,
   }).compile();
-  const app = moduleRef.createNestApplication({ bufferLogs: true });
+  const app = moduleRef.createNestApplication<NestExpressApplication>({ bufferLogs: true });
   configureApiApp(app);
   await app.init();
   await app.get(ZoneServers).listen(app);

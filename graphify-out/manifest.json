@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793226505.1431038,
-    "seen": 1793226525.6526704,
-    "ast_hash": "c8e67641eda70b2483e6ecad9ace438d",
+    "mtime": 1793228376.4997993,
+    "seen": 1793228433.1640692,
+    "ast_hash": "013f1501228078c849bd7d36f93dbd1c",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -1344,9 +1344,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/api-keys.repository.ts": {
-    "mtime": 1793219320.2281091,
-    "seen": 1793220602.2862282,
-    "ast_hash": "b2579f82e817917094e1257fe986a869",
+    "mtime": 1793228376.5331283,
+    "seen": 1793228433.1640692,
+    "ast_hash": "42b469fa504ffab7ba8b0eb4a090ee9b",
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/api-keys.service.issue-revoke.spec.ts": {
@@ -1362,9 +1362,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/api-keys.service.ts": {
-    "mtime": 1793219320.2311163,
-    "seen": 1793220602.2862282,
-    "ast_hash": "e1254ec08ad1e4bd1314e4303c0c2f0a",
+    "mtime": 1793228376.5351434,
+    "seen": 1793228433.1640692,
+    "ast_hash": "838c15a77f1fa61dce978366833e4e8e",
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/base62.spec.ts": {
@@ -1719,6 +1719,48 @@
     "mtime": 1793227256.1822102,
     "seen": 1793227324.0917754,
     "ast_hash": "f2bbb1eb0aae6b7c8be3a0fe7615e397",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/keys/key-create.command.ts": {
+    "mtime": 1793228376.5033302,
+    "seen": 1793228433.1640692,
+    "ast_hash": "5d07e4baf544f90aa66e7f1518a541ed",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/keys/key-list.command.ts": {
+    "mtime": 1793228376.5311117,
+    "seen": 1793228433.1640692,
+    "ast_hash": "94c1ea13008ab7caea26cb8a9769fd6e",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/keys/key-revoke.command.ts": {
+    "mtime": 1793228376.5311117,
+    "seen": 1793228433.1640692,
+    "ast_hash": "45fae96bbfaa3d19fde7c25a779c2abf",
+    "semantic_hash": ""
+  },
+  "apps/server/test/key-commands.e2e-spec.ts": {
+    "mtime": 1793228376.5371592,
+    "seen": 1793228433.1650753,
+    "ast_hash": "b865cfaf6625b3820e550cb77bf610fe",
+    "semantic_hash": ""
+  },
+  "apps/server/test/key-list-commands.e2e-spec.ts": {
+    "mtime": 1793228376.5391746,
+    "seen": 1793228433.1650753,
+    "ast_hash": "585d81ceb21d07dc20d57b5e3e37bfc4",
+    "semantic_hash": ""
+  },
+  "apps/server/test/key-revoke-commands.e2e-spec.ts": {
+    "mtime": 1793228376.5391746,
+    "seen": 1793228433.1650753,
+    "ast_hash": "2c665570825d452be64e32e64505e6d9",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/key-cli.ts": {
+    "mtime": 1793228376.54119,
+    "seen": 1793228433.1650753,
+    "ast_hash": "d3f93467d1ef1324da4e1f960d6e3d4f",
     "semantic_hash": ""
   }
 }

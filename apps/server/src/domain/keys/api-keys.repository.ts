@@ -28,6 +28,12 @@ export class ApiKeysRepository {
     return this.txHost.tx.getRepository(ApiKey).findOneBy({ prefix });
   }
 
+  async findByProject(projectId: string, kind: ApiKeyKind): Promise<ApiKey[]> {
+    return this.txHost.tx
+      .getRepository(ApiKey)
+      .find({ where: { projectId, kind }, order: { createdAt: "ASC" } });
+  }
+
   async touchLastUsedAt(id: string): Promise<void> {
     await this.txHost.tx
       .createQueryBuilder()

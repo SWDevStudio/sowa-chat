@@ -28,13 +28,22 @@ export class TelemetryInterceptor implements NestInterceptor {
     const startedAt = performance.now();
     const timing = this.operationSteps.current();
     response.once("finish", () => {
-      this.recordHttpMetrics(request, response, startedAt);
-      this.reportSlowOperation(request, timing);
+      const route = request.route?.path;
+      if (!route) {
+        return;
+      }
+      this.recordHttpMetrics(request, response, route, startedAt);
+      this.reportSlowOperation(request, route, timing);
     });
     return next.handle();
   }
 
-  private recordHttpMetrics(request: Request, response: Response, startedAt: number): void {
+  private recordHttpMetrics(
+    request: Request,
+    response: Response,
+    route: string,
+    startedAt: number,
+  ): void {
     const zone = zoneOfPort(this.ports, request.socket.localPort);
     if (!zone) {
       return;
@@ -42,18 +51,22 @@ export class TelemetryInterceptor implements NestInterceptor {
     this.httpMetrics.record({
       zone,
       method: request.method,
-      route: request.route.path,
+      route,
       status: response.statusCode,
       durationSeconds: (performance.now() - startedAt) / 1000,
     });
   }
 
-  private reportSlowOperation(request: Request, timing: OperationTiming | undefined): void {
+  private reportSlowOperation(
+    request: Request,
+    route: string,
+    timing: OperationTiming | undefined,
+  ): void {
     if (!timing) {
       return;
     }
     this.slowOperations.report({
-      name: `${request.method} ${request.route.path}`,
+      name: `${request.method} ${route}`,
       durationMs: performance.now() - timing.startedAt,
       steps: timing.steps,
     });

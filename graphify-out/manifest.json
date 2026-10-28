@@ -1446,15 +1446,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/crypto/encryption.service.spec.ts": {
-    "mtime": 1793219320.2681432,
-    "seen": 1793220602.2872214,
-    "ast_hash": "e0ee6db4050ace646a416213f5081038",
+    "mtime": 1793224041.9394512,
+    "seen": 1793224080.3044014,
+    "ast_hash": "571f11c29e9c9244fd9d3273909a1033",
     "semantic_hash": ""
   },
   "apps/server/src/infra/crypto/encryption.service.ts": {
-    "mtime": 1793219320.2701433,
-    "seen": 1793220602.2872214,
-    "ast_hash": "53094fc41c9ac6b2548ba3903974354f",
+    "mtime": 1793224041.941449,
+    "seen": 1793224080.3044014,
+    "ast_hash": "b68da262c56a4d1001f11c6de658d213",
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/migrations/1793300000000-CreateApiKeys.ts": {
@@ -1581,6 +1581,42 @@
     "mtime": 1793223678.7171028,
     "seen": 1793223700.84448,
     "ast_hash": "231353da48db225a890b7cc04ac364be",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/crypto/encrypted-field.ts": {
+    "mtime": 1793224041.937451,
+    "seen": 1793224080.3044014,
+    "ast_hash": "2d63a30f5b2b3c8a7899f4f083e35d13",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/crypto/registered-encrypted-fields.ts": {
+    "mtime": 1793224041.947221,
+    "seen": 1793224080.3044014,
+    "ast_hash": "4c61c264e3f6d5015591f4c8bb6090ca",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/crypto/secrets-reencryption.module.ts": {
+    "mtime": 1793224041.9497528,
+    "seen": 1793224080.3044014,
+    "ast_hash": "d22277218a398ec8e71b5acd33c3234a",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/crypto/secrets-reencryption.service.ts": {
+    "mtime": 1793224041.9507525,
+    "seen": 1793224080.3044014,
+    "ast_hash": "11a6757f5ffbaca9fd89db24ea6aae11",
+    "semantic_hash": ""
+  },
+  "apps/server/test/secrets-reencryption.e2e-spec.ts": {
+    "mtime": 1793224041.9527524,
+    "seen": 1793224080.3044014,
+    "ast_hash": "f89ca6be0525cd473f0bb08a45ceb382",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/test-secrets.ts": {
+    "mtime": 1793224041.9567926,
+    "seen": 1793224080.3044014,
+    "ast_hash": "0d6cf4bd8d7a4dbe01d6949f9ced186f",
     "semantic_hash": ""
   }
 }

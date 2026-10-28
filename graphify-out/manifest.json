@@ -546,9 +546,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/database-entities.ts": {
-    "mtime": 1793211247.8484035,
-    "seen": 1793211880.6887536,
-    "ast_hash": "37adb7dc6c22cceb9a6517332b5e27f9",
+    "mtime": 1793215707.0105174,
+    "seen": 1793215722.3382347,
+    "ast_hash": "edb0f132c0ec11ceeb574e4b4c1dc804",
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-options.ts": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-migrations.ts": {
-    "mtime": 1793211247.874004,
-    "seen": 1793211880.6887536,
-    "ast_hash": "ff4b44eadc10834d40fbd86c9650d26f",
+    "mtime": 1793215707.0125365,
+    "seen": 1793215722.3382347,
+    "ast_hash": "5dc3967cf552ed08c45a42f8b6ff8d0a",
     "semantic_hash": ""
   },
   "apps/server/src/infra/preparation/preparation-runner.spec.ts": {
@@ -1293,6 +1293,30 @@
     "mtime": 1793214457.7135544,
     "seen": 1793214472.557069,
     "ast_hash": "030b3f37b21360a2f0d46924333d1a86",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/database/migrations/1793215389271-CreateChatTables.ts": {
+    "mtime": 1793215707.0145497,
+    "seen": 1793215722.3382347,
+    "ast_hash": "c67589c746e9882f67614f30950b355a",
+    "semantic_hash": ""
+  },
+  "apps/server/test/chat-tables.e2e-spec.ts": {
+    "mtime": 1793215707.0165596,
+    "seen": 1793215722.3382347,
+    "ast_hash": "d748f138d324d46241855cac2c551c41",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/chat-rows.ts": {
+    "mtime": 1793215707.0185685,
+    "seen": 1793215722.3382347,
+    "ast_hash": "bb4227bcf5f761c3e449984edc7fa1dc",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/chat-schema.ts": {
+    "mtime": 1793215707.0185685,
+    "seen": 1793215722.3382347,
+    "ast_hash": "81eb57a2dddb472216c612c5db1cdc88",
     "semantic_hash": ""
   }
 }

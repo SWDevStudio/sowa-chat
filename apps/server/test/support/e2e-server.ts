@@ -11,6 +11,8 @@ export type Env = Record<string, string | undefined>;
 export interface RunningServer {
   process: ChildProcessWithoutNullStreams;
   output: () => string;
+  stdout: () => string;
+  stderr: () => string;
   isStopped: () => boolean;
   stop: () => Promise<void>;
 }
@@ -26,18 +28,23 @@ export function findFreePort(): Promise<number> {
   });
 }
 
-export function spawnServer(mode: string, env: Env): RunningServer {
-  const server = spawn(process.execPath, ["dist/main.js", mode], {
+export function spawnServer(mode: string, env: Env, args: string[] = []): RunningServer {
+  const server = spawn(process.execPath, ["dist/main.js", mode, ...args], {
     cwd: serverDirectory,
     env,
   });
   let output = "";
+  let stdout = "";
+  let stderr = "";
   let stopped = false;
-  const collectOutput = (chunk: Buffer) => {
+  server.stdout.on("data", (chunk: Buffer) => {
     output += chunk.toString();
-  };
-  server.stdout.on("data", collectOutput);
-  server.stderr.on("data", collectOutput);
+    stdout += chunk.toString();
+  });
+  server.stderr.on("data", (chunk: Buffer) => {
+    output += chunk.toString();
+    stderr += chunk.toString();
+  });
   const closed = new Promise<void>((resolveClose) => {
     server.on("close", () => {
       stopped = true;
@@ -48,6 +55,8 @@ export function spawnServer(mode: string, env: Env): RunningServer {
   return {
     process: server,
     output: () => output,
+    stdout: () => stdout,
+    stderr: () => stderr,
     isStopped: () => stopped,
     stop: async () => {
       if (!stopped) {

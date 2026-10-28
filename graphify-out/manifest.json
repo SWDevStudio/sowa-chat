@@ -378,15 +378,15 @@
     "semantic_hash": ""
   },
   "apps/server/test/logging.e2e-spec.ts": {
-    "mtime": 1793219320.391415,
-    "seen": 1793220602.2872214,
-    "ast_hash": "3f54c80ec8b53d26db1d82efa1cd80e1",
+    "mtime": 1793221746.2795053,
+    "seen": 1793221764.3847444,
+    "ast_hash": "e436c6f2cb3d44073691492ca88d7763",
     "semantic_hash": ""
   },
   "apps/server/src/infra/logging/logger.module.ts": {
-    "mtime": 1793219320.3336465,
-    "seen": 1793220602.2872214,
-    "ast_hash": "7a0ea07f3d7eda2a2efb548e27cf0aab",
+    "mtime": 1793221746.2759929,
+    "seen": 1793221764.3847444,
+    "ast_hash": "c71d9a3e9e520399d07d4c80aff3b33b",
     "semantic_hash": ""
   },
   "apps/server/test/request-id.e2e-spec.ts": {
@@ -450,9 +450,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/logging/log-destination.ts": {
-    "mtime": 1793219320.3290484,
-    "seen": 1793220602.2872214,
-    "ast_hash": "54f16724f1c08ff1b866772e05362763",
+    "mtime": 1793221746.2729914,
+    "seen": 1793221764.3847444,
+    "ast_hash": "01e7089d11739095a55263ca4e231c75",
     "semantic_hash": ""
   },
   "apps/server/test/log-settings.e2e-spec.ts": {
@@ -474,9 +474,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/e2e-server.ts": {
-    "mtime": 1793219320.4024842,
-    "seen": 1793220602.2872214,
-    "ast_hash": "57e38c3e37463dcd4cbee9d3b15776ca",
+    "mtime": 1793221746.2810233,
+    "seen": 1793221764.3847444,
+    "ast_hash": "b9f2b35e68699584c09c93092abe654a",
     "semantic_hash": ""
   },
   "apps/server/test/support/level-probe.ts": {
@@ -1515,6 +1515,12 @@
     "mtime": 1793221458.7872202,
     "seen": 1793221490.5343068,
     "ast_hash": "9493744f0091b4a9ad6c575f8da04029",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/logging/log-file-descriptor.spec.ts": {
+    "mtime": 1793221746.2739923,
+    "seen": 1793221764.3847444,
+    "ast_hash": "fb5d750669c94f627ade62d63b652523",
     "semantic_hash": ""
   }
 }

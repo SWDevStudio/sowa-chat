@@ -22,6 +22,8 @@ interface LogEntry {
 interface RunResult {
   exitCode: number | null;
   output: string;
+  stdout: string;
+  stderr: string;
 }
 
 async function serverEnvironment(): Promise<Env> {
@@ -40,7 +42,12 @@ function runToExit(mode: string, env: Env): Promise<RunResult> {
     const timer = setTimeout(() => server.process.kill(), startupTimeout);
     server.process.on("close", (exitCode) => {
       clearTimeout(timer);
-      resolveRun({ exitCode, output: server.output() });
+      resolveRun({
+        exitCode,
+        output: server.output(),
+        stdout: server.stdout(),
+        stderr: server.stderr(),
+      });
     });
   });
 }
@@ -53,6 +60,10 @@ function logEntries(output: string): LogEntry[] {
   return outputLines(output)
     .map(parseLogLine<LogEntry>)
     .filter((entry) => entry !== undefined);
+}
+
+function isServiceLogEntry(entry: LogEntry): boolean {
+  return entry["service.name"] !== undefined;
 }
 
 function isNestStartEntry(entry: LogEntry): boolean {
@@ -162,10 +173,41 @@ describe("JSON-логи сервера", { timeout: commandTimeout }, () => {
     expect(logEntries(result.output).some(isNestStartEntry), result.output).toBe(true);
   });
 
-  it.each(["migrate", "cli"])("%s пишет логи в том же формате", async (mode) => {
-    const result = await runToExit(mode, await serverEnvironment());
+  it("migrate пишет логи в том же формате", async () => {
+    const result = await runToExit("migrate", await serverEnvironment());
 
-    expectOnlyJsonLines(result.output, mode);
+    expectOnlyJsonLines(result.output, "migrate");
     expect(logEntries(result.output).some(isNestStartEntry), result.output).toBe(true);
+  });
+
+  it("migrate пишет логи в stdout, а не в stderr", async () => {
+    const result = await runToExit("migrate", await serverEnvironment());
+
+    expect(logEntries(result.stdout).some(isNestStartEntry), result.output).toBe(true);
+    expect(logEntries(result.stderr).some(isServiceLogEntry), result.output).toBe(false);
+  });
+
+  it("cli пишет JSON-логи в stderr", async () => {
+    const result = await runToExit("cli", await serverEnvironment());
+
+    expectOnlyJsonLines(result.stderr, "cli");
+    expect(logEntries(result.stderr).some(isNestStartEntry), result.output).toBe(true);
+  });
+
+  it("cli не пишет логи в stdout", async () => {
+    const result = await runToExit("cli", await serverEnvironment());
+
+    expect(logEntries(result.stdout).some(isServiceLogEntry), result.stdout).toBe(false);
+    expect(result.stdout).not.toContain(nestStartMessage);
+  });
+
+  it("cli с форматом pretty пишет логи в stderr, а не в stdout", async () => {
+    const result = await runToExit("cli", {
+      ...(await serverEnvironment()),
+      SOWA_LOG_FORMAT: "pretty",
+    });
+
+    expect(result.stderr).toContain(nestStartMessage);
+    expect(result.stdout).not.toContain(nestStartMessage);
   });
 });

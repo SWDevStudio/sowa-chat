@@ -13,6 +13,7 @@
    - `postgres()` — `this.typeOrm.pingCheck("postgres", { timeout: 1000 })` (`TypeOrmHealthIndicator`).
    - `redis()` — `this.indicators.check("redis").attempt(...).withTimeout(1000)` (`HealthIndicatorService`). Внутри `attempt`: если `this.redis.status !== "ready"`, бросить `new Error(`Redis connection is ${this.redis.status}`)`; иначе `await this.redis.ping()`. Клиент — `@Inject(Redis)` из `RedisModule` (TASK-3). Команда при разорванном соединении встала бы в очередь `ioredis`, поэтому статус проверяется до `PING`.
    - Оба метода возвращают `HealthIndicatorResult` Terminus: при отказе — `{ <ключ>: { status: "down", message } }`, исключений не бросают.
+   - Результат `redis()` не пересобирать вручную: `withTimeout` Terminus 12.1.0 добавляет поле `responseTime` (мс), оно остаётся в ответе `/health/ready`. Тесты сверяют `error.redis` через `toMatchObject({ status: "down", message })`, а не `toEqual`. В `/status` `responseTime` не попадает: `StatusService` собирает `DependencyStatus` только из `status` и `message`, без копирования остальных полей результата.
 
 2. `replica-readiness.ts` — `ReplicaReadiness`, ручной перевод реплики в «не готова»:
    - `markNotReady(): void`;

@@ -53,3 +53,8 @@
 
 - Вопрос: тест ждал `status` = `end` после отклонения `waitForRedis`, но клиент остаётся в `reconnecting`. В ioredis 6 `disconnect()` в статусе `reconnecting` снимает таймер переподключения и закрывает уже закрытый стрим, `closeHandler` не вызывается.
 - Решение: код `waitForRedis` не менять, поправить тест: `disconnect` вызван один раз (`vi.spyOn`), `status` не `ready`. Клиент остановлен: таймера нет, стрим закрыт. Вызов `connect()` ради статуса `end` опирается на внутренности ioredis. `retryStrategy`, который не переподключается до первого `ready`, ронял бы старт на первой же ошибке вместо ожидания 5 секунд, и задача его запрещает.
+
+## 28.10.2026, TASK-4. Вопрос о `responseTime` в результате `redis()`
+
+- Вопрос: `withTimeout` Terminus 12.1.0 добавляет в результат `responseTime`, тесты `health.controller.spec.ts` сверяли `error.redis` через `toEqual({ status: "down", message })` и получали лишнее `responseTime`.
+- Решение: код `redis()` не менять, поправить тесты на `toMatchObject({ status: "down", message })`. Ручная сборка результата вместо штатного `HealthIndicatorService` — своя замена библиотеке. `responseTime` — число миллисекунд без данных драйвера и секретов, отдаётся только на служебном порту в `/health/ready`. В `/status` оно не попадает: `StatusService` берёт из результата только `status` и `message`.

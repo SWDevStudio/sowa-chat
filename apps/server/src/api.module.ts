@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { OperatorAuthModule } from "./api/operator/operator-auth.module.js";
+import { ServerApiModule } from "./api/server/server-api.module.js";
 import { ServerAuthModule } from "./api/server/server-auth.module.js";
 import { databaseEntities } from "./database-entities.js";
 import { AuditModule } from "./domain/audit/audit.module.js";
@@ -29,6 +30,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     HealthModule,
     ServerAuthModule,
     OperatorAuthModule,
+    ServerApiModule,
   ],
 })
 export class ApiModule {}

@@ -6,7 +6,9 @@ import { ClsModule } from "nestjs-cls";
 import { ClsPluginTransactional } from "@nestjs-cls/transactional";
 import { TransactionalAdapterTypeOrm } from "@nestjs-cls/transactional-adapter-typeorm";
 import { databaseConfig } from "../config/database.config.js";
+import { OperationStepsModule } from "../../telemetry/operation-steps/operation-steps.module.js";
 import { createDataSourceOptions } from "./database-options.js";
+import { DatabaseStepSubscriber } from "./database-step.subscriber.js";
 import type { DatabaseEntity } from "./database-options.js";
 
 const typeOrmModules = new WeakMap<DatabaseEntity[], DynamicModule>();
@@ -48,7 +50,9 @@ export class DatabaseModule {
             adapter: new TransactionalAdapterTypeOrm({ dataSourceToken: getDataSourceToken() }),
           }),
         ]),
+        OperationStepsModule,
       ],
+      providers: [DatabaseStepSubscriber],
     };
   }
 }

@@ -12,7 +12,7 @@
 |---|---|---|---|---|---|---|
 | 1 | [Переменные `SOWA_TOKEN_SIGNING_KEYS` и `SOWA_TOKEN_SIGNING_KEY_ID`: разбор ключей Ed25519 и конфиг](TASK-1.md) | haiku | sonnet | обычная | — | готова |
 | 2 | [Роли оператора и схемы выдачи токена оператора в `protocol`](TASK-2.md) | haiku | sonnet | обычная | — | готова |
-| 3 | [Ключ подписи токенов обязателен в production](TASK-3.md) | haiku | sonnet | обычная | 1 | в работе |
+| 3 | [Ключ подписи токенов обязателен в production](TASK-3.md) | haiku | sonnet | обычная | 1 | готова |
 | 4 | [Подпись и проверка токенов через `jose`: только EdDSA, `kid`, `aud`, срок](TASK-4.md) | sonnet | opus | обычная | 1 | не начата |
 | 5 | [Сущность и миграция `operators`](TASK-5.md) | haiku | sonnet | обычная | 2 | готова |
 | 6 | [Контекст запроса: проект и оператор в `nestjs-cls`](TASK-6.md) | haiku | sonnet | обычная | 2 | готова |

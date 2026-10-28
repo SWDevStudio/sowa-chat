@@ -38,6 +38,12 @@ yarn-error.log*
 .DS_Store
 *.pem
 
+# Epic process
+.claude/worktrees/
+.claude/epic-state.md
+.claude/pipeline-state.md
+.claude/epic-runs/
+
 # Graphify
 graphify-out/cache/
 graphify-out/cost.json

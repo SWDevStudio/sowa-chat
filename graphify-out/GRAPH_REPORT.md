@@ -1,7 +1,7 @@
-# Graph Report - EPIC-4-4  (2026-10-28)
+# Graph Report - EPIC-4-review  (2026-10-28)
 
 ## Corpus Check
-- 96 files · ~15,631 words
+- 96 files · ~15,645 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 10 file(s) not represented in the graph (top: (none) 9, .example 1)
 
@@ -11,19 +11,19 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `3c386742`
+- Built from commit: `8a68d73c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- log-redaction.spec.ts
+- RedactionProbeController
 - bot-sdk/tsconfig.json
 - package.json
 - zone-servers.spec.ts
 - devDependencies
 - server-modes.e2e-spec.ts
 - server/package.json
-- logger.module.ts
+- config.module.ts
 - compilerOptions
 - ioredis@^6.0.0
 - config-startup.e2e-spec.ts
@@ -133,7 +133,7 @@ Nodes (13): Env, fetchStatus(), findFreePort(), findZonePorts(), modes, reposito
 Cohesion: 0.11
 Nodes (17): author, nest-commander@^3.21.0, @nest-lab/throttler-storage-redis@^1.2.0, @nestjs/platform-socket.io@^12.1.3, @nestjs/throttler@^6.7.1, nestjs-zod@^5.5.0, description, license (+9 more)
 
-### Community 7 - "logger.module.ts"
+### Community 7 - "config.module.ts"
 Cohesion: 0.17
 Nodes (13): appConfig, compileConfigModule(), testEnv, databaseConfig, loggingConfig, parseEnv(), portsConfig, redisConfig (+5 more)
 
@@ -285,11 +285,11 @@ Nodes (32): ErrorCode, errorCodes, errorDetailSchema, ErrorResponse, errorRespon
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `zone-servers.spec.ts` to `main.ts`, `server/package.json`, `logger.module.ts`, `log-redaction.spec.ts`, `dependencies`, `cls-middleware.ts`, `zone.decorator.spec.ts`, `zone.guard.ts`, `api-versioning.spec.ts`, `zone.guard.spec.ts`?**
+- **Why does `@nestjs/common` connect `zone-servers.spec.ts` to `main.ts`, `server/package.json`, `config.module.ts`, `log-redaction.spec.ts`, `dependencies`, `cls-middleware.ts`, `zone.decorator.spec.ts`, `zone.guard.ts`, `api-versioning.spec.ts`, `zone.guard.spec.ts`?**
   _High betweenness centrality (0.129) - this node is a cross-community bridge._
 - **What connects `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json` to the rest of the system?**
   _5 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `log-redaction.spec.ts` be split into smaller, more focused modules?**
+- **Should `RedactionProbeController` be split into smaller, more focused modules?**
   _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
 - **Why does `pino` connect `log-redaction.spec.ts` to `main.ts`, `dependencies`, `server/package.json`, `log-settings.e2e-spec.ts`?**
   _High betweenness centrality (0.066) - this node is a cross-community bridge._

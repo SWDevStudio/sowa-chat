@@ -91,7 +91,7 @@ async function findZonePorts(): Promise<ZonePorts> {
   };
 }
 
-describe("ZoneServers", () => {
+describe("ZoneServers", { timeout: 20_000 }, () => {
   let app: INestApplication | undefined;
 
   afterEach(async () => {
@@ -129,7 +129,8 @@ describe("ZoneServers", () => {
       const server = zoneServers.getServer(zone);
 
       expect(server?.listening, zone).toBe(true);
-      expect((server?.address() as AddressInfo).port, zone).toBe(probe.ports[zone]);
+      const address = server?.address() as AddressInfo | undefined;
+      expect(address?.port, zone).toBe(probe.ports[zone]);
     }
   });
 

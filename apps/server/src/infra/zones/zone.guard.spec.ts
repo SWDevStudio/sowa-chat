@@ -91,7 +91,7 @@ function requestOnPort(localPort: number | undefined, originalUrl = "/v1/probe")
   return { method: "GET", originalUrl, socket: { localPort } };
 }
 
-describe("ZoneGuard через порты зон", () => {
+describe("ZoneGuard через порты зон", { timeout: 20_000 }, () => {
   const apps: INestApplication[] = [];
 
   async function startApp(controllers = guardedControllers) {

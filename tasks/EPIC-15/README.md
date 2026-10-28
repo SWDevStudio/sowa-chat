@@ -10,8 +10,8 @@
 
 | № | Задача | Исполнитель | Тесты | Сложность | Зависит от | Статус |
 |---|---|---|---|---|---|---|
-| 1 | [Метрики HTTP по шаблону маршрута: `TelemetryModule` и `TelemetryInterceptor`](TASK-1.md) | haiku | sonnet | обычная | — | не начата |
-| 2 | [Замер времени шагов операции через `nestjs-cls`](TASK-2.md) | haiku | sonnet | обычная | — | не начата |
-| 3 | [Переменная `SOWA_SLOW_OPERATION_MS` и конфиг порога](TASK-3.md) | haiku | sonnet | простая | — | не начата |
+| 1 | [Метрики HTTP по шаблону маршрута: `TelemetryModule` и `TelemetryInterceptor`](TASK-1.md) | haiku | sonnet | обычная | — | в работе |
+| 2 | [Замер времени шагов операции через `nestjs-cls`](TASK-2.md) | haiku | sonnet | обычная | — | готова |
+| 3 | [Переменная `SOWA_SLOW_OPERATION_MS` и конфиг порога](TASK-3.md) | haiku | sonnet | простая | — | в работе |
 | 4 | [Медленный HTTP-запрос — одна строка `warn` с разбивкой по шагам](TASK-4.md) | haiku | sonnet | обычная | 1, 2, 3 | не начата |
 | 5 | [Шаг `db`: время запросов к БД через подписчик TypeORM](TASK-5.md) | haiku | sonnet | обычная | 2 | не начата |

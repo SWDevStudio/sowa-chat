@@ -13,6 +13,11 @@ export function resolveRequestId(request: IncomingMessage): string {
   return randomUUID();
 }
 
+export function requestIdOfResponse(response: ServerResponse): string {
+  const requestId = response.getHeader(requestIdHeader);
+  return typeof requestId === "string" ? requestId : "";
+}
+
 export function echoRequestId(requestId: string, response: ServerResponse): void {
   response.setHeader(requestIdHeader, requestId);
 }

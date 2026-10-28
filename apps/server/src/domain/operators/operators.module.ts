@@ -7,6 +7,6 @@ import { OperatorsService } from "./operators.service.js";
 @Module({
   imports: [TokensModule],
   providers: [OperatorsRepository, OperatorsService, DisabledOperators],
-  exports: [OperatorsService, OperatorsRepository, DisabledOperators],
+  exports: [OperatorsService, DisabledOperators],
 })
 export class OperatorsModule {}

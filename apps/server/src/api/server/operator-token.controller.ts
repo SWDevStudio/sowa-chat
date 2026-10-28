@@ -1,17 +1,14 @@
-import { Body, HttpCode, Inject, Post } from "@nestjs/common";
+import { Body, HttpCode, Inject, Post, UseFilters } from "@nestjs/common";
 import type { OperatorTokenResponse } from "@sowa-chat/protocol";
 import { ZodResponse } from "nestjs-zod";
-import {
-  type IssuedOperatorToken,
-  OperatorDisabledError,
-  OperatorsService,
-} from "../../domain/operators/operators.service.js";
-import { ApiException } from "../../infra/http/api-exception.js";
+import { OperatorsService } from "../../domain/operators/operators.service.js";
 import { RequestContext } from "../../infra/request-context/request-context.js";
+import { OperatorDisabledFilter } from "./operator-disabled.filter.js";
 import { OperatorTokenRequestDto, OperatorTokenResponseDto } from "./operator-token.dto.js";
 import { ServerController } from "./server-controller.decorator.js";
 
 @ServerController("operator-token")
+@UseFilters(OperatorDisabledFilter)
 export class OperatorTokenController {
   constructor(
     @Inject(OperatorsService) private readonly operators: OperatorsService,
@@ -22,21 +19,13 @@ export class OperatorTokenController {
   @HttpCode(200)
   @ZodResponse({ status: 200, type: OperatorTokenResponseDto })
   async issue(@Body() body: OperatorTokenRequestDto): Promise<OperatorTokenResponse> {
-    const issued = await this.issueToken(body);
-    return { token: issued.token, expiresAt: issued.expiresAt.toISOString() };
-  }
-
-  private async issueToken(body: OperatorTokenRequestDto): Promise<IssuedOperatorToken> {
-    try {
-      return await this.operators.issueToken({
-        ...body,
-        projectId: this.requestContext.projectId(),
-      });
-    } catch (error) {
-      if (error instanceof OperatorDisabledError) {
-        throw new ApiException({ code: "forbidden", message: "Operator is disabled" });
-      }
-      throw error;
-    }
+    const { token, expiresAt } = await this.operators.issueToken({
+      projectId: this.requestContext.projectId(),
+      externalId: body.externalId,
+      name: body.name,
+      avatarUrl: body.avatarUrl,
+      role: body.role,
+    });
+    return { token, expiresAt: expiresAt.toISOString() };
   }
 }

@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import type { OperatorRole } from "@sowa-chat/protocol";
 import { TokensService } from "../../infra/tokens/tokens.service.js";
+import type { OperatorTokenClaims } from "./operator-token-claims.js";
 import { OperatorsRepository } from "./operators.repository.js";
 
 export const operatorTokenTtlSeconds = 900;
@@ -32,14 +33,21 @@ export class OperatorsService {
   ) {}
 
   async issueToken(input: IssueOperatorTokenInput): Promise<IssuedOperatorToken> {
-    const operator = await this.operators.upsert({ ...input, avatarUrl: input.avatarUrl ?? null });
+    const operator = await this.operators.upsert({
+      projectId: input.projectId,
+      externalId: input.externalId,
+      name: input.name,
+      avatarUrl: input.avatarUrl ?? null,
+      role: input.role,
+    });
     if (operator.disabledAt !== null) {
       throw new OperatorDisabledError();
     }
+    const claims: OperatorTokenClaims = { projectId: operator.projectId, role: operator.role };
     return this.tokens.sign({
       audience: "operator",
       subject: operator.id,
-      claims: { projectId: operator.projectId, role: operator.role },
+      claims,
       ttlSeconds: operatorTokenTtlSeconds,
     });
   }

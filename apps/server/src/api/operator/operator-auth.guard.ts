@@ -1,18 +1,12 @@
 import { type CanActivate, type ExecutionContext, Inject, Injectable } from "@nestjs/common";
-import { operatorRoles } from "@sowa-chat/protocol";
 import type { Request } from "express";
-import { z } from "zod";
 import { DisabledOperators } from "../../domain/operators/disabled-operators.js";
+import { operatorTokenClaimsSchema } from "../../domain/operators/operator-token-claims.js";
 import { ApiException } from "../../infra/http/api-exception.js";
 import { bearerToken } from "../../infra/http/bearer-token.js";
 import { RequestContext } from "../../infra/request-context/request-context.js";
 import { TokensService } from "../../infra/tokens/tokens.service.js";
 import { OperationSteps } from "../../telemetry/operation-steps/operation-steps.js";
-
-const operatorClaimsSchema = z.object({
-  projectId: z.string().min(1),
-  role: z.enum(operatorRoles),
-});
 
 @Injectable()
 export class OperatorAuthGuard implements CanActivate {
@@ -34,7 +28,7 @@ export class OperatorAuthGuard implements CanActivate {
     if (!verified) {
       throw this.unauthorized();
     }
-    const claims = operatorClaimsSchema.safeParse(verified.claims);
+    const claims = operatorTokenClaimsSchema.safeParse(verified.claims);
     if (!claims.success) {
       throw this.unauthorized();
     }

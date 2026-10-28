@@ -402,9 +402,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/request-id/request-id.ts": {
-    "mtime": 1793219321.54613,
-    "seen": 1793220808.2436569,
-    "ast_hash": "651145587082bea931493df203527f3b",
+    "mtime": 1793231455.9881449,
+    "seen": 1793231488.5316877,
+    "ast_hash": "7cc2b415ad7301e0b967cd9a63a43e15",
     "semantic_hash": ""
   },
   "apps/server/src/infra/request-id/request-id.spec.ts": {
@@ -768,9 +768,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/http/http-error.filter.ts": {
-    "mtime": 1793219321.5260406,
-    "seen": 1793220808.2436569,
-    "ast_hash": "06836b8812be16ce9ce2e2aab0dbf787",
+    "mtime": 1793231455.986134,
+    "seen": 1793231488.5316877,
+    "ast_hash": "26940b55c9cad2d5b90ad7271ee1162c",
     "semantic_hash": ""
   },
   "apps/server/src/infra/http/security-headers.spec.ts": {
@@ -1614,9 +1614,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operators.module.ts": {
-    "mtime": 1793229096.3897755,
-    "seen": 1793229122.3903458,
-    "ast_hash": "3a1968801a8c30fdb556fe7730c8c163",
+    "mtime": 1793231455.9821122,
+    "seen": 1793231488.5316877,
+    "ast_hash": "378b8ae23b16d244a9f8cb8f9cb59301",
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operators.repository.ts": {
@@ -1632,9 +1632,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operators.service.ts": {
-    "mtime": 1793225455.9047909,
-    "seen": 1793225564.1537237,
-    "ast_hash": "8c1394a724e34ca5b80a849843ee434c",
+    "mtime": 1793231455.9841228,
+    "seen": 1793231488.5316877,
+    "ast_hash": "a3926ebee00560e533b1f7a406135a8e",
     "semantic_hash": ""
   },
   "apps/server/test/operators.e2e-spec.ts": {
@@ -1686,9 +1686,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api/operator/operator-auth.guard.ts": {
-    "mtime": 1793229096.384515,
-    "seen": 1793229122.3903458,
-    "ast_hash": "df957afcd6aa468215f98bae6c621ded",
+    "mtime": 1793231455.9779212,
+    "seen": 1793231488.5316877,
+    "ast_hash": "dc9874a5a3d9dd0604fd0472be937d0f",
     "semantic_hash": ""
   },
   "apps/server/src/api/operator/operator-auth.module.ts": {
@@ -1758,9 +1758,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api/server/operator-token.controller.ts": {
-    "mtime": 1793229707.632793,
-    "seen": 1793229730.8962073,
-    "ast_hash": "d4a91289489714947aebc19e335d13c2",
+    "mtime": 1793231455.9804947,
+    "seen": 1793231488.5316877,
+    "ast_hash": "060877948157ead97e210e5e098d05f0",
     "semantic_hash": ""
   },
   "apps/server/src/api/server/operator-token.dto.ts": {
@@ -1779,6 +1779,18 @@
     "mtime": 1793229707.6406505,
     "seen": 1793229730.899285,
     "ast_hash": "9baa8060a520eef4b57aebd230728736",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/server/operator-disabled.filter.ts": {
+    "mtime": 1793231455.9779212,
+    "seen": 1793231488.5316877,
+    "ast_hash": "4273fc2098b47f9c40cc3d281d610fbf",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/operators/operator-token-claims.ts": {
+    "mtime": 1793231455.9821122,
+    "seen": 1793231488.5316877,
+    "ast_hash": "4e397b01582fbb35529a2d855a545c24",
     "semantic_hash": ""
   }
 }

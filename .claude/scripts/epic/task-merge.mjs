@@ -22,11 +22,9 @@ function ensureOnEpicBranch(root, epic) {
 
 function removeWorktree(root, epic, task) {
   const worktree = worktreePath(root, epic, task);
-  const removed = run(`git worktree remove --force ${quote(worktree)}`, root);
-  if (!removed.ok) {
-    fs.rmSync(worktree, { recursive: true, force: true, maxRetries: 3 });
-    runOrFail("git worktree prune", root);
-  }
+  run(`git worktree remove --force ${quote(worktree)}`, root);
+  fs.rmSync(worktree, { recursive: true, force: true, maxRetries: 3 });
+  runOrFail("git worktree prune", root);
   runOrFail(`git branch -D ${taskBranch(epic, task)}`, root);
 }
 

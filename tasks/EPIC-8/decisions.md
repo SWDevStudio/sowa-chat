@@ -39,3 +39,8 @@
 
 - Вопрос: статический импорт `ApiModule`, `WorkerModule`, `CliModule` в тесте падает с `Invalid environment variables`: `ConfigModule.forRoot` с `parseEnv` срабатывает при загрузке, а в `apps/server/vitest.config.ts` переменных нет.
 - Решение: `vitest.config.ts` не менять, правится тест. Модули режимов загружаются через `await import(...)` после `stubTestEnv()` в `beforeAll`, как в `zone-servers.spec.ts`. `vi.resetModules()` не вызывается, иначе `TelemetryModule` в `imports` будет другим экземпляром класса. Общий `setupFiles` со стабом окружения отклонён: он скрыл бы ошибки конфигурации в остальных unit-тестах и меняет файл вне задачи.
+
+## Ошибки и параллельность подписчиков
+
+- Ошибка подписчика пробрасывается в `publish` и откатывает действие, как у `subscribe`, так и у `OnDomainEvent`: декоратор вызывает `OnEvent(name, { suppressErrors: false })`.
+- `emitAsync` запускает подписчиков параллельно на одном `QueryRunner`, а TypeORM нумерует точки сохранения по `transactionDepth`. Поэтому подписчики одного события не пишут в БД параллельно в общей транзакции, а публикации через `Promise.all` в одной транзакции запрещены: `withTransaction(Propagation.Nested)` в них перемешал бы точки сохранения.

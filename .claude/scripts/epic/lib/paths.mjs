@@ -3,11 +3,10 @@ import path from "node:path";
 import { runOrFail } from "./shell.mjs";
 
 export function mainRoot() {
-  const commonDir = runOrFail(
-    "git rev-parse --path-format=absolute --git-common-dir",
-    process.cwd(),
-  );
-  return path.dirname(commonDir);
+  const topLevel = path.normalize(runOrFail("git rev-parse --show-toplevel", process.cwd()));
+  const worktreesMarker = path.join(path.sep, ".claude", "worktrees", path.sep);
+  const markerIndex = topLevel.indexOf(worktreesMarker);
+  return markerIndex === -1 ? topLevel : topLevel.slice(0, markerIndex);
 }
 
 export function epicBranch(epic) {

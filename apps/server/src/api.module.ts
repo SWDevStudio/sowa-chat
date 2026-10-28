@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ServerAuthModule } from "./api/server/server-auth.module.js";
 import { databaseEntities } from "./database-entities.js";
 import { AuditModule } from "./domain/audit/audit.module.js";
 import { AppClsModule } from "./infra/cls/app-cls.module.js";
@@ -25,6 +26,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     ZonesModule,
     ApiHttpModule,
     HealthModule,
+    ServerAuthModule,
   ],
 })
 export class ApiModule {}

@@ -348,9 +348,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api.module.ts": {
-    "mtime": 1793221967.6260927,
-    "seen": 1793221984.8873625,
-    "ast_hash": "98cf5043969af0353ea3e12705f33340",
+    "mtime": 1793226326.3512847,
+    "seen": 1793226351.2061636,
+    "ast_hash": "d3ff095a0af612c0363c724da3e4465e",
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
@@ -1641,6 +1641,48 @@
     "mtime": 1793225455.9065425,
     "seen": 1793225564.157776,
     "ast_hash": "801dec4bed81c8801cc93c8f10fc65ee",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/server/server-auth.module.ts": {
+    "mtime": 1793226326.354316,
+    "seen": 1793226351.2061636,
+    "ast_hash": "026fabcfa5d25c51286de59bdfc421ce",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/server/server-controller.decorator.ts": {
+    "mtime": 1793226326.3548245,
+    "seen": 1793226351.2061636,
+    "ast_hash": "74e17e19f537217d3aa9e5a83e50431e",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/server/server-key.guard.ts": {
+    "mtime": 1793226326.3558419,
+    "seen": 1793226351.2061636,
+    "ast_hash": "4b91ebbb110d854b51be02df42e0d1b5",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/http/bearer-token.spec.ts": {
+    "mtime": 1793226326.3573558,
+    "seen": 1793226351.207688,
+    "ast_hash": "f282c53f77aa152fc2b473824ebe2f80",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/http/bearer-token.ts": {
+    "mtime": 1793226326.3583746,
+    "seen": 1793226351.207688,
+    "ast_hash": "6e8935a1f0fc165ce580a2fafb2951e1",
+    "semantic_hash": ""
+  },
+  "apps/server/test/server-key-guard.e2e-spec.ts": {
+    "mtime": 1793226326.3593657,
+    "seen": 1793226351.207688,
+    "ast_hash": "7407ce8400af85c5a18ae8857ed4abbd",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/zone-e2e-app.ts": {
+    "mtime": 1793226326.3603725,
+    "seen": 1793226351.207688,
+    "ast_hash": "57a9af40426a56512b1fb8a2956fae42",
     "semantic_hash": ""
   }
 }

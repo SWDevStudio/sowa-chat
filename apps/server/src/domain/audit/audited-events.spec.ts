@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import type { ApiKeyEvent, ProjectCreatedEvent } from "../../telemetry/events/domain-events.js";
+import type {
+  ApiKeyEvent,
+  IdentityKeyEvent,
+  ProjectCreatedEvent,
+} from "../../telemetry/events/domain-events.js";
 import { auditedEventNames } from "./audit-rule.js";
 import { auditedEvents } from "./audited-events.js";
 
@@ -129,6 +133,72 @@ describe("auditedEvents project.created rule", () => {
     const names = auditedEventNames(auditedEvents);
 
     expect(names).toEqual(
+      expect.arrayContaining(["apiKey.issued", "apiKey.revoked", "project.created"]),
+    );
+  });
+});
+
+const identityKeyEvent: IdentityKeyEvent = {
+  identityKeyId: "identity-key-1",
+  projectId: "project-1",
+  kid: "main-1",
+  alg: "EdDSA",
+  actorKind: "cli",
+};
+
+describe("auditedEvents identityKey rules", () => {
+  it("lists identityKey.added and identityKey.revoked", () => {
+    const names = auditedEventNames(auditedEvents);
+
+    expect(names).toContain("identityKey.added");
+    expect(names).toContain("identityKey.revoked");
+  });
+
+  it.each(["identityKey.added", "identityKey.revoked"] as const)(
+    "%s maps cli event to record with identityKey target and kid, alg in data",
+    (name) => {
+      const rule = auditedEvents[name];
+
+      expect(rule).toBeDefined();
+      expect(rule?.(identityKeyEvent)).toEqual({
+        projectId: "project-1",
+        actorKind: "cli",
+        actorId: null,
+        targetKind: "identityKey",
+        targetId: "identity-key-1",
+        data: { kid: "main-1", alg: "EdDSA" },
+      });
+    },
+  );
+
+  it.each(["identityKey.added", "identityKey.revoked"] as const)(
+    "%s keeps system actorKind and ES256",
+    (name) => {
+      const record = auditedEvents[name]?.({
+        ...identityKeyEvent,
+        alg: "ES256",
+        actorKind: "system",
+      });
+
+      expect(record).toMatchObject({ actorKind: "system", data: { kid: "main-1", alg: "ES256" } });
+    },
+  );
+
+  it.each(["identityKey.added", "identityKey.revoked"] as const)(
+    "%s data has only kid and alg",
+    (name) => {
+      const record = auditedEvents[name]?.({
+        ...identityKeyEvent,
+        publicKey: { kty: "OKP", x: "key-leak" },
+      } as IdentityKeyEvent);
+
+      expect(Object.keys(record?.data ?? {}).sort()).toEqual(["alg", "kid"]);
+      expect(JSON.stringify(record)).not.toContain("key-leak");
+    },
+  );
+
+  it("keeps apiKey and project.created rules", () => {
+    expect(auditedEventNames(auditedEvents)).toEqual(
       expect.arrayContaining(["apiKey.issued", "apiKey.revoked", "project.created"]),
     );
   });

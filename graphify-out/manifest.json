@@ -924,9 +924,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/telemetry/events/domain-events.ts": {
-    "mtime": 1793224636.7412543,
-    "seen": 1793224656.468154,
-    "ast_hash": "6671c8af27ba70bd406d917748352c72",
+    "mtime": 1793225957.2165563,
+    "seen": 1793226023.4322083,
+    "ast_hash": "5fe8f672503418ae0f8cd9f64c9c669d",
     "semantic_hash": ""
   },
   "apps/server/src/telemetry/events/on-domain-event.decorator.ts": {
@@ -978,9 +978,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/audit/audited-events.ts": {
-    "mtime": 1793224636.7317128,
-    "seen": 1793224656.468154,
-    "ast_hash": "8bd4c387994df89a82d395618ddad964",
+    "mtime": 1793225957.2009487,
+    "seen": 1793226023.4300838,
+    "ast_hash": "790334e0239d59793530e791c636de21",
     "semantic_hash": ""
   },
   "apps/server/test/support/test-audit-rules.ts": {
@@ -1332,9 +1332,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/audit/audited-events.spec.ts": {
-    "mtime": 1793224636.729694,
-    "seen": 1793224656.468154,
-    "ast_hash": "e76a77fb01ff7c89c0ad7de23d6bad43",
+    "mtime": 1793225957.193879,
+    "seen": 1793226023.4300838,
+    "ast_hash": "da242326afa3b02f6937f26cb1882d45",
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/api-key.entity.ts": {
@@ -1404,9 +1404,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/keys.module.ts": {
-    "mtime": 1793219320.2377186,
-    "seen": 1793220602.2862282,
-    "ast_hash": "059fed8ecff7b1b963cf1ff7076c3506",
+    "mtime": 1793225957.211763,
+    "seen": 1793226023.4300838,
+    "ast_hash": "a2b40695d7ba62a4e8c5d4ba107b2b95",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/encryption-keys.schema.spec.ts": {
@@ -1647,6 +1647,42 @@
     "mtime": 1793224636.747374,
     "seen": 1793224656.468154,
     "ast_hash": "6c77896da830a178a2faf880bc4a77ec",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/keys/identity-keys.repository.ts": {
+    "mtime": 1793225957.2029502,
+    "seen": 1793226023.4300838,
+    "ast_hash": "3ebd6976fa2ff16f75398de342dbae81",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/keys/identity-keys.service.ts": {
+    "mtime": 1793225957.2071643,
+    "seen": 1793226023.4300838,
+    "ast_hash": "6f110fac9272aac3ee4dbb5521cff58e",
+    "semantic_hash": ""
+  },
+  "apps/server/test/identity-keys-revoke-list.e2e-spec.ts": {
+    "mtime": 1793225957.2185693,
+    "seen": 1793226023.443343,
+    "ast_hash": "14f0c2b3e7680122aa8a9b33a854c87d",
+    "semantic_hash": ""
+  },
+  "apps/server/test/identity-keys.e2e-spec.ts": {
+    "mtime": 1793225957.219572,
+    "seen": 1793226023.443343,
+    "ast_hash": "0738fa7832b43941edddf7007000078c",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/identity-key-rows.ts": {
+    "mtime": 1793225957.2235272,
+    "seen": 1793226023.443343,
+    "ast_hash": "30d6707b66227a7a642c24af67d1a553",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/identity-pems.ts": {
+    "mtime": 1793225957.2245424,
+    "seen": 1793226023.443343,
+    "ast_hash": "8be6729928a7ac757f8ffd19a7b34f3f",
     "semantic_hash": ""
   }
 }

@@ -1,12 +1,12 @@
 import type { INestApplicationContext, Type } from "@nestjs/common";
-import type { ConfigType } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
+import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Logger } from "nestjs-pino";
+import { configureApiApp } from "./api-app.js";
 import { ApiModule } from "./api.module.js";
 import { CliModule } from "./cli.module.js";
-import { useClsMiddleware } from "./infra/cls/cls-middleware.js";
 import { PreparationRunner } from "./infra/preparation/preparation-runner.js";
-import { portsConfig } from "./infra/config/ports.config.js";
+import { ZoneServers } from "./infra/zones/zone-servers.js";
 import { MigrateModule } from "./migrate.module.js";
 import { parseServerMode, serverModes } from "./server-mode.js";
 import type { ServerMode } from "./server-mode.js";
@@ -23,11 +23,10 @@ async function createContext(rootModule: Type) {
 }
 
 async function runApi() {
-  const app = await NestFactory.create(ApiModule, { bufferLogs: true });
-  useClsMiddleware(app);
-  useAppLogger(app);
-  const ports = app.get<ConfigType<typeof portsConfig>>(portsConfig.KEY);
-  await app.listen(ports.public);
+  const app = await NestFactory.create<NestExpressApplication>(ApiModule, { bufferLogs: true });
+  configureApiApp(app);
+  await app.init();
+  await app.get(ZoneServers).listen(app);
 }
 
 async function runWorker() {

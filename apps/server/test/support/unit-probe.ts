@@ -18,6 +18,7 @@ const testEnv = {
   SOWA_S3_ACCESS_KEY: "test-access",
   SOWA_S3_SECRET_KEY: "test-secret",
   SOWA_S3_BUCKET: "test-bucket",
+  SOWA_ENCRYPTION_KEYS: "1:AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
 };
 
 interface ProbeAppOptions {

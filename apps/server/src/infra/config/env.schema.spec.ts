@@ -7,6 +7,7 @@ const requiredEnv = {
   SOWA_S3_ACCESS_KEY: "sowa-dev",
   SOWA_S3_SECRET_KEY: "sowa-dev-secret",
   SOWA_S3_BUCKET: "sowa-chat",
+  SOWA_ENCRYPTION_KEYS: "1:AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
 };
 
 type Env = Record<string, string | undefined>;
@@ -75,6 +76,36 @@ describe("envSchema", () => {
 
       expect(isAccepted(env)).toBe(false);
       expect(describeErrors(env)).toMatch(/SOWA_ENV: \S+/);
+    });
+  });
+
+  describe("SOWA_ENCRYPTION_KEYS", () => {
+    const withoutKeys: Env = { ...requiredEnv, SOWA_ENCRYPTION_KEYS: undefined };
+
+    it("обязательна в production и называется в ошибке", () => {
+      const env = { ...withoutKeys, SOWA_ENV: "production" };
+
+      expect(isAccepted(env)).toBe(false);
+      expect(describeErrors(env)).toContain(
+        "SOWA_ENCRYPTION_KEYS: is required when SOWA_ENV is production",
+      );
+    });
+
+    it("обязательна, когда SOWA_ENV не задана", () => {
+      expect(isAccepted(withoutKeys)).toBe(false);
+      expect(describeErrors(withoutKeys)).toContain("SOWA_ENCRYPTION_KEYS");
+    });
+
+    it("необязательна в development", () => {
+      const env = { ...withoutKeys, SOWA_ENV: "development" };
+
+      expect(isAccepted(env)).toBe(true);
+    });
+
+    it("принимается в production, если задана", () => {
+      const env = { ...requiredEnv, SOWA_ENV: "production" };
+
+      expect(isAccepted(env)).toBe(true);
     });
   });
 

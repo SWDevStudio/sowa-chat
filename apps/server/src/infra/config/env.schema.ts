@@ -72,6 +72,17 @@ function checkPrettyLogFormat(env: EnvObject, context: z.RefinementCtx): void {
   });
 }
 
+function checkEncryptionKeysInProduction(env: EnvObject, context: z.RefinementCtx): void {
+  if (env.SOWA_ENV !== "production" || env.SOWA_ENCRYPTION_KEYS !== undefined) {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_ENCRYPTION_KEYS"],
+    message: "is required when SOWA_ENV is production",
+  });
+}
+
 export const envSchema = envObjectSchema.superRefine((env, context) => {
   for (const variable of portVariables) {
     const other = findPortWithSameValue(env, variable);
@@ -84,6 +95,7 @@ export const envSchema = envObjectSchema.superRefine((env, context) => {
     }
   }
   checkPrettyLogFormat(env, context);
+  checkEncryptionKeysInProduction(env, context);
 });
 
 export type Env = z.infer<typeof envSchema>;

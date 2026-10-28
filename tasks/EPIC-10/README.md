@@ -13,7 +13,7 @@
 | 1 | [Логи режима `cli` в stderr, вывод команд в stdout](TASK-1.md) | haiku | sonnet | обычная | — | готова |
 | 2 | [Запуск команд nest-commander в режиме `cli`, программа `sowa-chat` и команда `key:generate`](TASK-2.md) | sonnet | sonnet | обычная | 1 | не начата |
 | 3 | [Проверка и нормализация origin](TASK-3.md) | haiku | sonnet | обычная | — | готова |
-| 4 | [Колонка `projects.operator_allowed_origins`](TASK-4.md) | haiku | sonnet | обычная | — | в работе |
+| 4 | [Колонка `projects.operator_allowed_origins`](TASK-4.md) | haiku | sonnet | обычная | — | готова |
 | 5 | [Разбор публичного PEM identity-ключа: алгоритм и JWK](TASK-5.md) | haiku | opus | обычная | — | готова |
 | 6 | [Сервис проектов: создание с `pk_` и `sk_` одной транзакцией, поиск по имени и список](TASK-6.md) | sonnet | opus | обычная | 3, 4 | не начата |
 | 7 | [Перешифровка секретов: реестр зашифрованных полей и перешифровка пачками](TASK-7.md) | sonnet | opus | обычная | — | не начата |

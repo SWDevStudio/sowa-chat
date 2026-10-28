@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "apps/server/vitest.config.e2e.ts": {
-    "mtime": 1793197275.7346294,
-    "seen": 1793204135.8345704,
-    "ast_hash": "34206503ff7c9065b8434bf5ce2918e5",
+    "mtime": 1793204854.3776693,
+    "seen": 1793204963.4685307,
+    "ast_hash": "c76ca86071059ac54a4447eb70650924",
     "semantic_hash": ""
   },
   "apps/server/vitest.config.ts": {
@@ -348,9 +348,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api.module.ts": {
-    "mtime": 1793202565.0161664,
-    "seen": 1793204135.8345704,
-    "ast_hash": "7f4b42c2d69b9441a6c0b321f20db238",
+    "mtime": 1793204874.439257,
+    "seen": 1793204963.4675345,
+    "ast_hash": "b8bdd2893032a219be9cf948b71c3f42",
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
@@ -372,9 +372,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/worker.module.ts": {
-    "mtime": 1793202565.028968,
-    "seen": 1793204135.8345704,
-    "ast_hash": "5a5cd965bb98799394d6541752651ade",
+    "mtime": 1793204874.4449651,
+    "seen": 1793204963.4685307,
+    "ast_hash": "d114ee82f3b27baca313b64da061c36a",
     "semantic_hash": ""
   },
   "apps/server/test/logging.e2e-spec.ts": {
@@ -486,9 +486,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/unit-probe.ts": {
-    "mtime": 1793197275.7187939,
-    "seen": 1793204135.8345704,
-    "ast_hash": "bade5f8545e584230c5401599612b862",
+    "mtime": 1793204854.373485,
+    "seen": 1793204963.4685307,
+    "ast_hash": "39e1343ee010d97f67b0b516b6836138",
     "semantic_hash": ""
   },
   "apps/server/src/infra/cls/cls-middleware.ts": {
@@ -510,9 +510,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/global-setup.ts": {
-    "mtime": 1793197275.7081387,
-    "seen": 1793204135.8345704,
-    "ast_hash": "1a7601e143979ba8a0e181dea98c7ad2",
+    "mtime": 1793204854.3689394,
+    "seen": 1793204963.4685307,
+    "ast_hash": "4a18a6a252ba3b2eaea247c3f8d86c0b",
     "semantic_hash": ""
   },
   "apps/server/test/support/postgres-container.ts": {
@@ -522,9 +522,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/provided-context.d.ts": {
-    "mtime": 1793197275.7152944,
-    "seen": 1793204135.8345704,
-    "ast_hash": "2b5866f18a9e57bdb3c4465d7d296693",
+    "mtime": 1793204854.3699574,
+    "seen": 1793204963.4685307,
+    "ast_hash": "fb42a39075dc67f7f1f70b3ba17d193b",
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-options.spec.ts": {
@@ -816,9 +816,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/zones/zone-servers.spec.ts": {
-    "mtime": 1793200614.2448785,
-    "seen": 1793204135.8345704,
-    "ast_hash": "fa6ddc5f35dd63f92cb63ff0ba7cc3e6",
+    "mtime": 1793204854.3593657,
+    "seen": 1793204963.4685307,
+    "ast_hash": "d2fce978264b0d69735fa7866adfeb53",
     "semantic_hash": ""
   },
   "apps/server/src/infra/zones/zone-servers.ts": {
@@ -864,9 +864,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/zone-probe.ts": {
-    "mtime": 1793200614.262887,
-    "seen": 1793204135.8345704,
-    "ast_hash": "2da03aeb995ee8a4f641790dbc66c3fb",
+    "mtime": 1793204854.375664,
+    "seen": 1793204963.4685307,
+    "ast_hash": "52436fdb53eaadfffc8853d858f0dea5",
     "semantic_hash": ""
   },
   "packages/protocol/src/page-query.spec.ts": {
@@ -987,6 +987,144 @@
     "mtime": 1793202565.036001,
     "seen": 1793204135.8345704,
     "ast_hash": "e365fe911e89fb5f9d0e5308af85877a",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/dependency-checks.ts": {
+    "mtime": 1793204854.3482416,
+    "seen": 1793204963.4685307,
+    "ast_hash": "376dafcfd074f97da306e20a55c89ede",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/health.controller.spec.ts": {
+    "mtime": 1793204854.3492546,
+    "seen": 1793204963.4685307,
+    "ast_hash": "49d8bdf5d1666d183d377a09fd473452",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/health.controller.ts": {
+    "mtime": 1793204854.3492546,
+    "seen": 1793204963.4685307,
+    "ast_hash": "789293ad8af9a1b9e91795ef87753519",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/health.module.ts": {
+    "mtime": 1793204854.3507657,
+    "seen": 1793204963.4685307,
+    "ast_hash": "28c128fdabac05b822de6537f526e75e",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/replica-readiness.ts": {
+    "mtime": 1793204854.35178,
+    "seen": 1793204963.4685307,
+    "ast_hash": "01dc549f77f1bfc11e7e957a4866f9c5",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/server-version.ts": {
+    "mtime": 1793204854.35278,
+    "seen": 1793204963.4685307,
+    "ast_hash": "4ef3ac596d92f0ed924d9abb393bd454",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/status.controller.spec.ts": {
+    "mtime": 1793204854.35278,
+    "seen": 1793204963.4685307,
+    "ast_hash": "68cc25955128a4d4d976459c79ca8224",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/status.controller.ts": {
+    "mtime": 1793204854.3542914,
+    "seen": 1793204963.4685307,
+    "ast_hash": "ad4aa5ed7b09a1d52a5bbb87bae18f3d",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/health/status.service.ts": {
+    "mtime": 1793204854.3542914,
+    "seen": 1793204963.4685307,
+    "ast_hash": "c049e4bbb6434b69b0228aad208f3be6",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/redis/redis-client.spec.ts": {
+    "mtime": 1793204854.356305,
+    "seen": 1793204963.4685307,
+    "ast_hash": "594a6d367c1f42001425c918249f680c",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/redis/redis-client.ts": {
+    "mtime": 1793204854.356305,
+    "seen": 1793204963.4685307,
+    "ast_hash": "fd3f2e79032ef79e4a3451a17698a7fa",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/redis/redis.module.ts": {
+    "mtime": 1793204854.3578148,
+    "seen": 1793204963.4685307,
+    "ast_hash": "5a7d312f51caec9c3f10502c7ce2906f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/telemetry/metrics/metrics.controller.spec.ts": {
+    "mtime": 1793204854.3618941,
+    "seen": 1793204963.4685307,
+    "ast_hash": "4138533a9e13fbd639220f847c263ca4",
+    "semantic_hash": ""
+  },
+  "apps/server/src/telemetry/metrics/metrics.controller.ts": {
+    "mtime": 1793204854.3628933,
+    "seen": 1793204963.4685307,
+    "ast_hash": "4fb4cf4470a383d1999db6ba65a945b8",
+    "semantic_hash": ""
+  },
+  "apps/server/src/telemetry/metrics/metrics.module.ts": {
+    "mtime": 1793204854.3628933,
+    "seen": 1793204963.4685307,
+    "ast_hash": "80867d24e2e962f5f8809b0dd6255fc1",
+    "semantic_hash": ""
+  },
+  "apps/server/test/health.e2e-spec.ts": {
+    "mtime": 1793204854.366422,
+    "seen": 1793204963.4685307,
+    "ast_hash": "fc7ef1e0e5e6fae38367c2864b40c45b",
+    "semantic_hash": ""
+  },
+  "apps/server/test/redis-connection.e2e-spec.ts": {
+    "mtime": 1793204854.3674226,
+    "seen": 1793204963.4685307,
+    "ast_hash": "f1fe12550255f001e13fe724a60a8870",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/offline-redis.ts": {
+    "mtime": 1793204854.3689394,
+    "seen": 1793204963.4685307,
+    "ast_hash": "573a1c59080dccef4a3b7a8d6b0500c8",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/redis-stub-probe.ts": {
+    "mtime": 1793204854.3709579,
+    "seen": 1793204963.4685307,
+    "ast_hash": "a2533b169b39ac383041284ca227ca44",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/redis-url.setup.ts": {
+    "mtime": 1793204854.3714767,
+    "seen": 1793204963.4685307,
+    "ast_hash": "906e41224bd46bf0274982832a2f0a1f",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/test-redis.ts": {
+    "mtime": 1793204854.372478,
+    "seen": 1793204963.4685307,
+    "ast_hash": "d4fc36521ac9787d8e307c0bca2a37f7",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/valkey-container.ts": {
+    "mtime": 1793204854.3746693,
+    "seen": 1793204963.4685307,
+    "ast_hash": "cdc5db4fae5203657f5691d90c364e18",
+    "semantic_hash": ""
+  },
+  "apps/server/test/valkey-container.e2e-spec.ts": {
+    "mtime": 1793204854.3766668,
+    "seen": 1793204963.4685307,
+    "ast_hash": "64677cfe73d9ed859ea339b2889bce2e",
     "semantic_hash": ""
   }
 }

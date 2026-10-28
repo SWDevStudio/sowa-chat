@@ -14,6 +14,6 @@ export default defineConfig({
     fileParallelism: false,
     env: testEnv,
     globalSetup: ["./test/support/global-setup.ts"],
-    setupFiles: ["./test/support/database-url.setup.ts"],
+    setupFiles: ["./test/support/database-url.setup.ts", "./test/support/redis-url.setup.ts"],
   },
 });

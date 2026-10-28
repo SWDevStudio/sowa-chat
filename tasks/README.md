@@ -43,7 +43,7 @@
 | [EPIC-3](EPIC-3/README.md) | Логи | готов |
 | [EPIC-4](EPIC-4/README.md) | Зоны API | на ревью |
 | [EPIC-5](EPIC-5/README.md) | База данных и миграции | на ревью |
-| [EPIC-6](EPIC-6/README.md) | Redis и служебная зона | не начат |
+| [EPIC-6](EPIC-6/README.md) | Redis и служебная зона | на ревью |
 | [EPIC-7](EPIC-7/README.md) | Обработка HTTP-запросов | на ревью |
 | [EPIC-8](EPIC-8/README.md) | Шина событий и журнал аудита | не начат |
 | [EPIC-9](EPIC-9/README.md) | Ключи и шифрование секретов | не начат |

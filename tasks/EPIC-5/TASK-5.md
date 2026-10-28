@@ -1,45 +1,104 @@
-# EPIC-5 / TASK-5. E2e-окружение: PostgreSQL в testcontainers
+# EPIC-5 / TASK-5. Режим migrate: шаги подготовки по порядку, коды выхода, миграции в e2e
 
 Исполнитель: sonnet
-Зависит от: TASK-2
+Зависит от: TASK-4
+Владеет: apps/server/src/infra/database/run-database-migrations.ts, apps/server/src/infra/database/database-migration.step.ts, apps/server/src/infra/preparation/, apps/server/src/migrate.module.ts, apps/server/src/main.ts, apps/server/package.json, apps/server/test/support/global-setup.ts, apps/server/test/migrate-mode.e2e-spec.ts
 Ветка: feature/EPIC-5
 
 ## Что сделать
 
-Подготовить окружение, на котором e2e-тесты сервера запускаются с настоящим PostgreSQL.
+Режим `migrate` выполняет шаги подготовки по порядку и завершается: код 0 при успехе, код 1 при ошибке любого шага. Первый шаг — миграции базы. Эпик хранилища файлов добавит второй шаг: создание бакета и его CORS-правил.
 
-1. Перед e2e-тестами (глобальная подготовка vitest) поднимается контейнер PostgreSQL `postgres:18.6` через `@testcontainers/postgresql` — тот же образ, что в `deploy/compose/docker-compose.dev.yml`.
-2. Миграции применяются тем же кодом, что в режиме `migrate`. Пользователь один — тот, которого создаёт контейнер.
-3. Механизм фикстур: функции, которые создают нужные тесту записи (сначала — проект). Фикстуры пишут данные через репозитории или SQL, но не создают и не меняют схему.
-4. Между тестами данные очищаются (например, `TRUNCATE` всех таблиц, кроме таблицы миграций), контейнер один на весь прогон.
-5. Помощник, который поднимает Nest-приложение для e2e с конфигом, указывающим на контейнер.
+1. `apps/server/src/infra/database/run-database-migrations.ts`:
+
+   ```ts
+   export async function runDatabaseMigrations(
+     url: string,
+     migrations: DatabaseMigration[] = databaseMigrations,
+   ): Promise<string[]>
+   ```
+
+   Создаёт свой `DataSource` из `createDataSourceOptions({ url, poolSize: 1, entities: [] })` с переданным списком `migrations`, вызывает `initialize()` и `runMigrations()`, в `finally` — `destroy()`. Возвращает имена применённых миграций (`migration.name`). Эту функцию вызывают и шаг режима `migrate`, и глобальная подготовка e2e: миграции в тестах применяет тот же код.
+2. `apps/server/src/infra/preparation/preparation-step.ts`:
+
+   ```ts
+   export interface PreparationStep {
+     readonly name: string;
+     run(): Promise<void>;
+   }
+
+   export const preparationSteps = Symbol("preparationSteps");
+   ```
+
+3. `apps/server/src/infra/preparation/preparation-runner.ts` — `PreparationRunner` (`@Injectable()`), в конструктор внедряется `@Inject(preparationSteps) steps: PreparationStep[]`. Метод `async run(): Promise<void>` выполняет шаги строго по очереди. Перед шагом пишет в лог `Preparation step started`, после — `Preparation step finished`, оба с полем `step` (имя шага). Ошибку шага не перехватывает: следующие шаги не выполняются, ошибка уходит наверх.
+4. `apps/server/src/infra/database/database-migration.step.ts` — `DatabaseMigrationStep implements PreparationStep`, `name = "databaseMigrations"`. Внедряет группу `database` (`@Inject(databaseConfig.KEY)`), в `run()` вызывает `runDatabaseMigrations(database.migrationUrl)` и пишет в лог `Database migrations applied` с полем `migrations` — списком имён.
+5. `apps/server/src/migrate.module.ts` — к существующим `imports` добавить провайдеры:
+
+   ```ts
+   providers: [
+     DatabaseMigrationStep,
+     {
+       provide: preparationSteps,
+       useFactory: (databaseMigration: DatabaseMigrationStep) => [databaseMigration],
+       inject: [DatabaseMigrationStep],
+     },
+     PreparationRunner,
+   ],
+   ```
+
+   Порядок шагов задаёт этот список. Модулей с Redis и HTTP в `MigrateModule` нет.
+6. `apps/server/src/main.ts` — меняется только `runMigrate`:
+
+   ```ts
+   async function runMigrate() {
+     const app = await createContext(MigrateModule);
+     try {
+       await app.get(PreparationRunner).run();
+     } finally {
+       await app.close();
+     }
+   }
+   ```
+
+   Ошибка шага отклоняет промис верхнего уровня: Node печатает ошибку с текстом PostgreSQL и завершает процесс с кодом 1. Остальные функции `main.ts` не трогать: их меняет параллельный эпик зон API (EPIC-4).
+7. `apps/server/package.json` — скрипт `"start:migrate": "nest start -- migrate"` рядом с `start:api`, чтобы применить миграции к базе из `.env` при разработке.
+8. `apps/server/test/support/global-setup.ts` — после запуска контейнера вызвать `runDatabaseMigrations(container.getConnectionUri())`, до `project.provide`.
 
 ## Где
 
-- `apps/server/test/support/` — новая папка: контейнеры, фикстуры, создание приложения.
-- `apps/server/vitest.config.e2e.ts` — глобальная подготовка.
+- `apps/server/src/infra/database/` — новые `run-database-migrations.ts`, `database-migration.step.ts`.
+- `apps/server/src/infra/preparation/` — новая папка: `preparation-step.ts`, `preparation-runner.ts`.
+- `apps/server/src/migrate.module.ts`, `apps/server/src/main.ts` (только `runMigrate`), `apps/server/package.json`.
+- `apps/server/test/support/global-setup.ts`.
+- Тесты: `apps/server/src/infra/preparation/preparation-runner.spec.ts`, `apps/server/test/migrate-mode.e2e-spec.ts`.
 
 ## Требования из плана
 
-- Тесты: unit + e2e на testcontainers (Postgres, Redis, SeaweedFS из того же образа, что в compose).
-- Базы данных не создаются автоматически: схема — только миграциями, данные — фикстурами. `synchronize` не используется и в тестах.
-- Критичные запросы покрываются тестами на реальном PostgreSQL, не на моках.
+- Перед выкаткой один шаг — `migrate`: он применяет миграции, создаёт бакет и обновляет его CORS-правила. Бакет и CORS — шаг эпика хранилища файлов.
+- Подключение для миграций: `SOWA_MIGRATION_DATABASE_URL`, если она задана, иначе `DATABASE_URL` (поле `migrationUrl` группы `database`, TASK-1).
+- Старые и новые поды работают одновременно, поэтому миграции только обратно совместимые (expand → contract) и запускаются отдельно до выкатки.
+- В compose `migrate` отрабатывает и завершается до старта `api`: `api` ждёт его успешного завершения.
 
 ## Документация
 
-- https://node.testcontainers.org/modules/postgresql/
-- https://vitest.dev/config/#globalsetup
-- https://docs.nestjs.com/fundamentals/testing
+- https://typeorm.io/docs/migrations/executing
+- https://docs.nestjs.com/standalone-applications
+- https://docs.nestjs.com/fundamentals/custom-providers
 
 ## Критерии приёмки
 
-- `pnpm --filter @sowa-chat/server test:e2e` поднимает PostgreSQL 18.6 в контейнере, накатывает миграции и проходит тестовый e2e-тест, который создаёт проект через фикстуру и читает его.
-- После прогона контейнер остановлен.
-- Данные одного теста не видны в следующем.
+- `PreparationRunner` выполняет шаги в порядке списка; если первый шаг бросает ошибку, `run()` отклоняется этой ошибкой, а второй шаг не вызывается (unit).
+- E2e: в новой базе контейнера (тест создаёт её через `CREATE DATABASE` и удаляет после себя) собранный `migrate` с `DATABASE_URL` этой базы и без `SOWA_MIGRATION_DATABASE_URL` завершается с кодом 0 и создаёт таблицу `migrations`; повторный запуск тоже выходит с кодом 0, число строк в `migrations` не меняется.
+- E2e: `migrate` с `DATABASE_URL` на свободный порт и `SOWA_MIGRATION_DATABASE_URL` контейнера выходит с кодом 0; с `DATABASE_URL` контейнера и `SOWA_MIGRATION_DATABASE_URL` на свободный порт — с кодом 1, в выводе есть `ECONNREFUSED`.
+- E2e: `runDatabaseMigrations(url, [BrokenMigration1700000000000])` (TypeORM требует метку времени в конце имени класса), где `up` выполняет `SELECT * FROM missing_table`, отклоняется ошибкой с текстом `missing_table`, и в таблице `migrations` нет строки этой миграции.
+- Существующий e2e-тест «migrate запускается и завершается с кодом 0» проходит.
 
 ## Чего не делать
 
-- Не добавлять Valkey и SeaweedFS — Valkey добавит эпик Redis, SeaweedFS — эпик хранилища файлов.
+- Не создавать сущности и миграции с таблицами — это TASK-6.
+- Не подключать к `MigrateModule` модули, которым нужен Redis или HTTP, и `DatabaseModule` приложения.
+- Не делать шаг бакета и CORS — это эпик хранилища файлов.
+- Не добавлять init-скрипты PostgreSQL и вторых пользователей в compose.
 
 ## История доработок
 

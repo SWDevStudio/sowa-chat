@@ -6,10 +6,15 @@ PostgreSQL через TypeORM, миграции, транзакции, тест�
 
 Нужны эпики: 2.
 
-| № | Задача | Исполнитель | Зависит от | Статус |
-|---|---|---|---|---|
-| 1 | [Подключение TypeORM из конфига, `synchronize` выключен](TASK-1.md) | haiku | — | не начата |
-| 2 | [Режим `migrate`](TASK-2.md) | sonnet | 1 | не начата |
-| 3 | [Транзакции через `nestjs-cls` и `@Transactional()`](TASK-3.md) | sonnet | 1 | не начата |
-| 4 | [Сущность и миграция `projects`](TASK-4.md) | haiku | 2 | не начата |
-| 5 | [E2e-окружение: PostgreSQL в testcontainers, миграции и фикстуры](TASK-5.md) | sonnet | 2 | не начата |
+Ревью: opus
+
+| № | Задача | Исполнитель | Тесты | Зависит от | Статус |
+|---|---|---|---|---|---|
+| 1 | [Переменные окружения базы: размер пула и адрес для миграций](TASK-1.md) | haiku | sonnet | — | не начата |
+| 2 | [PostgreSQL 18.6 в контейнере для всех e2e-тестов](TASK-2.md) | haiku | sonnet | — | не начата |
+| 3 | [Подключение к PostgreSQL через TypeORM в режимах `api`, `worker` и `cli`](TASK-3.md) | sonnet | sonnet | 1, 2 | не начата |
+| 4 | [Список миграций, DataSource для CLI TypeORM и скрипты `migration:generate`, `migration:create`](TASK-4.md) | haiku | sonnet | 3 | не начата |
+| 5 | [Режим `migrate`: шаги подготовки по порядку, коды выхода, миграции в e2e](TASK-5.md) | sonnet | sonnet | 4 | не начата |
+| 6 | [Сущность `Project` и миграция таблицы `projects`](TASK-6.md) | haiku | sonnet | 5 | не начата |
+| 7 | [Транзакции `@Transactional()` и образцовый репозиторий проектов](TASK-7.md) | sonnet | opus | 6 | не начата |
+| 8 | [E2e: фикстура проекта, очистка таблиц между тестами, запуск приложения](TASK-8.md) | haiku | sonnet | 6 | не начата |

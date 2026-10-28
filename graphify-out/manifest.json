@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-migrations.ts": {
-    "mtime": 1793219320.2722101,
-    "seen": 1793220602.2872214,
-    "ast_hash": "eb74dda732be451298ed126647d36c26",
+    "mtime": 1793222545.8215828,
+    "seen": 1793222563.3891082,
+    "ast_hash": "7d9e36c7d124c1c7803ab5781d40f7e7",
     "semantic_hash": ""
   },
   "apps/server/src/infra/preparation/preparation-runner.spec.ts": {
@@ -636,15 +636,15 @@
     "semantic_hash": ""
   },
   "apps/server/test/projects-table.e2e-spec.ts": {
-    "mtime": 1793219320.3944209,
-    "seen": 1793220602.2872214,
-    "ast_hash": "ac8404684ac35cd0c692458719c68c62",
+    "mtime": 1793222545.8235793,
+    "seen": 1793222563.3891082,
+    "ast_hash": "2e109da795b99db4fed2d4e1d5322919",
     "semantic_hash": ""
   },
   "apps/server/src/domain/projects/project.entity.ts": {
-    "mtime": 1793219320.2387183,
-    "seen": 1793220602.2862282,
-    "ast_hash": "cae4e767e28cce734ac9910f4484eba8",
+    "mtime": 1793222545.8195724,
+    "seen": 1793222563.3891082,
+    "ast_hash": "fa7541f470617f508659754f90ec0d01",
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/migrations/1793193549883-CreateProjects.ts": {
@@ -1533,6 +1533,12 @@
     "mtime": 1793222430.1976466,
     "seen": 1793222449.2342327,
     "ast_hash": "d5fcb4052f0fb4942b6bf788aeed14b2",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/database/migrations/1793300003000-AddProjectsOperatorAllowedOrigins.ts": {
+    "mtime": 1793222545.822582,
+    "seen": 1793222563.3891082,
+    "ast_hash": "5604663b8bf4ef57a5b5c7c335f1bf8d",
     "semantic_hash": ""
   }
 }

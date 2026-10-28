@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { encryptionKeysSchema } from "./encryption-keys.schema.js";
 
 const portVariables = [
   "SOWA_PUBLIC_PORT",
@@ -49,6 +50,7 @@ const envObjectSchema = z.object({
   SOWA_S3_ACCESS_KEY: nonEmptyString,
   SOWA_S3_SECRET_KEY: nonEmptyString,
   SOWA_S3_BUCKET: nonEmptyString,
+  SOWA_ENCRYPTION_KEYS: encryptionKeysSchema,
   SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),
   SOWA_LOG_FORMAT: z.enum(logFormats).default("json"),
   SOWA_SLOW_OPERATION_MS: integerInRange(1, 600000, 500),
@@ -71,6 +73,17 @@ function checkPrettyLogFormat(env: EnvObject, context: z.RefinementCtx): void {
   });
 }
 
+function checkEncryptionKeysInProduction(env: EnvObject, context: z.RefinementCtx): void {
+  if (env.SOWA_ENV !== "production" || env.SOWA_ENCRYPTION_KEYS !== undefined) {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_ENCRYPTION_KEYS"],
+    message: "is required when SOWA_ENV is production",
+  });
+}
+
 export const envSchema = envObjectSchema.superRefine((env, context) => {
   for (const variable of portVariables) {
     const other = findPortWithSameValue(env, variable);
@@ -83,6 +96,7 @@ export const envSchema = envObjectSchema.superRefine((env, context) => {
     }
   }
   checkPrettyLogFormat(env, context);
+  checkEncryptionKeysInProduction(env, context);
 });
 
 export type Env = z.infer<typeof envSchema>;

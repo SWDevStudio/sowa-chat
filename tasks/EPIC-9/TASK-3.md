@@ -1,53 +1,72 @@
-# EPIC-9 / TASK-3. Проверка ключа по хешу
+# EPIC-9 / TASK-3. События аудита apiKey.issued и apiKey.revoked
 
-Исполнитель: sonnet
-Зависит от: TASK-1, TASK-2
+Исполнитель: haiku
+Зависит от: —
+Владеет: apps/server/src/telemetry/events/domain-events.ts, apps/server/src/domain/audit/audited-events.ts, apps/server/src/domain/audit/audited-events.spec.ts
 Ветка: feature/EPIC-9
 
 ## Что сделать
 
-Сервис ключей: выпуск, проверка и отзыв ключей `server` и `bot`.
+Два доменных события ключей и правила журнала аудита для них. Публиковать события будет сервис ключей (TASK-6), здесь только реестр и правила. Образец правила — `apps/server/test/support/test-audit-rules.ts`.
 
-1. Выпуск: создаёт ключ (формат из TASK-1), сохраняет `prefix` и SHA-256-хеш, возвращает открытый ключ один раз.
-2. Проверка:
-   - сначала разбор и контрольная сумма — опечатка отсекается без запроса к БД;
-   - поиск записи по `prefix`;
-   - сравнение хеша через `crypto.timingSafeEqual`;
-   - отозванный ключ (`revoked_at`) не проходит;
-   - результат — проект (и бот для `bot`), к которому относится ключ.
-3. `last_used_at` обновляется не чаще раза в минуту на ключ, чтобы не писать в БД на каждый запрос.
-4. Отзыв: ставит `revoked_at`.
-5. Выпуск и отзыв публикуют события в шину для журнала аудита и добавляют их в список подписчика аудита.
+1. В `apps/server/src/telemetry/events/domain-events.ts` добавить тип данных и два события в интерфейс `DomainEvents`:
+
+   ```ts
+   export interface ApiKeyEvent {
+     apiKeyId: string;
+     projectId: string;
+     kind: "server" | "bot";
+     prefix: string;
+     botId: string | null;
+     actorKind: "cli" | "system";
+   }
+
+   export interface DomainEvents {
+     "apiKey.issued": ApiKeyEvent;
+     "apiKey.revoked": ApiKeyEvent;
+   }
+   ```
+
+   Типы объявляются литералами здесь же: `telemetry` не импортирует `domain` (решение EPIC-8). `prefix` — публичный идентификатор ключа (`lookupPrefix` из TASK-1), не сам ключ.
+
+2. В `apps/server/src/domain/audit/audited-events.ts` добавить в `auditedEvents` правила для обоих событий. Оба правила одинаковые — общая функция `apiKeyAuditRecord(event: ApiKeyEvent): AuditRecord` в том же файле:
+
+   | Поле `AuditRecord` | Значение |
+   |---|---|
+   | `projectId` | `event.projectId` |
+   | `actorKind` | `event.actorKind` |
+   | `actorId` | `null` |
+   | `targetKind` | `"apiKey"` |
+   | `targetId` | `event.apiKeyId` |
+   | `data` | `{ kind: event.kind, prefix: event.prefix, botId: event.botId }` |
 
 ## Где
 
-- `apps/server/src/domain/keys/`.
-- `apps/server/src/domain/audit/` — список событий аудита.
+- `apps/server/src/telemetry/events/domain-events.ts` — реестр `DomainEvents`.
+- `apps/server/src/domain/audit/audited-events.ts` — список `auditedEvents` (`AuditRules` из `apps/server/src/domain/audit/audit-rule.ts`).
+- Тест: `apps/server/src/domain/audit/audited-events.spec.ts` (vitest, `pnpm --filter @sowa-chat/server test`).
 
 ## Требования из плана
 
-- Ключи `server` и `bot` хранятся как SHA-256-хеш: это случайные строки высокой энтропии, медленный bcrypt им не нужен.
-- HMAC и ключи сравниваются через `crypto.timingSafeEqual`.
 - У всех ключей есть `last_used_at`, создание и отзыв пишутся в журнал аудита.
-- На время замены активны два ключа: выпуск нового не отзывает старый.
+- `audit_log.data` — без персональных данных; ключ в журнал не попадает, только его публичный `prefix`.
+- `action` журнала равно имени события, имена событий — camelCase с точкой (решение EPIC-8).
 
 ## Документация
 
-- https://docs.nestjs.com/security/encryption-and-hashing
-- https://nodejs.org/api/crypto.html#cryptotimingsafeequala-b
+- https://docs.nestjs.com/techniques/events
 
 ## Критерии приёмки
 
-- Ключ с опечаткой отклоняется без запроса к БД.
-- В БД ключ лежит только хешем: открытого ключа нет ни в одной колонке.
-- Отозванный ключ не проходит проверку.
-- Выпуск и отзыв создают записи в `audit_log`.
-- Два запроса подряд обновляют `last_used_at` один раз.
+- `auditedEventNames(auditedEvents)` содержит `apiKey.issued` и `apiKey.revoked`.
+- Правило каждого из двух событий для примера события возвращает запись ровно с полями из таблицы выше.
+- В `data` записи нет ключей, кроме `kind`, `prefix` и `botId`.
 
 ## Чего не делать
 
-- Не делать guard для HTTP — это эпик доступа бекенда и операторов.
-- Не кэшировать результат проверки — это эпик кэша.
+- Не публиковать события и не делать сервис ключей — это TASK-6.
+- Не импортировать в `apps/server/src/telemetry/` ничего из `domain` и `api`.
+- Не менять `AuditLogListener` и `AuditModule`.
 
 ## История доработок
 

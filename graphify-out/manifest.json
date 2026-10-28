@@ -1522,5 +1522,17 @@
     "seen": 1793221764.3847444,
     "ast_hash": "fb5d750669c94f627ade62d63b652523",
     "semantic_hash": ""
+  },
+  "apps/server/src/domain/keys/identity-key-pem.spec.ts": {
+    "mtime": 1793222430.1961296,
+    "seen": 1793222449.2342327,
+    "ast_hash": "4f8f17c78383f726cbd2dfc99618b3f7",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/keys/identity-key-pem.ts": {
+    "mtime": 1793222430.1976466,
+    "seen": 1793222449.2342327,
+    "ast_hash": "d5fcb4052f0fb4942b6bf788aeed14b2",
+    "semantic_hash": ""
   }
 }

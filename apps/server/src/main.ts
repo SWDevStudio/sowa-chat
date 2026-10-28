@@ -5,6 +5,7 @@ import { Logger } from "nestjs-pino";
 import { ApiModule } from "./api.module.js";
 import { CliModule } from "./cli.module.js";
 import { useClsMiddleware } from "./infra/cls/cls-middleware.js";
+import { PreparationRunner } from "./infra/preparation/preparation-runner.js";
 import { portsConfig } from "./infra/config/ports.config.js";
 import { MigrateModule } from "./migrate.module.js";
 import { parseServerMode, serverModes } from "./server-mode.js";
@@ -38,8 +39,13 @@ async function runToCompletion(rootModule: Type) {
   await app.close();
 }
 
-function runMigrate() {
-  return runToCompletion(MigrateModule);
+async function runMigrate() {
+  const app = await createContext(MigrateModule);
+  try {
+    await app.get(PreparationRunner).run();
+  } finally {
+    await app.close();
+  }
 }
 
 function runCli() {

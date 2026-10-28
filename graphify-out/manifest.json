@@ -1270,5 +1270,17 @@
     "seen": 1793213488.590904,
     "ast_hash": "dec88745333fcd81aa3a38157fa76890",
     "semantic_hash": ""
+  },
+  "apps/server/src/domain/conversations/participant.entity.spec.ts": {
+    "mtime": 1793214368.3728943,
+    "seen": 1793214383.1174085,
+    "ast_hash": "4ac8e0cb19190e8d731f79bc4777639b",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/conversations/participant.entity.ts": {
+    "mtime": 1793214368.3739042,
+    "seen": 1793214383.1174085,
+    "ast_hash": "dce5f8e45626e9ea258d1a8186d75772",
+    "semantic_hash": ""
   }
 }

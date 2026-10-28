@@ -76,13 +76,13 @@ describe("postgres container for e2e", () => {
   );
 
   it(
-    "creates an empty database without applying migrations",
+    "database has only tables created by migrations",
     async () => {
-      const rows = await queryDatabase<{ count: string }>(
+      const rows = await queryDatabase<{ table_name: string }>(
         process.env.DATABASE_URL ?? "",
-        "SELECT count(*)::text AS count FROM information_schema.tables WHERE table_schema = 'public'",
+        "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name",
       );
-      expect(rows).toEqual([{ count: "0" }]);
+      expect(rows).toEqual([{ table_name: "migrations" }, { table_name: "projects" }]);
     },
     queryTimeout,
   );

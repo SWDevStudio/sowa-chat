@@ -16,6 +16,7 @@ description: Конвейер sowa-chat — по очереди ведёт вс�
 - Эпики идут по одному: следующий стартует после слияния предыдущего. Параллельно идут только задачи внутри эпика.
 - Файлы задач эпика пишет `epic-planner` прямо перед эпиком, когда код всех нужных эпиков уже в `pipeline`. Заранее они не пишутся.
 - Внутри эпика действуют все правила скилла `epic`, кроме его точек остановки.
+- После ответа `epic-planner` и `pipeline-analyst` менеджер записывает их в журнал так же, как в скилле `epic` (раздел «Жёсткие правила»): `log-agent.mjs N - epic-planner-plan opus …`, `log-agent.mjs 0 - pipeline-analyst sonnet …`.
 - Лимиты — раздел «Субагенты и прогоны» в CLAUDE.md.
 - Никаких `push`, `--force`, `--amend`, `--no-verify`, `rebase` и `reset` веток `pipeline` и `feature/EPIC-N`.
 - Состояние конвейера — `.claude/pipeline-state.md` (в `.gitignore`): текущий эпик и этап (планирование, эпик, слияние), временный лимит разработчика. Пропущенные эпики хранит скрипт в `.claude/epic-runs/pipeline-skipped.json`. После обрыва сессии или сжатия контекста начинать с состояния.
@@ -26,6 +27,9 @@ description: Конвейер sowa-chat — по очереди ведёт вс�
 |---|---|---|
 | `node .claude/scripts/epic/next-epic.mjs` | следующий эпик, у которого все нужные эпики уже в `pipeline`; эпики с невыполненными зависимостями сам помечает пропущенными | `next N` и строки `skipped …` или `done` |
 | `node .claude/scripts/epic/skip-epic.mjs N "<причина>"` | пометить эпик пропущенным | строка с причиной |
+| `node .claude/scripts/epic/analysis-due.mjs` | сколько задач влито с прошлого анализа | `due K` при 10 и больше, иначе `wait M/10` |
+| `node .claude/scripts/epic/analysis-done.mjs K` | записать в журнал, что анализ K сделан | строка `analysis K logged` |
+| `node .claude/scripts/epic/log-agent.mjs N <M или -> <роль> <модель> tokens=… durationMs=…` | записать в журнал `.claude/epic-runs/metrics.jsonl`, что агент закончил | строка `logged …` |
 
 ## 1. Старт или продолжение
 
@@ -38,7 +42,8 @@ description: Конвейер sowa-chat — по очереди ведёт вс�
 
 ## 2. Цикл эпика
 
-1. `next-epic.mjs`. `done` — раздел 3. `next N` — дальше.
+1. **Анализ.** `analysis-due.mjs`. `due K` — `pipeline-analyst` с `model: sonnet` и заданием «Анализ K», затем `analysis-done.mjs K`, `git add -- tasks/pipeline-analysis-K.md` и коммит `[DOCS]: add pipeline analysis K`. Анализ идёт между эпиками на ветке `pipeline`, пока других агентов нет. `wait` — сразу дальше. Предложения аналитика сами в правила и файлы задач не вносятся: они идут в итоговый отчёт.
+   Затем `next-epic.mjs`. `done` — раздел 3. `next N` — дальше.
 2. **Ветка.** Ветки `feature/EPIC-N` нет — `git switch -c feature/EPIC-N pipeline`. Есть — `git switch feature/EPIC-N`.
 3. **Планирование.** В таблице задач README эпика нет колонки «Тесты» или у задач нет файлов `TASK-M.md` — `epic-planner` с `model: opus` и заданием «Режим plan, эпик N». Затем `git add -- tasks/EPIC-N` и коммит `[DOCS]: add task files for <тема эпика по-английски>`. Планировщик ответил «описать нельзя» — `skip-epic.mjs N "<причина>"`, `git switch pipeline`, шаг 1.
 4. **Эпик.** Вызвать скилл `epic` с аргументами «N, база pipeline» и вести эпик по нему до итогового отчёта в `tasks/EPIC-N/report.md`.
@@ -57,6 +62,7 @@ description: Конвейер sowa-chat — по очереди ведёт вс�
 - пропущенные эпики и причина;
 - задачи «на разработчике» по всем эпикам;
 - ссылки на `decisions.md` эпиков: там публичные имена и решения планировщика;
+- ссылки на `tasks/pipeline-analysis-K.md` и пять главных предложений последнего анализа;
 - замечания ревью, которые остались;
 - ручные проверки;
 - `git log --oneline --first-parent master..pipeline`.

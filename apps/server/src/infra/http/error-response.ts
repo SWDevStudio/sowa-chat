@@ -3,6 +3,7 @@ import { errorCodes } from "@sowa-chat/protocol";
 import type { ErrorResponse } from "@sowa-chat/protocol";
 import { ZodValidationException } from "nestjs-zod";
 import { ZodError } from "zod";
+import { ApiException } from "./api-exception.js";
 import { errorCodeOfStatus } from "./error-code-of-status.js";
 
 export const internalErrorMessage = "Internal server error";
@@ -12,6 +13,9 @@ const validationMessage = "Validation failed";
 export function toErrorResponse(exception: unknown, requestId: string): ErrorResponse {
   if (exception instanceof ZodValidationException) {
     return validationErrorResponse(exception.getZodError(), requestId);
+  }
+  if (exception instanceof ApiException) {
+    return apiErrorResponse(exception, requestId);
   }
   if (exception instanceof HttpException) {
     return httpErrorResponse(exception, requestId);
@@ -36,6 +40,23 @@ function validationErrorResponse(zodError: unknown, requestId: string): ErrorRes
       message: issue.message,
     })),
   };
+}
+
+function apiErrorResponse(exception: ApiException, requestId: string): ErrorResponse {
+  const statusCode = exception.getStatus();
+  if (statusCode >= 500) {
+    return internalErrorResponse(requestId, statusCode);
+  }
+  const body: ErrorResponse = {
+    statusCode,
+    message: exception.message,
+    code: exception.code,
+    requestId,
+  };
+  if (!exception.details) {
+    return body;
+  }
+  return { ...body, details: exception.details };
 }
 
 function httpErrorResponse(exception: HttpException, requestId: string): ErrorResponse {

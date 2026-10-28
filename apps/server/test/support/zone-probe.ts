@@ -9,7 +9,10 @@ export interface ZoneProbeApp {
   ports: ZonePorts;
 }
 
-export async function startZoneProbeApp(controllers: Type[]): Promise<ZoneProbeApp> {
+export async function startZoneProbeApp(
+  controllers: Type[],
+  env: Record<string, string> = {},
+): Promise<ZoneProbeApp> {
   const ports: ZonePorts = {
     public: await findFreePort(),
     operator: await findFreePort(),
@@ -21,6 +24,7 @@ export async function startZoneProbeApp(controllers: Type[]): Promise<ZoneProbeA
     SOWA_OPERATOR_PORT: String(ports.operator),
     SOWA_INTERNAL_PORT: String(ports.internal),
     SOWA_MANAGEMENT_PORT: String(ports.management),
+    ...env,
   });
   vi.resetModules();
   const { ApiModule } = await import("../../src/api.module.js");

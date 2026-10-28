@@ -16,7 +16,7 @@
 | 4 | [Подпись и проверка токенов через `jose`: только EdDSA, `kid`, `aud`, срок](TASK-4.md) | sonnet | opus | обычная | 1 | готова |
 | 5 | [Сущность и миграция `operators`](TASK-5.md) | haiku | sonnet | обычная | 2 | готова |
 | 6 | [Контекст запроса: проект и оператор в `nestjs-cls`](TASK-6.md) | haiku | sonnet | обычная | 2 | готова |
-| 7 | [Guard серверного ключа для `/v1/server`](TASK-7.md) | sonnet | opus | обычная | 6 | в работе |
+| 7 | [Guard серверного ключа для `/v1/server`](TASK-7.md) | sonnet | opus | обычная | 6 | готова |
 | 8 | [Операторы: создание или обновление по `externalId` и выпуск токена](TASK-8.md) | haiku | sonnet | обычная | 4, 5 | готова |
 | 9 | [`POST /v1/server/operator-token`: выдача токена оператора](TASK-9.md) | haiku | sonnet | обычная | 2, 7, 8 | не начата |
 | 10 | [Guard оператора для `/v1/operator`: токен и контекст оператора](TASK-10.md) | sonnet | opus | обычная | 4, 6, 7, 8 | не начата |

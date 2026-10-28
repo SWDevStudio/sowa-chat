@@ -17,5 +17,5 @@
 | 5 | [Ответы через zod-схемы: лишние поля не уходят наружу](TASK-5.md) | haiku | opus | обычная | 4 | готова |
 | 6 | [Заголовки безопасности `helmet` и `Cache-Control: no-store`](TASK-6.md) | haiku | sonnet | обычная | — | готова |
 | 7 | [Лимит тела запроса 64 КБ до разбора JSON](TASK-7.md) | haiku | sonnet | обычная | 3, 6 | не начата |
-| 8 | [OpenAPI по зонам из zod-схем, Swagger UI только в development на служебном порту](TASK-8.md) | haiku | sonnet | обычная | 4, 6 | в работе |
+| 8 | [OpenAPI по зонам из zod-схем, Swagger UI только в development на служебном порту](TASK-8.md) | haiku | sonnet | обычная | 4, 6 | готова |
 | 9 | [Проверить Swagger UI в браузере со строгой CSP](TASK-9.md) | разработчик | — | — | 6, 8 | не начата |

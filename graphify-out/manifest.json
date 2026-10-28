@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793229462.0294173,
-    "seen": 1793229488.8400056,
-    "ast_hash": "0ff86758a0f13691c19386914f27f29e",
+    "mtime": 1793230312.4705071,
+    "seen": 1793230338.3419554,
+    "ast_hash": "f7fa62720270d5c8273a05db8f3f21b3",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -1797,6 +1797,30 @@
     "mtime": 1793229462.037021,
     "seen": 1793229488.8400056,
     "ast_hash": "4be6d92e9a242f5d5f00fda05662c02f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/origins/origin.commands.ts": {
+    "mtime": 1793230312.4725342,
+    "seen": 1793230338.3419554,
+    "ast_hash": "31fe11cfb7a846e487a303aba6a49ab3",
+    "semantic_hash": ""
+  },
+  "apps/server/test/origin-commands-launch.e2e-spec.ts": {
+    "mtime": 1793230312.4805946,
+    "seen": 1793230338.3435218,
+    "ast_hash": "c0c981801a2980f2ab4341e934f3d2f0",
+    "semantic_hash": ""
+  },
+  "apps/server/test/origin-commands.e2e-spec.ts": {
+    "mtime": 1793230312.4846184,
+    "seen": 1793230338.3435218,
+    "ast_hash": "2d191b91e4d390f90631f376780126bd",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/origin-cli.ts": {
+    "mtime": 1793230312.4846184,
+    "seen": 1793230338.3435218,
+    "ast_hash": "09b745ea6d1cbe81105fac22cf7d05c9",
     "semantic_hash": ""
   }
 }

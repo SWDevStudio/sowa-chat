@@ -6,6 +6,14 @@ import { KeyCreateCommand } from "./cli/keys/key-create.command.js";
 import { KeyGenerateCommand } from "./cli/keys/key-generate.command.js";
 import { KeyListCommand } from "./cli/keys/key-list.command.js";
 import { KeyRevokeCommand } from "./cli/keys/key-revoke.command.js";
+import {
+  OperatorOriginAddCommand,
+  OperatorOriginListCommand,
+  OperatorOriginRemoveCommand,
+  OriginAddCommand,
+  OriginListCommand,
+  OriginRemoveCommand,
+} from "./cli/origins/origin.commands.js";
 import { ProjectCreateCommand } from "./cli/projects/project-create.command.js";
 import { ProjectListCommand } from "./cli/projects/project-list.command.js";
 import { databaseEntities } from "./database-entities.js";
@@ -37,6 +45,12 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     IdentityKeyAddCommand,
     IdentityKeyListCommand,
     IdentityKeyRevokeCommand,
+    OriginAddCommand,
+    OriginRemoveCommand,
+    OriginListCommand,
+    OperatorOriginAddCommand,
+    OperatorOriginRemoveCommand,
+    OperatorOriginListCommand,
     ProjectCreateCommand,
     ProjectListCommand,
   ],

@@ -5,10 +5,10 @@ export interface EncryptedSecret {
   tag: Buffer;
 }
 
-const IV_LENGTH = 12;
-const TAG_LENGTH = 16;
-const VERSION_PATTERN = /^v([1-9]\d*)$/;
-const BASE64URL_PATTERN = /^[A-Za-z0-9_-]*$/;
+export const ivLength = 12;
+export const authTagLength = 16;
+const versionPattern = /^v([1-9]\d*)$/;
+const base64UrlPattern = /^[A-Za-z0-9_-]*$/;
 
 export function formatEncryptedSecret(secret: EncryptedSecret): string {
   return [
@@ -26,17 +26,17 @@ export function parseEncryptedSecret(value: string): EncryptedSecret | undefined
   }
   const [versionPart, ivPart, ciphertextPart, tagPart] = parts;
 
-  const versionMatch = VERSION_PATTERN.exec(versionPart);
+  const versionMatch = versionPattern.exec(versionPart);
   if (versionMatch === null) {
     return undefined;
   }
-  if (![ivPart, ciphertextPart, tagPart].every((part) => BASE64URL_PATTERN.test(part))) {
+  if (![ivPart, ciphertextPart, tagPart].every((part) => base64UrlPattern.test(part))) {
     return undefined;
   }
 
   const iv = Buffer.from(ivPart, "base64url");
   const tag = Buffer.from(tagPart, "base64url");
-  if (iv.length !== IV_LENGTH || tag.length !== TAG_LENGTH) {
+  if (iv.length !== ivLength || tag.length !== authTagLength) {
     return undefined;
   }
 

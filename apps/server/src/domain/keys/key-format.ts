@@ -45,7 +45,16 @@ export function parseKey(text: string, type: KeyType): ParsedKey | undefined {
   if (checksum !== computeChecksum(prefix, body)) {
     return undefined;
   }
-  return { type, text, lookupPrefix: `${prefix}_${body.slice(0, lookupBodyLength)}` };
+  return { type, text, lookupPrefix: buildLookupPrefix(prefix, body) };
+}
+
+export function toLookupPrefix(key: string): string {
+  const [prefix = "", body = ""] = key.split("_");
+  return buildLookupPrefix(prefix, body);
+}
+
+function buildLookupPrefix(prefix: string, body: string): string {
+  return `${prefix}_${body.slice(0, lookupBodyLength)}`;
 }
 
 function computeChecksum(prefix: string, body: string): string {

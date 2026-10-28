@@ -6,18 +6,20 @@ import type { ApiKeyEvent } from "../../telemetry/events/domain-events.js";
 import type { ActorKind } from "../audit/actor-kind.js";
 import type { ApiKey, ApiKeyKind } from "./api-key.entity.js";
 import { ApiKeysRepository } from "./api-keys.repository.js";
-import { generateKey, parseKey } from "./key-format.js";
+import { generateKey, parseKey, toLookupPrefix } from "./key-format.js";
 import type { KeyType } from "./key-format.js";
 import { hashKey } from "./key-hash.js";
 
 export type KeyActorKind = Extract<ActorKind, "cli" | "system">;
 
-export interface IssueApiKeyInput {
+interface IssueApiKeyBaseInput {
   projectId: string;
-  kind: ApiKeyKind;
-  botId?: string;
   actorKind: KeyActorKind;
 }
+
+export type IssueApiKeyInput =
+  | (IssueApiKeyBaseInput & { kind: "server" })
+  | (IssueApiKeyBaseInput & { kind: "bot"; botId: string });
 
 export interface IssuedApiKey {
   apiKeyId: string;
@@ -36,7 +38,7 @@ export interface RevokeApiKeyInput {
   actorKind: KeyActorKind;
 }
 
-const keyTypeByKind: Record<ApiKeyKind, KeyType> = {
+export const keyTypeByKind: Record<ApiKeyKind, KeyType> = {
   server: "serverKey",
   bot: "botKey",
 };
@@ -52,16 +54,12 @@ export class ApiKeysService {
   async issue(input: IssueApiKeyInput): Promise<IssuedApiKey> {
     const keyType = keyTypeByKind[input.kind];
     const key = generateKey(keyType);
-    const parsed = parseKey(key, keyType);
-    if (!parsed) {
-      throw new Error("Generated key does not parse");
-    }
     const row = await this.repository.create({
       projectId: input.projectId,
       kind: input.kind,
-      prefix: parsed.lookupPrefix,
+      prefix: toLookupPrefix(key),
       keyHash: hashKey(key),
-      botId: input.botId ?? null,
+      botId: input.kind === "bot" ? input.botId : null,
     });
     await this.bus.publish("apiKey.issued", toEvent(row, input.actorKind));
     return { apiKeyId: row.id, prefix: row.prefix, key };

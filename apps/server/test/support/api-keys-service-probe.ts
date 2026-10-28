@@ -4,7 +4,7 @@ import { createHash } from "node:crypto";
 import type { Mock } from "vitest";
 import type { ApiKey, ApiKeyKind } from "../../src/domain/keys/api-key.entity.js";
 import { ApiKeysRepository } from "../../src/domain/keys/api-keys.repository.js";
-import { ApiKeysService } from "../../src/domain/keys/api-keys.service.js";
+import { ApiKeysService, keyTypeByKind } from "../../src/domain/keys/api-keys.service.js";
 import { parseKey } from "../../src/domain/keys/key-format.js";
 import { DomainEventBus } from "../../src/telemetry/events/domain-event-bus.js";
 
@@ -39,7 +39,7 @@ export function sha256(text: string): Buffer {
 }
 
 export function lookupPrefixOf(key: string, kind: ApiKeyKind): string {
-  const parsed = parseKey(key, kind === "server" ? "serverKey" : "botKey");
+  const parsed = parseKey(key, keyTypeByKind[kind]);
   if (!parsed) {
     throw new Error("key does not parse");
   }

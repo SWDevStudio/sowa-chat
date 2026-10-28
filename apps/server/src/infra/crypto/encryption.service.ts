@@ -8,11 +8,19 @@ import {
 import { Inject, Injectable } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
 import { encryptionConfig } from "../config/encryption.config.js";
-import { formatEncryptedSecret, parseEncryptedSecret } from "./encrypted-secret.js";
+import {
+  authTagLength,
+  formatEncryptedSecret,
+  ivLength,
+  parseEncryptedSecret,
+} from "./encrypted-secret.js";
 
-const ALGORITHM = "aes-256-gcm";
-const IV_LENGTH = 12;
-const AUTH_TAG_LENGTH = 16;
+const algorithm = "aes-256-gcm";
+
+interface CurrentKey {
+  version: number;
+  key: KeyObject;
+}
 
 export class SecretDecryptionError extends Error {
   constructor() {
@@ -23,27 +31,29 @@ export class SecretDecryptionError extends Error {
 @Injectable()
 export class EncryptionService {
   private readonly keys = new Map<number, KeyObject>();
-  private readonly currentVersion: number | undefined;
+  private readonly currentKey: CurrentKey | undefined;
 
   constructor(@Inject(encryptionConfig.KEY) config: ConfigType<typeof encryptionConfig>) {
     for (const { version, key } of config.keys) {
-      this.keys.set(version, createSecretKey(key));
+      const secretKey = createSecretKey(key);
+      this.keys.set(version, secretKey);
+      if (this.currentKey === undefined || version > this.currentKey.version) {
+        this.currentKey = { version, key: secretKey };
+      }
     }
-    this.currentVersion = this.keys.size === 0 ? undefined : Math.max(...this.keys.keys());
   }
 
   encrypt(plaintext: string): string {
-    const key = this.currentVersion === undefined ? undefined : this.keys.get(this.currentVersion);
-    if (this.currentVersion === undefined || key === undefined) {
+    if (this.currentKey === undefined) {
       throw new Error("SOWA_ENCRYPTION_KEYS is not set");
     }
 
-    const iv = randomBytes(IV_LENGTH);
-    const cipher = createCipheriv(ALGORITHM, key, iv, { authTagLength: AUTH_TAG_LENGTH });
+    const iv = randomBytes(ivLength);
+    const cipher = createCipheriv(algorithm, this.currentKey.key, iv, { authTagLength });
     const ciphertext = Buffer.concat([cipher.update(plaintext, "utf8"), cipher.final()]);
 
     return formatEncryptedSecret({
-      version: this.currentVersion,
+      version: this.currentKey.version,
       iv,
       ciphertext,
       tag: cipher.getAuthTag(),
@@ -52,15 +62,16 @@ export class EncryptionService {
 
   decrypt(value: string): string {
     const secret = parseEncryptedSecret(value);
-    const key = secret === undefined ? undefined : this.keys.get(secret.version);
-    if (secret === undefined || key === undefined) {
+    if (secret === undefined) {
+      throw new SecretDecryptionError();
+    }
+    const key = this.keys.get(secret.version);
+    if (key === undefined) {
       throw new SecretDecryptionError();
     }
 
     try {
-      const decipher = createDecipheriv(ALGORITHM, key, secret.iv, {
-        authTagLength: AUTH_TAG_LENGTH,
-      });
+      const decipher = createDecipheriv(algorithm, key, secret.iv, { authTagLength });
       decipher.setAuthTag(secret.tag);
       return Buffer.concat([decipher.update(secret.ciphertext), decipher.final()]).toString("utf8");
     } catch {

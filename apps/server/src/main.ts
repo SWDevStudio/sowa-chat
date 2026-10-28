@@ -1,5 +1,6 @@
 import type { INestApplicationContext, Type } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Logger } from "nestjs-pino";
 import { configureApiApp } from "./api-app.js";
 import { ApiModule } from "./api.module.js";
@@ -21,7 +22,7 @@ async function createContext(rootModule: Type) {
 }
 
 async function runApi() {
-  const app = await NestFactory.create(ApiModule, { bufferLogs: true });
+  const app = await NestFactory.create<NestExpressApplication>(ApiModule, { bufferLogs: true });
   configureApiApp(app);
   await app.init();
   await app.get(ZoneServers).listen(app);

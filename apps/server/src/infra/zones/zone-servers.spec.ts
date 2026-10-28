@@ -1,5 +1,6 @@
 import { Controller, Get, VERSION_NEUTRAL } from "@nestjs/common";
 import type { INestApplication } from "@nestjs/common";
+import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Test } from "@nestjs/testing";
 import { createConnection, createServer } from "node:net";
 import type { AddressInfo, Server } from "node:net";
@@ -164,8 +165,11 @@ describe("ZoneServers", { timeout: 20_000 }, () => {
     const { configureApiApp } = await import("../../api-app.js");
     const { ZoneServers } = await import("./zone-servers.js");
     const moduleRef = await Test.createTestingModule({ imports: [ApiModule] }).compile();
-    app = moduleRef.createNestApplication({ bufferLogs: true });
-    configureApiApp(app);
+    const expressApp = moduleRef.createNestApplication<NestExpressApplication>({
+      bufferLogs: true,
+    });
+    app = expressApp;
+    configureApiApp(expressApp);
     await app.init();
 
     try {

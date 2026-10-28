@@ -1,4 +1,5 @@
 import type { INestApplication, Type } from "@nestjs/common";
+import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Test } from "@nestjs/testing";
 import type { ZonePorts } from "../../src/infra/zones/zone.js";
 import { findFreePort } from "./e2e-server.js";
@@ -34,7 +35,7 @@ export async function startZoneProbeApp(
     imports: [ApiModule],
     controllers,
   }).compile();
-  const app = moduleRef.createNestApplication({ bufferLogs: true });
+  const app = moduleRef.createNestApplication<NestExpressApplication>({ bufferLogs: true });
   configureApiApp(app);
   await app.init();
   await app.get(ZoneServers).listen(app);

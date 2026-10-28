@@ -383,7 +383,7 @@ await bot.start();  // webhook() поднимает свой HTTP-сервер �
 - проверку подписи и защиту от дублей по `eventId`;
 - быстрое подтверждение вебхука: обработчик работает уже после ответа `200 OK`;
 - `ctx.send`: текст, файлы или текст с файлами одним сообщением — `ctx.send({ text?, files? })`, как у посетителя и оператора. Аргумент всегда объект, даже для простого текста: новое поле добавляется без перегрузок и без поломки старого кода. Правило то же, что у посетителя и оператора: до 10 файлов, хотя бы текст или файл;
-- `ctx.sendTyping`, `ctx.handoff`, `ctx.transfer`;
+- `ctx.sendTyping`, `ctx.handoff`, `ctx.transfer`, `ctx.history`, `ctx.updateVisitorContacts`;
 - индикатор «печатает» во время работы обработчика: `bot-sdk` сам отправляет его каждые 3 секунды, пока бот готовит ответ;
 - `ctx.messages`: все сообщения посетителя после последнего ответа бота;
 - `ctx.state`: состояние диалога для бота (до 64 КБ). Оно хранится у нас и общее для всех экземпляров бота, поэтому сценарному боту не нужна своя база;
@@ -525,7 +525,7 @@ ai-assistant  без условий
 - Файлы загружаются прямо в S3 по presigned URL, сервер не пропускает их через себя: `POST /uploads` → загрузка в S3 → `complete` → обработка в worker.
 - Лимиты по типам настраиваются на проект, например фото до 20 МБ, голос до 5 минут, видео до 100 МБ.
 - Тип файла определяется по сигнатуре (magic bytes), а не по расширению. SVG не принимаем. Защита обработки файлов от вредного содержимого — в разделе 15, «Защита от атак».
-- Фото: удаление EXIF (там бывает геолокация), превью через sharp, HEIC с iPhone конвертируется в JPEG или WebP.
+- Фото: удаление EXIF (там бывает геолокация), превью через sharp, HEIC с iPhone конвертируется в JPEG или WebP. Готовые сборки sharp HEIC не читают, поэтому HEIC декодирует `heic-decode` (libheif, собранный в WebAssembly) в пиксели, а дальше их обрабатывает sharp. Размер в пикселях проверяется до декодирования тем же лимитом, что `limitInputPixels`.
 - Голос: Chrome и Firefox пишут webm/opus, Safari обычно mp4/aac. Worker через ffmpeg приводит запись к одному формату, считает длительность и waveform для плеера.
 - Видео: кадр-обложка и длительность.
 - Бакет приватный, доступ по подписанным ссылкам с коротким TTL. По желанию проверка ClamAV.
@@ -747,7 +747,7 @@ export class SendMessageDto extends createZodDto(SendMessageSchema) {}
 
 ## 14. SDK
 
-UML-схемы классов — черновик для согласования: открытые (`+`), закрытые (`-`) и защищённые (`#`) методы, имена и сигнатуры — предложения. Проходим их по одному классу. Обозначения — в гайде [«Как читать UML-схемы»](docs/diagrams/uml-guide.drawio.svg).
+UML-схемы классов показывают открытые (`+`), закрытые (`-`) и защищённые (`#`) методы. Обозначения — в гайде [«Как читать UML-схемы»](docs/diagrams/uml-guide.drawio.svg). Открытые методы согласованы 28.10.2026 с правками из блока «Согласованные правки к схемам» ниже. Где схема и этот блок расходятся, верен блок. Закрытые и защищённые методы — предложения, исполнитель может их менять.
 
 Экземпляры создаются фабриками `createVisitorClient()`, `createOperatorClient()`, `createBot()` и `createServerClient()`. Подпись identity и проверка вебхука в `server-sdk` — отдельные функции `signIdentity()` и `verifyWebhook()`.
 
@@ -758,6 +758,15 @@ UML-схемы классов — черновик для согласовани
 ![SDK бекенда — классы](docs/diagrams/12-sdk-server.drawio.svg)
 
 ![Общие типы и интерфейсы — классы](docs/diagrams/13-protocol.drawio.svg)
+
+**Согласованные правки к схемам.**
+- Заметки по клиенту у оператора: `addVisitorNote(visitorId, { text })`, `updateVisitorNote(noteId, { text })`, `deleteVisitorNote(noteId)`. Текст передаётся объектом, как в `addInternalNote({ text })`.
+- Передача диалога: тип `TransferTarget = { operatorId: string } | { bot: string }` и интерфейс `Transferer` (`transfer(target)`) в `protocol`. Его реализуют `OperatorConversation` и `BotContext`: `conversation.transfer({ operatorId })`, `ctx.transfer({ bot: 'billing' })`. Оператор может передать диалог боту, а бот — конкретному оператору.
+- Подгрузка истории: интерфейс `HistoryLoader` (`loadOlder(options?: { limit?: number })`) в `protocol`. Его реализуют `VisitorClient` и `OperatorConversation`, в снимке открытого диалога оператора тоже есть `hasOlder` и `loadingOlder`.
+- Бот: `ctx.history({ beforeSeq?, limit? }): Promise<Message[]>`, `limit` по умолчанию `50`. Бот — серверный процесс без снимка, поэтому метод возвращает сообщения, а не дописывает их в снимок.
+- Бот: контакты посетителя записывает `ctx.updateVisitorContacts({ name?, email?, phone? })`, тип `VisitorContacts` в `protocol`. Имя отличается от `updateVisitorData`: тот дописывает сырой `visitorData` интегратора, а этот — непроверенные контакты в карточку.
+- `server-sdk`: посетителя указывает тип `VisitorRef = { externalId: string } | { visitorId: string }`: `updateVisitorData(ref, patch)`, `deleteVisitor(ref)`, `unblockVisitor(ref)`. Server API принимает оба вида id, так что через него можно удалить и разблокировать анонима.
+- `server-sdk`: `signIdentity(user, { privateKey, kid, alg })` и `verifyWebhook(request, { secret })` — отдельные функции, а не статические методы `ServerClient`.
 
 **Общие типы и интерфейсы.** Чтобы клиенты не расходились, общее вынесено на схему 13. Типы данных — `MessageInput`, `Message`, `Attachment`, `JsonObject` — живут в `protocol` и одинаковы для всех SDK. Одно и то же действие описано маленьким интерфейсом: `MessageSender` (`send`), `TypingSender` (`sendTyping`), `ReadMarker` (`markRead`). Интерфейсы лежат там же, в `protocol` (`packages/protocol/src/capabilities.ts`): от него уже зависят и `sdk`, и `bot-sdk`, а сами интерфейсы — только типы, SDK импортирует их через `import type`, и в бандл сайта ничего не попадает. Его реализуют `VisitorClient`, `OperatorConversation` и `BotContext`, поэтому имя метода или тип аргумента, разошедшийся с другими, поймает компилятор. Тип файла и результат `send()` разные намеренно: в браузере `send()` сразу возвращает `PendingMessage`, дальше работают очередь и автоповтор; бот — серверный процесс и дожидается, пока сервер сохранит сообщение.
 

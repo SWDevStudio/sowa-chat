@@ -1,47 +1,59 @@
-# EPIC-10 / TASK-4. Регистрация identity-ключа сайта
+# EPIC-10 / TASK-4. Колонка projects.operator_allowed_origins
 
-Исполнитель: sonnet
-Зависит от: TASK-2
+Исполнитель: haiku
+Зависит от: —
+Владеет: apps/server/src/domain/projects/project.entity.ts, apps/server/src/infra/database/migrations/1793300003000-AddProjectsOperatorAllowedOrigins.ts, apps/server/src/infra/database/database-migrations.ts, apps/server/test/projects-table.e2e-spec.ts
+Коммит: [SERVER]: add operator allowed origins column to projects
 Ветка: feature/EPIC-10
 
 ## Что сделать
 
-1. `identity-key:add --project <имя> --kid <kid> --file <путь к PEM>`:
-   - читает публичный ключ из PEM;
-   - определяет алгоритм по ключу: Ed25519 → `EdDSA`, ECDSA P-256 → `ES256`; любой другой ключ (RSA, P-384, приватный ключ) — ошибка;
-   - сохраняет ключ в формате JWK в `identity_keys` вместе с алгоритмом.
-2. `identity-key:list --project <имя>` — `kid`, алгоритм, дата создания, отозван или нет.
-3. `identity-key:revoke --project <имя> --kid <kid>` — отзыв.
-4. Добавление и отзыв публикуют события для журнала аудита.
+Второй список доменов проекта — домены админки для операторской зоны. Образец — колонка `allowed_origins` в `apps/server/src/domain/projects/project.entity.ts` и миграция `apps/server/src/infra/database/migrations/1793300002000-AddProjectsPublicKey.ts`.
+
+1. Сущность `Project` — новое свойство сразу после `allowedOrigins`:
+
+   ```ts
+   @Column({ name: "operator_allowed_origins", type: "text", array: true, default: () => "'{}'" })
+   operatorAllowedOrigins!: string[];
+   ```
+
+2. Миграция `1793300003000-AddProjectsOperatorAllowedOrigins.ts`, класс `AddProjectsOperatorAllowedOrigins1793300003000`, `name = "AddProjectsOperatorAllowedOrigins1793300003000"`, пишется вручную:
+   - `up`: `ALTER TABLE "projects" ADD "operator_allowed_origins" text array NOT NULL DEFAULT '{}'`;
+   - `down`: `ALTER TABLE "projects" DROP COLUMN "operator_allowed_origins"`.
+
+3. `apps/server/src/infra/database/database-migrations.ts` — `AddProjectsOperatorAllowedOrigins1793300003000` в конец `databaseMigrations`, после `AddProjectsPublicKey1793300002000`.
+
+4. `apps/server/test/projects-table.e2e-spec.ts` проверяет точный список колонок: добавить `operator_allowed_origins` в отсортированный список и проверку типа (`data_type` `ARRAY`, `udt_name` `_text`, `is_nullable` `NO`) по образцу `allowed_origins`; в тесте «сохраняет проект только с name» — `operatorAllowedOrigins` равен `[]`.
 
 ## Где
 
-- `apps/server/src/domain/keys/` — логика.
-- Модуль режима `cli` — команды.
+- `apps/server/src/domain/projects/project.entity.ts` — правка.
+- `apps/server/src/infra/database/migrations/1793300003000-AddProjectsOperatorAllowedOrigins.ts` — новый файл.
+- `apps/server/src/infra/database/database-migrations.ts` — регистрация.
+- Тест: `apps/server/test/projects-table.e2e-spec.ts` (e2e).
 
 ## Требования из плана
 
-- Принимаем два алгоритма: EdDSA (Ed25519, рекомендуем) и ES256 (ECDSA P-256 — для сред и облачных KMS, где нет Ed25519).
-- Интегратор сам генерирует пару (`openssl genpkey -algorithm ed25519` или `openssl ecparam -name prime256v1 -genkey`) и регистрирует у нас только публичную половину: `sowa-chat identity-key:add --project main --kid … --file identity-public.pem`.
-- Алгоритм хранится вместе с ключом, и в заголовке JWT разрешается только он, поэтому подменить алгоритм нельзя.
-- Приватный ключ у нас не появляется.
-- Утёк приватный identity-ключ — новый ключ с новым `kid`, отзыв старого.
+- `projects`: `id, name, allowed_origins[], operator_allowed_origins[], settings jsonb`.
+- `operator_allowed_origins` — домены админки для операторской зоны. Домен сайта не получает CORS-доступа к операторскому API, а домен админки — к публичному.
+- В production по умолчанию список пуст: браузеры не пустят, пока домен не указан явно.
+- Имена колонок в snake_case через `name`.
 
 ## Документация
 
-- https://github.com/panva/jose
-- https://docs.nestjs.com/recipes/nest-commander
+- https://typeorm.io/docs/entity/entities#column-types-for-postgres
+- https://www.postgresql.org/docs/current/arrays.html
 
 ## Критерии приёмки
 
-- Публичные ключи Ed25519 и P-256, сгенерированные `openssl`, добавляются с правильным `alg`.
-- RSA-ключ и приватный ключ отклоняются.
-- Повторный `kid` в том же проекте — ошибка.
-- Добавление и отзыв видны в `audit_log`.
+- После миграций у `projects` ровно колонки `allowed_origins`, `created_at`, `id`, `name`, `operator_allowed_origins`, `public_key`, `settings`; `operator_allowed_origins` — `text[]`, `NOT NULL`.
+- Проект, сохранённый только с `name`, читается с `operatorAllowedOrigins` `[]`; сохранённый с `operatorAllowedOrigins: ["https://admin.example"]` читается с тем же списком, а `allowedOrigins` остаётся `[]`.
+- `down` миграции удаляет колонку.
 
 ## Чего не делать
 
-- Не проверять identity-JWT — это эпик идентификации посетителя.
+- Не менять `allowed_origins`, `public_key` и фикстуру `test/support/fixtures.ts`.
+- Не делать нормализацию и команды — это TASK-3 и TASK-13.
 
 ## История доработок
 

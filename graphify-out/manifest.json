@@ -348,9 +348,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api.module.ts": {
-    "mtime": 1793226326.3512847,
-    "seen": 1793226351.2061636,
-    "ast_hash": "d3ff095a0af612c0363c724da3e4465e",
+    "mtime": 1793227783.3331034,
+    "seen": 1793227858.8239017,
+    "ast_hash": "19a0019d8a9093eedb5aee5850d5d2f4",
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
@@ -1683,6 +1683,36 @@
     "mtime": 1793226326.3603725,
     "seen": 1793226351.207688,
     "ast_hash": "57a9af40426a56512b1fb8a2956fae42",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/operator/operator-auth.guard.ts": {
+    "mtime": 1793227783.3361163,
+    "seen": 1793227858.8239017,
+    "ast_hash": "1addfd2f2cdcbdcca5ab0c247fb85743",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/operator/operator-auth.module.ts": {
+    "mtime": 1793227783.3376367,
+    "seen": 1793227858.8239017,
+    "ast_hash": "6789c8b6e6ea998c4662967947ccaac0",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/operator/operator-controller.decorator.ts": {
+    "mtime": 1793227783.3401842,
+    "seen": 1793227858.8239017,
+    "ast_hash": "fce35c502d21baff696685827e0f6c05",
+    "semantic_hash": ""
+  },
+  "apps/server/test/operator-auth-guard.e2e-spec.ts": {
+    "mtime": 1793227783.3427408,
+    "seen": 1793227858.8259091,
+    "ast_hash": "ff58cdd36e6562b8297001fbfe8af517",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/operator-guard-probe.ts": {
+    "mtime": 1793227783.3464124,
+    "seen": 1793227858.8259091,
+    "ast_hash": "a394f4f9a9cbaee467c06a16d7b198a3",
     "semantic_hash": ""
   }
 }

@@ -546,9 +546,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/database-entities.ts": {
-    "mtime": 1793219321.408034,
-    "seen": 1793220808.2436569,
-    "ast_hash": "feddcb66f09d7b44d235f14c43e162bb",
+    "mtime": 1793222222.713642,
+    "seen": 1793222242.5917604,
+    "ast_hash": "f7afce547fe84d6bf607aeb5f261f1c9",
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-options.ts": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-migrations.ts": {
-    "mtime": 1793219321.494174,
-    "seen": 1793220808.2436569,
-    "ast_hash": "eb74dda732be451298ed126647d36c26",
+    "mtime": 1793222222.717173,
+    "seen": 1793222242.5917604,
+    "ast_hash": "9cce9330260d68c9374af88334105b13",
     "semantic_hash": ""
   },
   "apps/server/src/infra/preparation/preparation-runner.spec.ts": {
@@ -1557,6 +1557,24 @@
     "mtime": 1793221967.631573,
     "seen": 1793221984.8883626,
     "ast_hash": "0c2951c5ed3d0c0ad111cbf56b31d86d",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/operators/operator.entity.ts": {
+    "mtime": 1793222222.7151623,
+    "seen": 1793222242.5917604,
+    "ast_hash": "306a77875648edfd5c897a0199767566",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/database/migrations/1793300003000-CreateOperators.ts": {
+    "mtime": 1793222222.7191734,
+    "seen": 1793222242.5917604,
+    "ast_hash": "74fdecc84900340f4da8acf6b6a21580",
+    "semantic_hash": ""
+  },
+  "apps/server/test/operators-table.e2e-spec.ts": {
+    "mtime": 1793222222.720683,
+    "seen": 1793222242.59276,
+    "ast_hash": "a29b6a6519305808d28f359846fb3af1",
     "semantic_hash": ""
   }
 }

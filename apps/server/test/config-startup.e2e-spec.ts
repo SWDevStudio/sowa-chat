@@ -15,6 +15,7 @@ const validEnv = {
   SOWA_S3_ACCESS_KEY: "sowa-dev",
   SOWA_S3_SECRET_KEY: "sowa-dev-secret",
   SOWA_S3_BUCKET: "sowa-chat",
+  SOWA_ENCRYPTION_KEYS: "1:AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
 };
 
 type Env = Record<string, string | undefined>;
@@ -95,6 +96,11 @@ describe("запуск сервера с неверным окружением",
       reason: "с одинаковыми портами зон",
       overrides: { SOWA_PUBLIC_PORT: "18085", SOWA_INTERNAL_PORT: "18085" },
       named: /SOWA_PUBLIC_PORT|SOWA_INTERNAL_PORT/,
+    },
+    {
+      reason: "в production без SOWA_ENCRYPTION_KEYS",
+      overrides: { SOWA_ENV: "production", SOWA_ENCRYPTION_KEYS: undefined },
+      named: /SOWA_ENCRYPTION_KEYS/,
     },
   ])("$reason не стартует и называет переменную", async ({ overrides, named }) => {
     const result = await runServer(serverEnvironment(overrides), workingDirectory);

@@ -7,6 +7,7 @@ const requiredEnv = {
   SOWA_S3_ACCESS_KEY: "sowa-dev",
   SOWA_S3_SECRET_KEY: "sowa-dev-secret",
   SOWA_S3_BUCKET: "sowa-chat",
+  SOWA_ENCRYPTION_KEYS: "1:AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
 };
 
 const logLevels = ["trace", "debug", "info", "warn", "error", "fatal"];

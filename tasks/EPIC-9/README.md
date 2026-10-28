@@ -13,7 +13,7 @@
 | 1 | [Формат ключа: префикс типа, 32 случайных байта в base62, контрольная сумма CRC32](TASK-1.md) | haiku | sonnet | обычная | — | готова |
 | 2 | [Сущность и миграция `api_keys`](TASK-2.md) | haiku | sonnet | обычная | — | готова |
 | 3 | [События аудита `apiKey.issued` и `apiKey.revoked`](TASK-3.md) | haiku | sonnet | обычная | — | готова |
-| 4 | [Переменная `SOWA_ENCRYPTION_KEYS`: разбор списка ключей и конфиг](TASK-4.md) | haiku | sonnet | обычная | — | в работе |
+| 4 | [Переменная `SOWA_ENCRYPTION_KEYS`: разбор списка ключей и конфиг](TASK-4.md) | haiku | sonnet | обычная | — | готова |
 | 5 | [Сущность и миграция `identity_keys`](TASK-5.md) | haiku | sonnet | обычная | 2 | готова |
 | 6 | [Выпуск, проверка по хешу и отзыв ключей `server` и `bot`](TASK-6.md) | sonnet | opus | обычная | 1, 2, 3 | готова |
 | 7 | [Шифрование секретов AES-256-GCM с версией ключа](TASK-7.md) | sonnet | opus | обычная | 4 | не начата |

@@ -53,6 +53,7 @@ const envObjectSchema = z.object({
   SOWA_ENCRYPTION_KEYS: encryptionKeysSchema,
   SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),
   SOWA_LOG_FORMAT: z.enum(logFormats).default("json"),
+  SOWA_SLOW_OPERATION_MS: integerInRange(1, 600000, 500),
 });
 
 type EnvObject = z.infer<typeof envObjectSchema>;

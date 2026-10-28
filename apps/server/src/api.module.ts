@@ -10,7 +10,6 @@ import { createLoggerModule } from "./infra/logging/logger.module.js";
 import { RedisModule } from "./infra/redis/redis.module.js";
 import { ZonesModule } from "./infra/zones/zones.module.js";
 import { TelemetryModule } from "./telemetry/telemetry.module.js";
-import { MetricsModule } from "./telemetry/metrics/metrics.module.js";
 
 @Module({
   imports: [
@@ -23,7 +22,6 @@ import { MetricsModule } from "./telemetry/metrics/metrics.module.js";
     AuditModule,
     ZonesModule,
     ApiHttpModule,
-    MetricsModule,
     HealthModule,
   ],
 })

@@ -41,9 +41,14 @@ describe("DomainEventBus", () => {
   let bus: DomainEventBus;
   let listener: TestListener;
 
+  beforeAll(() => {
+    stubTestEnv();
+  });
+
   beforeEach(async () => {
+    const { AppConfigModule } = await import("../../infra/config/config.module.js");
     moduleRef = await Test.createTestingModule({
-      imports: [TelemetryModule],
+      imports: [AppConfigModule, TelemetryModule],
       providers: [TestListener],
     }).compile();
     await moduleRef.init();

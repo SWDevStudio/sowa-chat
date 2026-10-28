@@ -52,7 +52,7 @@
 | [EPIC-12](EPIC-12/README.md) | Доступ бекенда и операторов | не начат |
 | [EPIC-13](EPIC-13/README.md) | Сессия посетителя | не начат |
 | [EPIC-14](EPIC-14/README.md) | Кэш и синхронизация реплик | не начат |
-| [EPIC-15](EPIC-15/README.md) | Телеметрия запросов | не начат |
+| [EPIC-15](EPIC-15/README.md) | Телеметрия запросов | на ревью |
 | [EPIC-16](EPIC-16/README.md) | Лимиты запросов и CORS | не начат |
 | [EPIC-17](EPIC-17/README.md) | Docker и docker-compose | не начат |
 | [EPIC-18](EPIC-18/README.md) | CI | не начат |

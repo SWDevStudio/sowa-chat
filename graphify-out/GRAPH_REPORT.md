@@ -1,29 +1,29 @@
-# Graph Report - EPIC-6-2  (2026-10-28)
+# Graph Report - EPIC-6-3  (2026-10-28)
 
 ## Corpus Check
-- 154 files · ~26,820 words
+- 159 files · ~28,084 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 11 file(s) not represented in the graph (top: (none) 10, .example 1)
 
 ## Summary
-- 1171 nodes · 2134 edges · 80 communities (57 shown, 23 thin omitted)
+- 1197 nodes · 2213 edges · 95 communities (64 shown, 31 thin omitted)
 - Extraction: 99% EXTRACTED · 1% INFERRED · 0% AMBIGUOUS · INFERRED: 29 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2a65d780`
+- Built from commit: `8306950a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- global-setup.ts
+- api.module.ts
 - bot-sdk/tsconfig.json
 - package.json
 - log-level-warn.spec.ts
 - devDependencies
 - server-modes.e2e-spec.ts
 - server/package.json
-- main.ts
+- api-app.ts
 - compilerOptions
 - ref_node_path
 - config-startup.e2e-spec.ts
@@ -40,88 +40,102 @@
 - server-sdk/package.json
 - migrate-mode.e2e-spec.ts
 - api-docs.ts
-- env.schema.ts
+- config.module.ts
 - scripts
 - zone.guard.spec.ts
 - logging.e2e-spec.ts
 - log-redaction.e2e-spec.ts
 - provided-context.d.ts
 - request-id.e2e-spec.ts
-- server-errors.spec.ts
-- bullmq@^6.3.15
-- JsonObjectValidator
+- api-exception.ts
+- request-id.spec.ts
+- config.module.ts
 - database-connection.e2e-spec.ts
-- zone-servers.spec.ts
+- zod-serialization.spec.ts
 - tsconfig.build.json
 - file-type@^22.1.1
-- createProbeApp
+- zone-servers.spec.ts
 - nest-cli.json
 - cls-middleware.ts
 - workspace-check-types.e2e-spec.ts
 - server-sdk/tsconfig.json
-- zod-serialization.spec.ts
-- request-id.spec.ts
-- ValidationProbeController
 - log-redaction.spec.ts
+- database.module.ts
+- zod-validation.spec.ts
+- main.ts
+- transactions.e2e-spec.ts
 - migrate.module.ts
-- json-object-limits.spec.ts
 - ServerErrorsProbeController
 - log-settings.e2e-spec.ts
 - @aws-sdk/s3-request-presigner@^3.1151.0
 - helmet
 - http-error.filter.spec.ts
-- jose@^6.2.12
-- @nestjs/bullmq@^12.0.0
-- api-docs.spec.ts
+- logger.module.ts
+- server-errors.spec.ts
+- Zone
 - @nestjs/cache-manager@^12.0.1
-- nestjs-pino
-- Zone
-- @nestjs/websockets@^12.1.3
-- sharp@^0.35.5
-- @nestjs/common
-- Zone
-- ref_vitest
-- zod-validation.spec.ts
+- zone.decorator.ts
+- security-headers.spec.ts
+- packages-build.e2e-spec.ts
+- errors.spec.ts
+- zone-servers.ts
+- InternalProbeController
+- error-response.ts
+- NeutralProbeController
 - @sowa-chat/protocol@workspace:*
-- json-object-schema.ts
-- body-limit.spec.ts
-- pg
+- ErrorProbeController
+- MixedZoneController
+- server-protocol.e2e-spec.ts
+- @aws-sdk/client-s3@^3.1151.0
 - @nestjs/common
-- .constructor
+- BodyProbeController
+- redis.module.ts
+- @nestjs/microservices@^12.1.3
+- cache-manager@^7.2.9
+- nest-commander@^3.21.0
+- @nestjs/event-emitter@^12.0.1
+- @nestjs/terminus@^12.1.0
+- @nestjs/throttler@^6.7.1
+- rxjs@^7.8.1
+- pg
+- metrics.controller.ts
+- socket.io@^4.8.4
+- @socket.io/redis-adapter@^8.3.0
+- @types/pg@^8.23.1
 - protocol/src/index.ts
 
 ## God Nodes (most connected - your core abstractions)
-1. `@nestjs/common` - 53 edges
+1. `@nestjs/common` - 56 edges
 2. `Zone()` - 40 edges
-3. `compilerOptions` - 20 edges
-4. `startZoneProbeApp()` - 19 edges
-5. `typeorm` - 17 edges
-6. `findFreePort()` - 17 edges
+3. `findFreePort()` - 21 edges
+4. `startZoneProbeApp()` - 20 edges
+5. `compilerOptions` - 20 edges
+6. `typeorm` - 17 edges
 7. `scripts` - 16 edges
-8. `@nestjs/config` - 15 edges
+8. `@nestjs/config` - 16 edges
 9. `Project` - 14 edges
 10. `parseEnv()` - 14 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `Project` --references--> `JsonObject`  [EXTRACTED]
+  apps/server/src/domain/projects/project.entity.ts → packages/protocol/src/json-types.ts
 - `ApiExceptionInput` --references--> `ErrorCode`  [EXTRACTED]
   apps/server/src/infra/http/api-exception.ts → packages/protocol/src/errors.ts
 - `ProjectFixture` --references--> `JsonObject`  [EXTRACTED]
   apps/server/test/support/fixtures.ts → packages/protocol/src/json-types.ts
-- `Project` --references--> `JsonObject`  [EXTRACTED]
-  apps/server/src/domain/projects/project.entity.ts → packages/protocol/src/json-types.ts
 - `ApiException` --references--> `ErrorCode`  [EXTRACTED]
   apps/server/src/infra/http/api-exception.ts → packages/protocol/src/errors.ts
-- `startApp()` --calls--> `startZoneProbeApp()`  [EXTRACTED]
-  apps/server/src/infra/zones/zone.guard.spec.ts → apps/server/test/support/zone-probe.ts
+- `createRedactionProbeApp()` --calls--> `createProbeApp()`  [EXTRACTED]
+  apps/server/src/infra/logging/log-redaction.spec.ts → apps/server/test/support/unit-probe.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (80 total, 23 thin omitted)
+## Communities (95 total, 31 thin omitted)
 
-### Community 0 - "global-setup.ts"
-Cohesion: 0.24
-Nodes (9): testcontainers@^12.2.1, @testcontainers/postgresql@^12.2.1, runDatabaseMigrations(), setup(), startPostgresContainer(), startValkeyContainer(), valkeyUrl(), testcontainers (+1 more)
+### Community 0 - "api.module.ts"
+Cohesion: 0.15
+Nodes (13): nestjs-cls@^7.0.1, database, loadDataSource(), databaseEntities, AppClsModule, AppConfigModule, createTypeOrmModule(), DatabaseModule (+5 more)
 
 ### Community 1 - "bot-sdk/tsconfig.json"
 Cohesion: 0.29
@@ -137,27 +151,27 @@ Nodes (9): hasMessage(), infoProbe, isProbeRequestEntry(), LevelLogEntry, LevelP
 
 ### Community 4 - "devDependencies"
 Cohesion: 0.06
-Nodes (31): devDependencies, dependency-cruiser@^18.6.0, @nestjs/cli@^12.0.0, @nestjs/schematics@^12.0.0, @nestjs/testing@^12.0.1, pino-pretty@^13.2.0, socket.io-client@catalog:, source-map-support@^0.5.21 (+23 more)
+Nodes (31): devDependencies, dependency-cruiser@^18.6.0, @nestjs/cli@^12.0.0, @nestjs/schematics@^12.0.0, @nestjs/testing@^12.0.1, pino-pretty@^13.2.0, source-map-support@^0.5.21, supertest@^7.0.0 (+23 more)
 
 ### Community 5 - "server-modes.e2e-spec.ts"
-Cohesion: 0.06
-Nodes (29): entriesOf(), expectRequestIdInAllEntries(), isRequestEntryOf(), isServiceEntryOf(), LogEntry, ProbeController, ProbeResponse, ProbeService (+21 more)
+Cohesion: 0.13
+Nodes (13): Env, fetchStatus(), findFreePort(), findZonePorts(), modes, repositoryRoot, RunningServer, RunResult (+5 more)
 
 ### Community 6 - "server/package.json"
-Cohesion: 0.09
-Nodes (21): author, @aws-sdk/client-s3@^3.1151.0, bullmq@^6.3.15, @nest-lab/throttler-storage-redis@^1.2.0, @nestjs/microservices@^12.1.3, reflect-metadata@^0.2.2, rxjs@^7.8.1, socket.io@^4.8.4 (+13 more)
+Cohesion: 0.12
+Nodes (15): author, @nest-lab/throttler-storage-redis@^1.2.0, @nestjs/websockets@^12.1.3, pino-http@^11.0.0, description, socket.io-client@catalog:, socket.io-client, license (+7 more)
 
-### Community 7 - "main.ts"
-Cohesion: 0.17
-Nodes (19): appConfig, compileConfigModule(), compileWith(), stubTestEnv(), testEnv, databaseConfig, loggingConfig, parseEnv() (+11 more)
+### Community 7 - "api-app.ts"
+Cohesion: 0.23
+Nodes (9): bodyLimit, useBodyLimit(), BodyParserError, bodyParserErrorToHttpException(), isBodyParserError(), noStore(), useSecurityHeaders(), @nestjs/core (+1 more)
 
 ### Community 8 - "compilerOptions"
 Cohesion: 0.10
 Nodes (20): compilerOptions, allowSyntheticDefaultImports, declaration, emitDecoratorMetadata, esModuleInterop, experimentalDecorators, incremental, isolatedModules (+12 more)
 
 ### Community 9 - "ref_node_path"
-Cohesion: 0.10
-Nodes (12): ioredis@^6.0.0, filesReadingProcessEnv(), sourceDirectory, sourceFiles(), migrationFiles, migrationsDirectory, packageJson, IdentityRow (+4 more)
+Cohesion: 0.13
+Nodes (8): filesReadingProcessEnv(), sourceDirectory, sourceFiles(), packageJson, IdentityRow, VersionRow, useTestRedis(), testEnv
 
 ### Community 10 - "config-startup.e2e-spec.ts"
 Cohesion: 0.22
@@ -172,8 +186,8 @@ Cohesion: 0.10
 Nodes (21): author, dependencies, socket.io-client@catalog:, description, devDependencies, tsdown@catalog:, exports, ./operator (+13 more)
 
 ### Community 13 - "dependencies"
-Cohesion: 0.07
-Nodes (30): dependencies, cache-manager@^7.2.9, nest-commander@^3.21.0, @nestjs/bullmq@^12.0.0, nestjs-cls@^7.0.1, @nestjs-cls/transactional@^4.0.1, @nestjs/common@^12.0.1, @nestjs/config@^12.0.1 (+22 more)
+Cohesion: 0.08
+Nodes (26): dependencies, bullmq@^6.3.15, jose@^6.2.12, @nestjs/bullmq@^12.0.0, @nestjs-cls/transactional@^4.0.1, @nestjs-cls/transactional-adapter-typeorm@^2.0.1, @nestjs/common@^12.0.1, @nestjs/config@^12.0.1 (+18 more)
 
 ### Community 14 - "protocol/package.json"
 Cohesion: 0.10
@@ -208,14 +222,14 @@ Cohesion: 0.12
 Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@catalog:, exports, tsdown, @types/node (+10 more)
 
 ### Community 22 - "migrate-mode.e2e-spec.ts"
-Cohesion: 0.13
-Nodes (16): findZonePorts(), serverEnvironment(), unreachableDatabaseUrl(), serverEnvironment(), BrokenMigration1700000000000, countMigrationRows(), createDatabase(), migrateEnvironment() (+8 more)
+Cohesion: 0.23
+Nodes (9): BrokenMigration1700000000000, countMigrationRows(), createDatabase(), migrateEnvironment(), repositoryRoot, runMigrate(), RunResult, withClient() (+1 more)
 
 ### Community 23 - "api-docs.ts"
-Cohesion: 0.20
-Nodes (11): DocumentedZone, documentForZone(), isUnderAnyPrefix(), onlyOnManagementPort(), setupApiDocs(), zonePathPrefixes, apiZones, ZoneGuard (+3 more)
+Cohesion: 0.23
+Nodes (12): DocumentedZone, documentForZone(), isUnderAnyPrefix(), onlyOnManagementPort(), setupApiDocs(), zonePathPrefixes, ApiZone, apiZones (+4 more)
 
-### Community 24 - "env.schema.ts"
+### Community 24 - "config.module.ts"
 Cohesion: 0.08
 Nodes (19): checkPrettyLogFormat(), Env, EnvObject, envObjectSchema, envSchema, findPortWithSameValue(), integerInRange(), logFormats (+11 more)
 
@@ -224,56 +238,56 @@ Cohesion: 0.12
 Nodes (16): scripts, build, check-types, migration:create, migration:generate, start:api, start:api:dev, start:migrate (+8 more)
 
 ### Community 26 - "zone.guard.spec.ts"
-Cohesion: 0.11
-Nodes (8): CapturedResponse, FakeRequest, guardedControllers, MixedZoneController, OperatorZoneController, startApp(), unitPorts, UnzonedController
+Cohesion: 0.18
+Nodes (5): CapturedResponse, FakeRequest, guardedControllers, startApp(), unitPorts
 
 ### Community 27 - "logging.e2e-spec.ts"
-Cohesion: 0.23
-Nodes (9): expectOnlyJsonLines(), fetchStatus(), logEntries(), LogEntry, outputLines(), repositoryRoot, RunResult, waitForHttpStatus() (+1 more)
+Cohesion: 0.17
+Nodes (12): expectOnlyJsonLines(), fetchStatus(), logEntries(), LogEntry, outputLines(), repositoryRoot, RunResult, waitForHttpStatus() (+4 more)
 
 ### Community 28 - "log-redaction.e2e-spec.ts"
 Cohesion: 0.36
 Nodes (7): isRequestEntry(), isResponding(), logEntries(), LogEntry, repositoryRoot, waitForRequestEntry(), waitUntilResponding()
 
 ### Community 30 - "request-id.e2e-spec.ts"
-Cohesion: 0.18
-Nodes (12): entriesForPath(), isResponding(), logEntries(), LogEntry, ProbeResult, repositoryRoot, sendRequest(), waitForPathEntries() (+4 more)
+Cohesion: 0.23
+Nodes (10): entriesForPath(), isResponding(), logEntries(), LogEntry, ProbeResult, repositoryRoot, sendRequest(), waitForPathEntries() (+2 more)
 
-### Community 31 - "server-errors.spec.ts"
-Cohesion: 0.16
-Nodes (13): ApiException, ApiExceptionInput, errorCodeStatuses, ErrorDetail, errorCodeByStatus, ApiExceptionInput, entries(), errorEntriesOf() (+5 more)
+### Community 31 - "api-exception.ts"
+Cohesion: 0.29
+Nodes (6): ApiException, ApiExceptionInput, errorCodeStatuses, ErrorDetail, errorCodeByStatus, ErrorCode
 
-### Community 32 - "bullmq@^6.3.15"
-Cohesion: 0.20
-Nodes (4): DatabaseMigrationStep, PreparationRunner, PreparationStep, preparationSteps
+### Community 32 - "request-id.spec.ts"
+Cohesion: 0.15
+Nodes (10): createRequestIdProbeApp(), entriesOf(), expectRequestIdInAllEntries(), isRequestEntryOf(), isServiceEntryOf(), LogEntry, ProbeController, ProbeResponse (+2 more)
 
-### Community 33 - "JsonObjectValidator"
-Cohesion: 0.30
-Nodes (3): JsonObjectValidator, encoder, utf8ByteLength()
+### Community 33 - "config.module.ts"
+Cohesion: 0.26
+Nodes (12): appConfig, compileConfigModule(), compileWith(), stubTestEnv(), testEnv, databaseConfig, loggingConfig, parseEnv() (+4 more)
 
 ### Community 34 - "database-connection.e2e-spec.ts"
-Cohesion: 0.40
-Nodes (4): fetchStatus(), repositoryRoot, RunResult, waitForHttpStatus()
+Cohesion: 0.14
+Nodes (16): findZonePorts(), fetchStatus(), repositoryRoot, RunResult, serverEnvironment(), unreachableDatabaseUrl(), waitForHttpStatus(), serverEnvironment() (+8 more)
 
-### Community 35 - "zone-servers.spec.ts"
-Cohesion: 0.25
-Nodes (7): builtFiles, CommandResult, entriesByPackage, plannedBuildTasks(), PlannedTask, repositoryRoot, runInRoot()
+### Community 35 - "zod-serialization.spec.ts"
+Cohesion: 0.16
+Nodes (7): entries(), errorEntriesOf(), Issue, LogEntry, ProbeResponse, ProbeResponseDto, ResponseProbeController
 
 ### Community 36 - "tsconfig.build.json"
 Cohesion: 0.29
 Nodes (6): compilerOptions, rootDir, exclude, extends, include, ./tsconfig.json
 
-### Community 38 - "createProbeApp"
-Cohesion: 0.12
-Nodes (14): calls, ProbeBodyDto, ProbeCall, ProbeQueryDto, LogDestination, probeControllers, withOfflineDatabase(), ProbeAppOptions (+6 more)
+### Community 38 - "zone-servers.spec.ts"
+Cohesion: 0.21
+Nodes (12): probeControllers, withOfflineDatabase(), offlineRedis, withOfflineRedis(), createProbeApp(), ProbeAppOptions, redirectLogsTo(), stubTestEnv() (+4 more)
 
 ### Community 39 - "nest-cli.json"
 Cohesion: 0.33
 Nodes (5): collection, compilerOptions, deleteOutDir, $schema, sourceRoot
 
 ### Community 40 - "cls-middleware.ts"
-Cohesion: 0.46
-Nodes (4): useClsMiddleware(), echoRequestId(), resolveRequestId(), createE2eApp()
+Cohesion: 0.25
+Nodes (6): useClsMiddleware(), LogDestination, echoRequestId(), resolveRequestId(), createE2eApp(), nestjs-pino
 
 ### Community 41 - "workspace-check-types.e2e-spec.ts"
 Cohesion: 0.28
@@ -283,89 +297,117 @@ Nodes (8): CommandResult, librariesWithOwnChecks, plannedCheckTypesTasks(), Plan
 Cohesion: 0.29
 Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.json
 
-### Community 43 - "zod-serialization.spec.ts"
-Cohesion: 0.05
-Nodes (22): entries(), errorEntriesOf(), Issue, LogEntry, ProbeResponse, ProbeResponseDto, ResponseProbeController, allOutput() (+14 more)
+### Community 43 - "log-redaction.spec.ts"
+Cohesion: 0.09
+Nodes (12): allOutput(), CapturedLogs, createRedactionProbeApp(), fieldValueOf(), integratorDataFields, LogEntry, logFromService(), messageAndContactFields (+4 more)
 
-### Community 45 - "request-id.spec.ts"
-Cohesion: 0.16
-Nodes (11): databaseEntities, AppClsModule, AppConfigModule, createTypeOrmModule(), DatabaseModule, getTypeOrmModule(), typeOrmModules, ZonesModule (+3 more)
+### Community 45 - "database.module.ts"
+Cohesion: 0.11
+Nodes (18): DatabaseMigration, databaseMigrations, migrationFiles, migrationsDirectory, createDataSourceOptions(), DatabaseConnection, FirstEntity, SecondEntity (+10 more)
 
-### Community 47 - "log-redaction.spec.ts"
+### Community 47 - "main.ts"
 Cohesion: 0.13
 Nodes (16): configureApiApp(), ApiModule, CliModule, createContext(), mode, runApi(), runCli(), runMigrate() (+8 more)
 
-### Community 48 - "migrate.module.ts"
-Cohesion: 0.06
-Nodes (27): @nestjs-cls/transactional-adapter-typeorm@^2.0.1, database, loadDataSource(), Project, ProjectsModule, ProjectsRepository, DatabaseMigration, databaseMigrations (+19 more)
+### Community 48 - "transactions.e2e-spec.ts"
+Cohesion: 0.09
+Nodes (10): Project, ProjectsModule, ProjectsRepository, WorkerModule, ColumnRow, ScenarioError, SecondProjectsRepository, TransactionScenarios (+2 more)
 
-### Community 49 - "json-object-limits.spec.ts"
-Cohesion: 0.21
-Nodes (7): defaultLimits, isAccepted(), jsonLength(), objectOfJsonBytes(), Schema, schemaWith(), createJsonObjectSchema()
+### Community 49 - "migrate.module.ts"
+Cohesion: 0.20
+Nodes (4): DatabaseMigrationStep, PreparationRunner, PreparationStep, preparationSteps
 
 ### Community 51 - "log-settings.e2e-spec.ts"
-Cohesion: 0.19
-Nodes (13): runToExit(), ApiRun, fetchStatus(), LogEntry, repositoryRoot, runApiWithRequest(), RunResult, runToExit() (+5 more)
+Cohesion: 0.17
+Nodes (14): runToExit(), ApiRun, fetchStatus(), LogEntry, repositoryRoot, runApiWithRequest(), RunResult, runToExit() (+6 more)
 
 ### Community 54 - "http-error.filter.spec.ts"
-Cohesion: 0.14
-Nodes (14): ApiHttpModule, errorCodeOfStatus(), httpErrorResponse(), internalErrorMessage, internalErrorResponse(), toErrorResponse(), validationErrorResponse(), HttpErrorFilter (+6 more)
+Cohesion: 0.13
+Nodes (9): nestjs-zod@^5.5.0, ApiHttpModule, HttpErrorFilter, requestIdOf(), responseZodErrorOf(), knownKeys, ProbeBodyDto, requestIdHeader (+1 more)
 
-### Community 56 - "@nestjs/bullmq@^12.0.0"
+### Community 55 - "logger.module.ts"
 Cohesion: 0.24
 Nodes (10): pino@^10.4.0, createStdoutDestination(), baseOptions(), createLoggerModule(), jsonOptions(), prettyOptions(), redactPaths, sensitiveFields (+2 more)
 
-### Community 57 - "api-docs.spec.ts"
-Cohesion: 0.17
-Nodes (9): controllers, DocsProbeDto, documentOf(), InternalDocsProbeController, OpenApiDocument, OpenApiSchema, OperatorDocsProbeController, PublicDocsProbeController (+1 more)
+### Community 56 - "server-errors.spec.ts"
+Cohesion: 0.28
+Nodes (7): internalErrorMessage, ApiExceptionInput, entries(), errorEntriesOf(), hasStackWith(), LogEntry, stringsInside()
 
-### Community 60 - "Zone"
-Cohesion: 0.21
-Nodes (6): InternalProbeController, ManagementProbeController, OperatorProbeController, probeControllers, PublicProbeController, VisitorProbeController
-
-### Community 63 - "@nestjs/common"
-Cohesion: 0.23
-Nodes (4): ApiZone, startListening(), stopListening(), ZoneServers
-
-### Community 64 - "Zone"
-Cohesion: 0.15
-Nodes (8): BareController, MethodOnlyController, ZonedController, Zone(), InternalProbeController, ManagementProbeController, OperatorProbeController, PublicProbeController
-
-### Community 65 - "ref_vitest"
-Cohesion: 0.17
-Nodes (5): errorDetailSchema, ErrorResponse, errorResponseSchema, initialCodes, validBody
-
-### Community 66 - "zod-validation.spec.ts"
+### Community 57 - "Zone"
 Cohesion: 0.19
-Nodes (4): NeutralProbeController, probeControllers, SecondVersionProbeController, VersionedProbeController
+Nodes (11): controllers, DocsProbeDto, documentOf(), InternalDocsProbeController, OpenApiDocument, OpenApiSchema, OperatorDocsProbeController, PublicDocsProbeController (+3 more)
 
-### Community 84 - "@nestjs/common"
+### Community 60 - "security-headers.spec.ts"
+Cohesion: 0.23
+Nodes (5): InternalProbeController, ManagementProbeController, OperatorProbeController, PublicProbeController, VisitorProbeController
+
+### Community 61 - "packages-build.e2e-spec.ts"
+Cohesion: 0.25
+Nodes (7): builtFiles, CommandResult, entriesByPackage, plannedBuildTasks(), PlannedTask, repositoryRoot, runInRoot()
+
+### Community 62 - "errors.spec.ts"
+Cohesion: 0.28
+Nodes (6): errorCodes, errorDetailSchema, ErrorResponse, errorResponseSchema, initialCodes, validBody
+
+### Community 63 - "zone-servers.ts"
+Cohesion: 0.31
+Nodes (3): startListening(), stopListening(), ZoneServers
+
+### Community 64 - "InternalProbeController"
+Cohesion: 0.27
+Nodes (4): InternalProbeController, ManagementProbeController, OperatorProbeController, PublicProbeController
+
+### Community 65 - "error-response.ts"
+Cohesion: 0.67
+Nodes (5): errorCodeOfStatus(), httpErrorResponse(), internalErrorResponse(), toErrorResponse(), validationErrorResponse()
+
+### Community 66 - "NeutralProbeController"
+Cohesion: 0.32
+Nodes (3): NeutralProbeController, SecondVersionProbeController, VersionedProbeController
+
+### Community 69 - "MixedZoneController"
+Cohesion: 0.24
+Nodes (3): MixedZoneController, OperatorZoneController, UnzonedController
+
+### Community 70 - "server-protocol.e2e-spec.ts"
+Cohesion: 0.31
+Nodes (7): CommandResult, findFreePort(), repositoryRoot, respondsToHttp(), serverDirectory, startBuiltServer(), waitForHttp()
+
+### Community 73 - "@nestjs/common"
+Cohesion: 0.11
+Nodes (9): probeControllers, probeControllers, calls, ProbeBodyDto, ProbeCall, ProbeQueryDto, zoneMetadataKey, ZoneProbeApp (+1 more)
+
+### Community 75 - "redis.module.ts"
+Cohesion: 0.20
+Nodes (8): ioredis@^6.0.0, closeRedis(), createRedisClient(), redisStartupTimeoutMs, FakeRedis, waitForRedis(), RedisModule, ioredis
+
+### Community 84 - "metrics.controller.ts"
 Cohesion: 0.18
-Nodes (6): prom-client@^15.1.3, zoneMetadataKey, MetricsController, @nestjs/common, @nestjs/core, prom-client
+Nodes (4): prom-client@^15.1.3, MetricsController, MetricsModule, prom-client
 
 ### Community 115 - "protocol/src/index.ts"
-Cohesion: 0.11
-Nodes (16): createEventEnvelopeSchema(), EventEnvelope, eventEnvelopeSchema, MessageCreatedEnvelope, messageCreatedSchema, validEnvelope, defaultLimits, forbiddenKeys (+8 more)
+Cohesion: 0.06
+Nodes (28): ProjectFixture, createEventEnvelopeSchema(), EventEnvelope, eventEnvelopeSchema, MessageCreatedEnvelope, messageCreatedSchema, validEnvelope, defaultLimits (+20 more)
 
 ## Knowledge Gaps
 - **5 isolated node(s):** `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`
-  These have ≤1 connection - possible missing edges. (Counts symbols only; 459 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges. (Counts symbols only; 466 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **31 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `@nestjs/common` to `log-level-warn.spec.ts`, `server-modes.e2e-spec.ts`, `server/package.json`, `main.ts`, `dependencies`, `api-docs.ts`, `zone.guard.spec.ts`, `server-errors.spec.ts`, `bullmq@^6.3.15`, `createProbeApp`, `cls-middleware.ts`, `zod-serialization.spec.ts`, `request-id.spec.ts`, `log-redaction.spec.ts`, `migrate.module.ts`, `http-error.filter.spec.ts`, `@nestjs/bullmq@^12.0.0`, `api-docs.spec.ts`, `Zone`, `@nestjs/common`, `zod-validation.spec.ts`, `body-limit.spec.ts`?**
-  _High betweenness centrality (0.199) - this node is a cross-community bridge._
+- **Why does `@nestjs/common` connect `@nestjs/common` to `api.module.ts`, `log-level-warn.spec.ts`, `server/package.json`, `api-app.ts`, `dependencies`, `api-docs.ts`, `zone.guard.spec.ts`, `api-exception.ts`, `request-id.spec.ts`, `config.module.ts`, `zod-serialization.spec.ts`, `zone-servers.spec.ts`, `cls-middleware.ts`, `log-redaction.spec.ts`, `database.module.ts`, `main.ts`, `transactions.e2e-spec.ts`, `migrate.module.ts`, `http-error.filter.spec.ts`, `logger.module.ts`, `server-errors.spec.ts`, `Zone`, `zone-servers.ts`, `error-response.ts`, `redis.module.ts`, `metrics.controller.ts`?**
+  _High betweenness centrality (0.219) - this node is a cross-community bridge._
 - **What connects `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json` to the rest of the system?**
   _5 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06984126984126984 - nodes in this community are weakly interconnected._
-- **Why does `Zone()` connect `Zone` to `zod-validation.spec.ts`, `json-object-schema.ts`, `createProbeApp`, `body-limit.spec.ts`, `zod-serialization.spec.ts`, `ValidationProbeController`, `ServerErrorsProbeController`, `@nestjs/common`, `http-error.filter.spec.ts`, `api-docs.spec.ts`, `zone.guard.spec.ts`, `Zone`, `server-errors.spec.ts`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
+- **Why does `Zone()` connect `Zone` to `InternalProbeController`, `NeutralProbeController`, `zod-serialization.spec.ts`, `ErrorProbeController`, `MixedZoneController`, `zone-servers.spec.ts`, `@nestjs/common`, `BodyProbeController`, `zod-validation.spec.ts`, `ServerErrorsProbeController`, `metrics.controller.ts`, `http-error.filter.spec.ts`, `server-errors.spec.ts`, `zone.guard.spec.ts`, `zone.decorator.ts`, `security-headers.spec.ts`?**
+  _High betweenness centrality (0.047) - this node is a cross-community bridge._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.06451612903225806 - nodes in this community are weakly interconnected._
-- **Why does `typeorm` connect `migrate.module.ts` to `database-connection.e2e-spec.ts`, `server/package.json`, `ref_node_path`, `dependencies`, `migrate-mode.e2e-spec.ts`?**
-  _High betweenness centrality (0.042) - this node is a cross-community bridge._
+- **Why does `typeorm` connect `database.module.ts` to `api.module.ts`, `database-connection.e2e-spec.ts`, `server/package.json`, `ref_node_path`, `dependencies`, `transactions.e2e-spec.ts`, `protocol/src/index.ts`, `migrate-mode.e2e-spec.ts`?**
+  _High betweenness centrality (0.040) - this node is a cross-community bridge._
 - **Should `server-modes.e2e-spec.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.05656565656565657 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.13071895424836602 - nodes in this community are weakly interconnected._

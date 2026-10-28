@@ -10,6 +10,6 @@ import { SecretsReencryptionService } from "./secrets-reencryption.service.js";
     SecretsReencryptionService,
     { provide: encryptedFields, useValue: registeredEncryptedFields },
   ],
-  exports: [SecretsReencryptionService],
+  exports: [SecretsReencryptionService, encryptedFields],
 })
 export class SecretsReencryptionModule {}

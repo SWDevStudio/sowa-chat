@@ -3,6 +3,7 @@ import type {
   IdentityKeyEvent,
   ProjectCreatedEvent,
   ProjectOriginsEvent,
+  SecretsReencryptedEvent,
 } from "../../telemetry/events/domain-events.js";
 import type { AuditRecord, AuditRules } from "./audit-rule.js";
 
@@ -50,6 +51,17 @@ function projectOriginsAuditRecord(event: ProjectOriginsEvent): AuditRecord {
   };
 }
 
+function secretsReencryptedAuditRecord(event: SecretsReencryptedEvent): AuditRecord {
+  return {
+    projectId: null,
+    actorKind: event.actorKind,
+    actorId: null,
+    targetKind: "encryptedSecrets",
+    targetId: null,
+    data: { reencrypted: event.reencrypted, undecryptable: event.undecryptable },
+  };
+}
+
 export const auditedEvents: AuditRules = {
   "apiKey.issued": apiKeyAuditRecord,
   "apiKey.revoked": apiKeyAuditRecord,
@@ -58,4 +70,5 @@ export const auditedEvents: AuditRules = {
   "project.created": projectCreatedAuditRecord,
   "project.allowedOriginsChanged": projectOriginsAuditRecord,
   "project.operatorAllowedOriginsChanged": projectOriginsAuditRecord,
+  "secrets.reencrypted": secretsReencryptedAuditRecord,
 };

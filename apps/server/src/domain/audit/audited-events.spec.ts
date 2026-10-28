@@ -4,6 +4,7 @@ import type {
   IdentityKeyEvent,
   ProjectCreatedEvent,
   ProjectOriginsEvent,
+  SecretsReencryptedEvent,
 } from "../../telemetry/events/domain-events.js";
 import { auditedEventNames } from "./audit-rule.js";
 import { auditedEvents } from "./audited-events.js";
@@ -276,6 +277,70 @@ describe("auditedEvents project origins rules", () => {
         "identityKey.added",
         "identityKey.revoked",
         "project.created",
+      ]),
+    );
+  });
+});
+
+const secretsReencryptedEvent: SecretsReencryptedEvent = {
+  reencrypted: 12,
+  undecryptable: 1,
+  actorKind: "cli",
+};
+
+describe("auditedEvents secrets.reencrypted rule", () => {
+  it("lists secrets.reencrypted", () => {
+    expect(auditedEventNames(auditedEvents)).toContain("secrets.reencrypted");
+  });
+
+  it("maps cli event to record without project and target id, counts in data", () => {
+    const rule = auditedEvents["secrets.reencrypted"];
+
+    expect(rule).toBeDefined();
+    expect(rule?.(secretsReencryptedEvent)).toEqual({
+      projectId: null,
+      actorKind: "cli",
+      actorId: null,
+      targetKind: "encryptedSecrets",
+      targetId: null,
+      data: { reencrypted: 12, undecryptable: 1 },
+    });
+  });
+
+  it("maps zero counts", () => {
+    const record = auditedEvents["secrets.reencrypted"]?.({
+      ...secretsReencryptedEvent,
+      reencrypted: 0,
+      undecryptable: 0,
+    });
+
+    expect(record?.data).toEqual({ reencrypted: 0, undecryptable: 0 });
+  });
+
+  it("data has only reencrypted and undecryptable", () => {
+    const record = auditedEvents["secrets.reencrypted"]?.({
+      ...secretsReencryptedEvent,
+      value: "secret-leak",
+      id: "row-leak",
+      table: "table-leak",
+    } as SecretsReencryptedEvent);
+
+    expect(Object.keys(record?.data ?? {}).sort()).toEqual(["reencrypted", "undecryptable"]);
+    expect(JSON.stringify(record)).not.toContain("secret-leak");
+    expect(JSON.stringify(record)).not.toContain("row-leak");
+    expect(JSON.stringify(record)).not.toContain("table-leak");
+  });
+
+  it("keeps earlier rules", () => {
+    expect(auditedEventNames(auditedEvents)).toEqual(
+      expect.arrayContaining([
+        "apiKey.issued",
+        "apiKey.revoked",
+        "identityKey.added",
+        "identityKey.revoked",
+        "project.created",
+        "project.allowedOriginsChanged",
+        "project.operatorAllowedOriginsChanged",
       ]),
     );
   });

@@ -27,6 +27,12 @@ export interface ProjectOriginsEvent {
   actorKind: "cli" | "system";
 }
 
+export interface SecretsReencryptedEvent {
+  reencrypted: number;
+  undecryptable: number;
+  actorKind: "cli";
+}
+
 export interface DomainEvents {
   "apiKey.issued": ApiKeyEvent;
   "apiKey.revoked": ApiKeyEvent;
@@ -35,6 +41,7 @@ export interface DomainEvents {
   "project.created": ProjectCreatedEvent;
   "project.allowedOriginsChanged": ProjectOriginsEvent;
   "project.operatorAllowedOriginsChanged": ProjectOriginsEvent;
+  "secrets.reencrypted": SecretsReencryptedEvent;
 }
 
 export type DomainEventName = keyof DomainEvents & string;

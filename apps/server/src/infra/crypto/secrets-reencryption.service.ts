@@ -1,11 +1,16 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { TransactionHost } from "@nestjs-cls/transactional";
 import type { TransactionalAdapterTypeOrm } from "@nestjs-cls/transactional-adapter-typeorm";
+import { DomainEventBus } from "../../telemetry/events/domain-event-bus.js";
 import type { EncryptedField } from "./encrypted-field.js";
 import { encryptedFields } from "./encrypted-field.js";
 import { EncryptionService, SecretDecryptionError } from "./encryption.service.js";
 
 export const reencryptionBatchSize = 500;
+
+export interface ReencryptInput {
+  actorKind: "cli";
+}
 
 export interface UndecryptableValue {
   table: string;
@@ -71,9 +76,10 @@ export class SecretsReencryptionService {
     @Inject(EncryptionService) private readonly encryption: EncryptionService,
     @Inject(TransactionHost)
     private readonly txHost: TransactionHost<TransactionalAdapterTypeOrm>,
+    @Inject(DomainEventBus) private readonly bus: DomainEventBus,
   ) {}
 
-  async reencrypt(): Promise<ReencryptionReport> {
+  async reencrypt(input: ReencryptInput): Promise<ReencryptionReport> {
     const currentVersion = this.encryption.currentVersion;
     if (currentVersion === undefined) {
       throw new Error("SOWA_ENCRYPTION_KEYS is not set");
@@ -85,6 +91,11 @@ export class SecretsReencryptionService {
       report.fields.push({ ...field, reencrypted: result.reencrypted });
       report.undecryptable.push(...result.undecryptable);
     }
+    await this.bus.publish("secrets.reencrypted", {
+      reencrypted: report.fields.reduce((total, field) => total + field.reencrypted, 0),
+      undecryptable: report.undecryptable.length,
+      actorKind: input.actorKind,
+    });
     return report;
   }
 

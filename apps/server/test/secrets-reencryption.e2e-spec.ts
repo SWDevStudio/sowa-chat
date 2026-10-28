@@ -78,13 +78,15 @@ describe("перешифровка секретов", () => {
       await insertVersion1Secrets(dataSource, 1201);
       const plaintexts = plaintextsById(await readSecretRows(dataSource));
 
-      await expect(reencryption.reencrypt()).resolves.toEqual(fieldReport(1201));
+      await expect(reencryption.reencrypt({ actorKind: "cli" })).resolves.toEqual(
+        fieldReport(1201),
+      );
 
       const reencryptedRows = await readSecretRows(dataSource);
       expect(reencryptedRows).toHaveLength(1201);
       expectReencryptedTo(reencryptedRows, plaintexts);
 
-      await expect(reencryption.reencrypt()).resolves.toEqual(fieldReport(0));
+      await expect(reencryption.reencrypt({ actorKind: "cli" })).resolves.toEqual(fieldReport(0));
       expect(await readSecretRows(dataSource)).toEqual(reencryptedRows);
     },
     heavyTestTimeout,
@@ -96,7 +98,9 @@ describe("перешифровка секретов", () => {
       await insertVersion1Secrets(dataSource, count);
       const plaintexts = plaintextsById(await readSecretRows(dataSource));
 
-      await expect(reencryption.reencrypt()).resolves.toEqual(fieldReport(count));
+      await expect(reencryption.reencrypt({ actorKind: "cli" })).resolves.toEqual(
+        fieldReport(count),
+      );
 
       expectReencryptedTo(await readSecretRows(dataSource), plaintexts);
     },
@@ -104,7 +108,7 @@ describe("перешифровка секретов", () => {
   );
 
   it("пустая таблица — перешифровано 0", async () => {
-    await expect(reencryption.reencrypt()).resolves.toEqual(fieldReport(0));
+    await expect(reencryption.reencrypt({ actorKind: "cli" })).resolves.toEqual(fieldReport(0));
   });
 
   it(
@@ -123,14 +127,14 @@ describe("перешифровка секретов", () => {
         return encrypt(plaintext);
       });
 
-      await expect(reencryption.reencrypt()).rejects.toThrow("encrypt failed");
+      await expect(reencryption.reencrypt({ actorKind: "cli" })).rejects.toThrow("encrypt failed");
       vi.restoreAllMocks();
 
       const rowsAfterFailure = await readSecretRows(dataSource);
       expectReencryptedTo(rowsAfterFailure.slice(0, 500), plaintexts);
       expect(rowsAfterFailure.slice(500)).toEqual(originalRows.slice(500));
 
-      await expect(reencryption.reencrypt()).resolves.toEqual(fieldReport(701));
+      await expect(reencryption.reencrypt({ actorKind: "cli" })).resolves.toEqual(fieldReport(701));
 
       const finalRows = await readSecretRows(dataSource);
       expect(finalRows.slice(0, 500)).toEqual(rowsAfterFailure.slice(0, 500));
@@ -148,7 +152,7 @@ describe("перешифровка секретов", () => {
     const nullId = await insertSecret(dataSource, null);
     const lastId = await insertSecret(dataSource, version1Encryption.encrypt("last-secret"));
 
-    const report = await reencryption.reencrypt();
+    const report = await reencryption.reencrypt({ actorKind: "cli" });
 
     expect(report.fields).toEqual([{ ...testField, reencrypted: 2 }]);
     expect(report.undecryptable).toHaveLength(2);
@@ -171,7 +175,7 @@ describe("перешифровка секретов", () => {
     expect(version2Encryption.decrypt(firstValue)).toBe("first-secret");
     expect(version2Encryption.decrypt(lastValue)).toBe("last-secret");
 
-    const repeated = await reencryption.reencrypt();
+    const repeated = await reencryption.reencrypt({ actorKind: "cli" });
 
     expect(repeated.fields).toEqual([{ ...testField, reencrypted: 0 }]);
     expect(repeated.undecryptable).toHaveLength(2);
@@ -188,7 +192,7 @@ describe("перешифровка секретов", () => {
     try {
       await locker.startTransaction();
       await locker.query('SELECT "id" FROM "test_secrets" WHERE "id" = $1 FOR UPDATE', [changedId]);
-      const running = reencryption.reencrypt();
+      const running = reencryption.reencrypt({ actorKind: "cli" });
       running.catch(() => undefined);
 
       await vi.waitFor(
@@ -209,7 +213,7 @@ describe("перешифровка секретов", () => {
     }
 
     expect(await readSecret(dataSource, changedId)).toBe(changedValue);
-    await expect(reencryption.reencrypt()).resolves.toEqual(fieldReport(1));
+    await expect(reencryption.reencrypt({ actorKind: "cli" })).resolves.toEqual(fieldReport(1));
     const reencryptedValue = (await readSecret(dataSource, changedId)) ?? "";
     expect(version2Encryption.decrypt(reencryptedValue)).toBe("changed-secret");
   });
@@ -224,7 +228,7 @@ describe("перешифровка секретов", () => {
     ]);
     expect(await readSecretRows(dataSource)).toEqual(originalRows);
 
-    await reencryption.reencrypt();
+    await reencryption.reencrypt({ actorKind: "cli" });
     const reencryptedRows = await readSecretRows(dataSource);
 
     await expect(reencryption.countVersions()).resolves.toEqual([
@@ -259,7 +263,9 @@ describe("перешифровка секретов", () => {
 
     try {
       const service = withoutKeys.get(SecretsReencryptionService);
-      await expect(service.reencrypt()).rejects.toThrow("SOWA_ENCRYPTION_KEYS is not set");
+      await expect(service.reencrypt({ actorKind: "cli" })).rejects.toThrow(
+        "SOWA_ENCRYPTION_KEYS is not set",
+      );
     } finally {
       await withoutKeys.close();
     }
@@ -274,7 +280,10 @@ describe("перешифровка секретов", () => {
 
     try {
       const service = withRegisteredFields.get(SecretsReencryptionService);
-      await expect(service.reencrypt()).resolves.toEqual({ fields: [], undecryptable: [] });
+      await expect(service.reencrypt({ actorKind: "cli" })).resolves.toEqual({
+        fields: [],
+        undecryptable: [],
+      });
       await expect(service.countVersions()).resolves.toEqual([]);
     } finally {
       await withRegisteredFields.close();

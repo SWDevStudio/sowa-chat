@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793230312.4705071,
-    "seen": 1793230338.3419554,
-    "ast_hash": "f7fa62720270d5c8273a05db8f3f21b3",
+    "mtime": 1793230950.4802475,
+    "seen": 1793230973.2389226,
+    "ast_hash": "7f1bb291425b2e32f0ec53a5e167a7a2",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -924,9 +924,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/telemetry/events/domain-events.ts": {
-    "mtime": 1793227256.1776683,
-    "seen": 1793227324.0882063,
-    "ast_hash": "dd32852e1b47e0939a12387ff74141b8",
+    "mtime": 1793230950.4919045,
+    "seen": 1793230973.2389226,
+    "ast_hash": "0111368c4b7ec9f6188dc89e674c2456",
     "semantic_hash": ""
   },
   "apps/server/src/telemetry/events/on-domain-event.decorator.ts": {
@@ -978,9 +978,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/audit/audited-events.ts": {
-    "mtime": 1793227256.1193614,
-    "seen": 1793227324.0760875,
-    "ast_hash": "94805ca51b60d001580ea63e32e20bf7",
+    "mtime": 1793230950.48628,
+    "seen": 1793230973.2389226,
+    "ast_hash": "4009af769ae96ea22e6da8c0828935a4",
     "semantic_hash": ""
   },
   "apps/server/test/support/test-audit-rules.ts": {
@@ -1332,9 +1332,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/audit/audited-events.spec.ts": {
-    "mtime": 1793227256.0810385,
-    "seen": 1793227324.0760875,
-    "ast_hash": "21c8badce637e13e4eff180d2ed28d75",
+    "mtime": 1793230950.4842691,
+    "seen": 1793230973.2389226,
+    "ast_hash": "22dd0cc3b7f128b8db1db6c66a8e6f82",
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/api-key.entity.ts": {
@@ -1596,21 +1596,21 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/crypto/secrets-reencryption.module.ts": {
-    "mtime": 1793224041.9497528,
-    "seen": 1793224080.3044014,
-    "ast_hash": "d22277218a398ec8e71b5acd33c3234a",
+    "mtime": 1793230950.4882915,
+    "seen": 1793230973.2389226,
+    "ast_hash": "dab0aad0e1a1c49a86d4f20200408e36",
     "semantic_hash": ""
   },
   "apps/server/src/infra/crypto/secrets-reencryption.service.ts": {
-    "mtime": 1793224041.9507525,
-    "seen": 1793224080.3044014,
-    "ast_hash": "11a6757f5ffbaca9fd89db24ea6aae11",
+    "mtime": 1793230950.4903026,
+    "seen": 1793230973.2389226,
+    "ast_hash": "779fd694d01d6f28f8c9b20cb7c75d1c",
     "semantic_hash": ""
   },
   "apps/server/test/secrets-reencryption.e2e-spec.ts": {
-    "mtime": 1793224041.9527524,
-    "seen": 1793224080.3044014,
-    "ast_hash": "f89ca6be0525cd473f0bb08a45ceb382",
+    "mtime": 1793230950.4962327,
+    "seen": 1793230973.2389226,
+    "ast_hash": "c2ee3fc8e4817a6d6e343c2d8f7dd0f6",
     "semantic_hash": ""
   },
   "apps/server/test/support/test-secrets.ts": {
@@ -1821,6 +1821,30 @@
     "mtime": 1793230312.4846184,
     "seen": 1793230338.3435218,
     "ast_hash": "09b745ea6d1cbe81105fac22cf7d05c9",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/secrets/secrets-reencrypt.command.ts": {
+    "mtime": 1793230950.4822595,
+    "seen": 1793230973.2389226,
+    "ast_hash": "5c62c4bbe5fa860d3a3940d31ea9de62",
+    "semantic_hash": ""
+  },
+  "apps/server/test/secrets-reencrypt-command-launch.e2e-spec.ts": {
+    "mtime": 1793230950.4919045,
+    "seen": 1793230973.2389226,
+    "ast_hash": "339c4faf8f1bb72500ff2ddaaecaa804",
+    "semantic_hash": ""
+  },
+  "apps/server/test/secrets-reencrypt-command.e2e-spec.ts": {
+    "mtime": 1793230950.4919045,
+    "seen": 1793230973.2389226,
+    "ast_hash": "7e61145335724cdc703a3f0099a830b4",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/secrets-cli.ts": {
+    "mtime": 1793230950.4962327,
+    "seen": 1793230973.2389226,
+    "ast_hash": "22a069d31e81fca9001bee41178325cc",
     "semantic_hash": ""
   }
 }

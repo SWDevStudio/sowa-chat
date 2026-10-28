@@ -11,7 +11,7 @@ PostgreSQL через TypeORM, миграции, транзакции, тест�
 | № | Задача | Исполнитель | Тесты | Зависит от | Статус |
 |---|---|---|---|---|---|
 | 1 | [Переменные окружения базы: размер пула и адрес для миграций](TASK-1.md) | haiku | sonnet | — | готова |
-| 2 | [PostgreSQL 18.6 в контейнере для всех e2e-тестов](TASK-2.md) | haiku | sonnet | — | в работе |
+| 2 | [PostgreSQL 18.6 в контейнере для всех e2e-тестов](TASK-2.md) | haiku | sonnet | — | готова |
 | 3 | [Подключение к PostgreSQL через TypeORM в режимах `api`, `worker` и `cli`](TASK-3.md) | sonnet | sonnet | 1, 2 | не начата |
 | 4 | [Список миграций, DataSource для CLI TypeORM и скрипты `migration:generate`, `migration:create`](TASK-4.md) | haiku | sonnet | 3 | не начата |
 | 5 | [Режим `migrate`: шаги подготовки по порядку, коды выхода, миграции в e2e](TASK-5.md) | sonnet | sonnet | 4 | не начата |

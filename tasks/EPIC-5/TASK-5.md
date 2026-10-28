@@ -61,7 +61,7 @@
    ```
 
    Ошибка шага отклоняет промис верхнего уровня: Node печатает ошибку с текстом PostgreSQL и завершает процесс с кодом 1. Остальные функции `main.ts` не трогать: их меняет параллельный эпик зон API (EPIC-4).
-7. `apps/server/package.json` — скрипт `"start:migrate": "nest start -- migrate"` рядом с `start:api`, чтобы применить миграции к базе из `.env` при разработке.
+7. `apps/server/package.json` — скрипт `"start:migrate": "nest start -- migrate"` рядом с `start:api`, чтобы применить миграции к базе из `.env` при разработке. В `devDependencies` добавить `"@types/pg": "^8.23.1"` (`pnpm --filter @sowa-chat/server add -D @types/pg@^8.23.1`): e2e-тест импортирует `pg`, а своих типов у `pg` нет. Версия совпадает с `pg` `^8.23.1`.
 8. `apps/server/test/support/global-setup.ts` — после запуска контейнера вызвать `runDatabaseMigrations(container.getConnectionUri())`, до `project.provide`.
 
 ## Где

@@ -67,3 +67,8 @@ EPIC-5 меняет в `main.ts` только `runMigrate`.
 ## 28.10.2026, TASK-8. Помощники e2e
 
 Внутренние имена тестовых помощников: `useTestDatabase()`, `truncateAllTables(dataSource)`, `createProject(dataSource, fixture?)`, `createE2eApp()`. Очистка подключается явно в файле теста через `useTestDatabase()`, а не глобально: многим e2e-тестам база не нужна.
+
+## 28.10.2026, TASK-5. Вопрос исполнителя: `@types/pg`
+
+- Вопрос: добавить `@types/pg` в `devDependencies` `apps/server`? Без него `types server` падает (TS7016, TS7006 в `test/migrate-mode.e2e-spec.ts`).
+- Решение: добавить `"@types/pg": "^8.23.1"`. У `pg` 8.23.1 своих деклараций нет, `@types/pg` в workspace нет, версия `8.23.1` на npm есть и совпадает с `pg`.

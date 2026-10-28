@@ -14,7 +14,7 @@ PostgreSQL через TypeORM, миграции, транзакции, тест�
 | 2 | [PostgreSQL 18.6 в контейнере для всех e2e-тестов](TASK-2.md) | haiku | sonnet | — | готова |
 | 3 | [Подключение к PostgreSQL через TypeORM в режимах `api`, `worker` и `cli`](TASK-3.md) | sonnet | sonnet | 1, 2 | готова |
 | 4 | [Список миграций, DataSource для CLI TypeORM и скрипты `migration:generate`, `migration:create`](TASK-4.md) | haiku | sonnet | 3 | готова |
-| 5 | [Режим `migrate`: шаги подготовки по порядку, коды выхода, миграции в e2e](TASK-5.md) | sonnet | sonnet | 4 | не начата |
+| 5 | [Режим `migrate`: шаги подготовки по порядку, коды выхода, миграции в e2e](TASK-5.md) | sonnet | sonnet | 4 | готова |
 | 6 | [Сущность `Project` и миграция таблицы `projects`](TASK-6.md) | haiku | sonnet | 5 | не начата |
 | 7 | [Транзакции `@Transactional()` и образцовый репозиторий проектов](TASK-7.md) | sonnet | opus | 6 | не начата |
 | 8 | [E2e: фикстура проекта, очистка таблиц между тестами, запуск приложения](TASK-8.md) | haiku | sonnet | 6 | не начата |

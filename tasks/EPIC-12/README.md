@@ -13,10 +13,10 @@
 | 1 | [Переменные `SOWA_TOKEN_SIGNING_KEYS` и `SOWA_TOKEN_SIGNING_KEY_ID`: разбор ключей Ed25519 и конфиг](TASK-1.md) | haiku | sonnet | обычная | — | готова |
 | 2 | [Роли оператора и схемы выдачи токена оператора в `protocol`](TASK-2.md) | haiku | sonnet | обычная | — | готова |
 | 3 | [Ключ подписи токенов обязателен в production](TASK-3.md) | haiku | sonnet | обычная | 1 | готова |
-| 4 | [Подпись и проверка токенов через `jose`: только EdDSA, `kid`, `aud`, срок](TASK-4.md) | sonnet | opus | обычная | 1 | не начата |
+| 4 | [Подпись и проверка токенов через `jose`: только EdDSA, `kid`, `aud`, срок](TASK-4.md) | sonnet | opus | обычная | 1 | готова |
 | 5 | [Сущность и миграция `operators`](TASK-5.md) | haiku | sonnet | обычная | 2 | готова |
 | 6 | [Контекст запроса: проект и оператор в `nestjs-cls`](TASK-6.md) | haiku | sonnet | обычная | 2 | готова |
-| 7 | [Guard серверного ключа для `/v1/server`](TASK-7.md) | sonnet | opus | обычная | 6 | не начата |
+| 7 | [Guard серверного ключа для `/v1/server`](TASK-7.md) | sonnet | opus | обычная | 6 | в работе |
 | 8 | [Операторы: создание или обновление по `externalId` и выпуск токена](TASK-8.md) | haiku | sonnet | обычная | 4, 5 | не начата |
 | 9 | [`POST /v1/server/operator-token`: выдача токена оператора](TASK-9.md) | haiku | sonnet | обычная | 2, 7, 8 | не начата |
 | 10 | [Guard оператора для `/v1/operator`: токен и контекст оператора](TASK-10.md) | sonnet | opus | обычная | 4, 6, 7, 8 | не начата |

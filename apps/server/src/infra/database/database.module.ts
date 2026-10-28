@@ -1,7 +1,10 @@
 import type { DynamicModule } from "@nestjs/common";
 import { Module } from "@nestjs/common";
 import type { ConfigType } from "@nestjs/config";
-import { TypeOrmModule } from "@nestjs/typeorm";
+import { getDataSourceToken, TypeOrmModule } from "@nestjs/typeorm";
+import { ClsModule } from "nestjs-cls";
+import { ClsPluginTransactional } from "@nestjs-cls/transactional";
+import { TransactionalAdapterTypeOrm } from "@nestjs-cls/transactional-adapter-typeorm";
 import { databaseConfig } from "../config/database.config.js";
 import { createDataSourceOptions } from "./database-options.js";
 import type { DatabaseEntity } from "./database-options.js";
@@ -38,7 +41,14 @@ export class DatabaseModule {
   static forRoot(entities: DatabaseEntity[]): DynamicModule {
     return {
       module: DatabaseModule,
-      imports: [getTypeOrmModule(entities)],
+      imports: [
+        getTypeOrmModule(entities),
+        ClsModule.registerPlugins([
+          new ClsPluginTransactional({
+            adapter: new TransactionalAdapterTypeOrm({ dataSourceToken: getDataSourceToken() }),
+          }),
+        ]),
+      ],
     };
   }
 }

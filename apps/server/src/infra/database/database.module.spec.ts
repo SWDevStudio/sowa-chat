@@ -1,14 +1,16 @@
 import type { INestApplication } from "@nestjs/common";
-import { getDataSourceToken } from "@nestjs/typeorm";
+import { getDataSourceToken, TypeOrmModule } from "@nestjs/typeorm";
 import { createProbeApp, stubTestEnv } from "../../../test/support/unit-probe.js";
 import { DatabaseModule } from "./database.module.js";
 
 describe("DatabaseModule.forRoot", () => {
-  it("returns DatabaseModule with the TypeORM root module as its only import", () => {
+  it("returns DatabaseModule with the TypeORM root module among its imports", () => {
     const dynamicModule = DatabaseModule.forRoot([]);
 
     expect(dynamicModule.module).toBe(DatabaseModule);
-    expect(dynamicModule.imports).toHaveLength(1);
+    expect(dynamicModule.imports).toContainEqual(
+      expect.objectContaining({ module: TypeOrmModule }),
+    );
   });
 
   it("builds a new dynamic module on every call", () => {

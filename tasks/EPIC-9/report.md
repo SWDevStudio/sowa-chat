@@ -30,6 +30,8 @@
 
 Первый и второй прогоны падали на нагрузке: e2e шёл 798 с, `server-modes` 173 с, а `import` в unit-тестах 232 с. Падения: таймауты запуска в `audit-log`, `request-id`, `migrate-mode`, `server-modes`; во втором прогоне `afterAll` в `migrate-mode.e2e-spec.ts` не уложился в 10 с (в `vitest.config.e2e.ts` нет `hookTimeout` и `testTimeout`, в `vitest.config.ts` стоят 30 с). Тестировщик проверил: задачи не виноваты, `apps/server/.env.test` задаёт `SOWA_ENV=development`, правило задачи 8 в этих e2e не срабатывает. Третий и четвёртый прогоны (последний после правок ревью), когда других тяжёлых прогонов не было, прошли (PASS).
 
+После слияния `pipeline` (эпик 15) в `feature/EPIC-9` итоговый прогон упал в unit-тестах: `env.schema.slow-operations.spec.ts` эпика 15 собирал production-окружение без `SOWA_ENCRYPTION_KEYS`, который задача 8 сделала обязательным. В `requiredEnv` спека добавлен тестовый ключ (как в `env.schema.spec.ts`). Правку проверили vitest по файлу (10 из 10), `tsc` и oxlint; полный итоговый прогон после неё не повторялся: e2e, format, lint и types в прогоне до этого проходили.
+
 ## Ревью (opus)
 
 Блокирующих замечаний нет. Исправлены пять пунктов «стоит поправить». Остались мелочи:

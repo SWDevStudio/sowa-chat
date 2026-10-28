@@ -21,12 +21,20 @@ export interface ProjectCreatedEvent {
   actorKind: "cli" | "system";
 }
 
+export interface ProjectOriginsEvent {
+  projectId: string;
+  origins: string[];
+  actorKind: "cli" | "system";
+}
+
 export interface DomainEvents {
   "apiKey.issued": ApiKeyEvent;
   "apiKey.revoked": ApiKeyEvent;
   "identityKey.added": IdentityKeyEvent;
   "identityKey.revoked": IdentityKeyEvent;
   "project.created": ProjectCreatedEvent;
+  "project.allowedOriginsChanged": ProjectOriginsEvent;
+  "project.operatorAllowedOriginsChanged": ProjectOriginsEvent;
 }
 
 export type DomainEventName = keyof DomainEvents & string;

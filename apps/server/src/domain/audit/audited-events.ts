@@ -2,6 +2,7 @@ import type {
   ApiKeyEvent,
   IdentityKeyEvent,
   ProjectCreatedEvent,
+  ProjectOriginsEvent,
 } from "../../telemetry/events/domain-events.js";
 import type { AuditRecord, AuditRules } from "./audit-rule.js";
 
@@ -38,10 +39,23 @@ function projectCreatedAuditRecord(event: ProjectCreatedEvent): AuditRecord {
   };
 }
 
+function projectOriginsAuditRecord(event: ProjectOriginsEvent): AuditRecord {
+  return {
+    projectId: event.projectId,
+    actorKind: event.actorKind,
+    actorId: null,
+    targetKind: "project",
+    targetId: event.projectId,
+    data: { origins: event.origins },
+  };
+}
+
 export const auditedEvents: AuditRules = {
   "apiKey.issued": apiKeyAuditRecord,
   "apiKey.revoked": apiKeyAuditRecord,
   "identityKey.added": identityKeyAuditRecord,
   "identityKey.revoked": identityKeyAuditRecord,
   "project.created": projectCreatedAuditRecord,
+  "project.allowedOriginsChanged": projectOriginsAuditRecord,
+  "project.operatorAllowedOriginsChanged": projectOriginsAuditRecord,
 };

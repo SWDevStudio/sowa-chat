@@ -1,14 +1,21 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { Transactional } from "@nestjs-cls/transactional";
 import { DomainEventBus } from "../../telemetry/events/domain-event-bus.js";
+import type { DomainEventName } from "../../telemetry/events/domain-events.js";
 import type { ActorKind } from "../audit/actor-kind.js";
 import { ApiKeysService } from "../keys/api-keys.service.js";
 import { generateKey } from "../keys/key-format.js";
-import { normalizeOrigins } from "./origin.js";
+import type { OriginList } from "./origin-list.js";
+import { normalizeOrigin, normalizeOrigins } from "./origin.js";
 import type { Project } from "./project.entity.js";
 import { ProjectsRepository } from "./projects.repository.js";
 
 const PROJECT_NAME_PATTERN = /^[a-z0-9][a-z0-9-]{0,62}$/;
+
+export { originLists } from "./origin-list.js";
+export type { OriginList } from "./origin-list.js";
+
+export type OriginChange = "added" | "removed" | "unchanged";
 
 export type ProjectActorKind = Extract<ActorKind, "cli" | "system">;
 
@@ -16,6 +23,13 @@ export interface CreateProjectInput {
   name: string;
   allowedOrigins: string[];
   operatorAllowedOrigins: string[];
+  actorKind: ProjectActorKind;
+}
+
+export interface ChangeOriginInput {
+  projectId: string;
+  list: OriginList;
+  origin: string;
   actorKind: ProjectActorKind;
 }
 
@@ -46,6 +60,11 @@ export class ProjectNotFoundError extends Error {
     super(`Project "${name}" not found`);
   }
 }
+
+const ORIGINS_EVENTS = {
+  allowedOrigins: "project.allowedOriginsChanged",
+  operatorAllowedOrigins: "project.operatorAllowedOriginsChanged",
+} as const satisfies Record<OriginList, DomainEventName>;
 
 @Injectable()
 export class ProjectsService {
@@ -84,6 +103,20 @@ export class ProjectsService {
     };
   }
 
+  @Transactional()
+  async addOrigin(input: ChangeOriginInput): Promise<OriginChange> {
+    const origin = normalizeOrigin(input.origin);
+    const origins = await this.repository.appendOrigin(input.projectId, input.list, origin);
+    return this.publishOriginsChange(input, origins, "added");
+  }
+
+  @Transactional()
+  async removeOrigin(input: ChangeOriginInput): Promise<OriginChange> {
+    const origin = normalizeOrigin(input.origin);
+    const origins = await this.repository.removeOrigin(input.projectId, input.list, origin);
+    return this.publishOriginsChange(input, origins, "removed");
+  }
+
   async getByName(name: string): Promise<Project> {
     const project = await this.repository.findByName(name);
     if (!project) {
@@ -94,5 +127,21 @@ export class ProjectsService {
 
   async list(): Promise<Project[]> {
     return this.repository.findAll();
+  }
+
+  private async publishOriginsChange(
+    input: ChangeOriginInput,
+    origins: string[] | undefined,
+    change: OriginChange,
+  ): Promise<OriginChange> {
+    if (origins === undefined) {
+      return "unchanged";
+    }
+    await this.bus.publish(ORIGINS_EVENTS[input.list], {
+      projectId: input.projectId,
+      origins,
+      actorKind: input.actorKind,
+    });
+    return change;
   }
 }

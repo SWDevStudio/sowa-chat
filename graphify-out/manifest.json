@@ -684,9 +684,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/projects/projects.repository.ts": {
-    "mtime": 1793224636.735241,
-    "seen": 1793224656.468154,
-    "ast_hash": "2bf251d53bfbda778149ca13cd06d10a",
+    "mtime": 1793227256.12443,
+    "seen": 1793227324.0760875,
+    "ast_hash": "e167cef8452da34bc74a120cf2527f13",
     "semantic_hash": ""
   },
   "apps/server/test/transactions.e2e-spec.ts": {
@@ -924,9 +924,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/telemetry/events/domain-events.ts": {
-    "mtime": 1793225957.2165563,
-    "seen": 1793226023.4322083,
-    "ast_hash": "5fe8f672503418ae0f8cd9f64c9c669d",
+    "mtime": 1793227256.1776683,
+    "seen": 1793227324.0882063,
+    "ast_hash": "dd32852e1b47e0939a12387ff74141b8",
     "semantic_hash": ""
   },
   "apps/server/src/telemetry/events/on-domain-event.decorator.ts": {
@@ -978,9 +978,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/audit/audited-events.ts": {
-    "mtime": 1793225957.2009487,
-    "seen": 1793226023.4300838,
-    "ast_hash": "790334e0239d59793530e791c636de21",
+    "mtime": 1793227256.1193614,
+    "seen": 1793227324.0760875,
+    "ast_hash": "94805ca51b60d001580ea63e32e20bf7",
     "semantic_hash": ""
   },
   "apps/server/test/support/test-audit-rules.ts": {
@@ -1332,9 +1332,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/audit/audited-events.spec.ts": {
-    "mtime": 1793225957.193879,
-    "seen": 1793226023.4300838,
-    "ast_hash": "da242326afa3b02f6937f26cb1882d45",
+    "mtime": 1793227256.0810385,
+    "seen": 1793227324.0760875,
+    "ast_hash": "21c8badce637e13e4eff180d2ed28d75",
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/api-key.entity.ts": {
@@ -1626,9 +1626,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/projects/projects.service.ts": {
-    "mtime": 1793224636.7382534,
-    "seen": 1793224656.468154,
-    "ast_hash": "62e512c62a7ce14d3a8a8b4055d544a2",
+    "mtime": 1793227256.127954,
+    "seen": 1793227324.0760875,
+    "ast_hash": "1e873f83d97a640650d684658db6c380",
     "semantic_hash": ""
   },
   "apps/server/test/projects-service.e2e-spec.ts": {
@@ -1707,6 +1707,18 @@
     "mtime": 1793226505.1496491,
     "seen": 1793226525.6536694,
     "ast_hash": "0241ba3bdcb7b72f897731c019f0f451",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/projects/origin-list.ts": {
+    "mtime": 1793227256.1208754,
+    "seen": 1793227324.0760875,
+    "ast_hash": "59b7e0662c9bd75fa4a209537e8f29b4",
+    "semantic_hash": ""
+  },
+  "apps/server/test/project-origins.e2e-spec.ts": {
+    "mtime": 1793227256.1822102,
+    "seen": 1793227324.0917754,
+    "ast_hash": "f2bbb1eb0aae6b7c8be3a0fe7615e397",
     "semantic_hash": ""
   }
 }

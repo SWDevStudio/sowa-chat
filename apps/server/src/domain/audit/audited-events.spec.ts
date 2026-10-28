@@ -3,6 +3,7 @@ import type {
   ApiKeyEvent,
   IdentityKeyEvent,
   ProjectCreatedEvent,
+  ProjectOriginsEvent,
 } from "../../telemetry/events/domain-events.js";
 import { auditedEventNames } from "./audit-rule.js";
 import { auditedEvents } from "./audited-events.js";
@@ -200,6 +201,82 @@ describe("auditedEvents identityKey rules", () => {
   it("keeps apiKey and project.created rules", () => {
     expect(auditedEventNames(auditedEvents)).toEqual(
       expect.arrayContaining(["apiKey.issued", "apiKey.revoked", "project.created"]),
+    );
+  });
+});
+
+const projectOriginsEvent: ProjectOriginsEvent = {
+  projectId: "project-1",
+  origins: ["https://shop.example.com", "http://localhost:5173"],
+  actorKind: "cli",
+};
+
+const originEventNames = [
+  "project.allowedOriginsChanged",
+  "project.operatorAllowedOriginsChanged",
+] as const;
+
+describe("auditedEvents project origins rules", () => {
+  it("lists both origin events", () => {
+    const names = auditedEventNames(auditedEvents);
+
+    expect(names).toContain("project.allowedOriginsChanged");
+    expect(names).toContain("project.operatorAllowedOriginsChanged");
+  });
+
+  it.each(originEventNames)(
+    "%s maps cli event to record with project target and origins in data",
+    (name) => {
+      const rule = auditedEvents[name];
+
+      expect(rule).toBeDefined();
+      expect(rule?.(projectOriginsEvent)).toEqual({
+        projectId: "project-1",
+        actorKind: "cli",
+        actorId: null,
+        targetKind: "project",
+        targetId: "project-1",
+        data: { origins: ["https://shop.example.com", "http://localhost:5173"] },
+      });
+    },
+  );
+
+  it.each(originEventNames)("%s keeps system actorKind and empty list", (name) => {
+    const record = auditedEvents[name]?.({
+      projectId: "project-2",
+      origins: [],
+      actorKind: "system",
+    });
+
+    expect(record).toEqual({
+      projectId: "project-2",
+      actorKind: "system",
+      actorId: null,
+      targetKind: "project",
+      targetId: "project-2",
+      data: { origins: [] },
+    });
+  });
+
+  it.each(originEventNames)("%s data has only origins", (name) => {
+    const record = auditedEvents[name]?.({
+      ...projectOriginsEvent,
+      serverKey: "sk-leak",
+    } as ProjectOriginsEvent);
+
+    expect(Object.keys(record?.data ?? {})).toEqual(["origins"]);
+    expect(JSON.stringify(record)).not.toContain("sk-leak");
+  });
+
+  it("keeps earlier rules", () => {
+    expect(auditedEventNames(auditedEvents)).toEqual(
+      expect.arrayContaining([
+        "apiKey.issued",
+        "apiKey.revoked",
+        "identityKey.added",
+        "identityKey.revoked",
+        "project.created",
+      ]),
     );
   });
 });

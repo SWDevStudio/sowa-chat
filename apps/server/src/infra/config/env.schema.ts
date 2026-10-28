@@ -90,6 +90,17 @@ function checkEncryptionKeysInProduction(env: EnvObject, context: z.RefinementCt
   });
 }
 
+function checkTokenSigningKeysInProduction(env: EnvObject, context: z.RefinementCtx): void {
+  if (env.SOWA_ENV !== "production" || env.SOWA_TOKEN_SIGNING_KEYS !== undefined) {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_TOKEN_SIGNING_KEYS"],
+    message: "is required when SOWA_ENV is production",
+  });
+}
+
 function checkTokenSigningKeyId(env: EnvObject, context: z.RefinementCtx): void {
   const keyId = env.SOWA_TOKEN_SIGNING_KEY_ID;
   const keys = env.SOWA_TOKEN_SIGNING_KEYS ?? [];
@@ -126,6 +137,7 @@ export const envSchema = envObjectSchema.superRefine((env, context) => {
   }
   checkPrettyLogFormat(env, context);
   checkEncryptionKeysInProduction(env, context);
+  checkTokenSigningKeysInProduction(env, context);
   checkTokenSigningKeyId(env, context);
 });
 

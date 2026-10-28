@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793223678.7000072,
-    "seen": 1793223700.84448,
-    "ast_hash": "364cfb5f4a0a96dc9e26999385bce64c",
+    "mtime": 1793226505.1431038,
+    "seen": 1793226525.6526704,
+    "ast_hash": "c8e67641eda70b2483e6ecad9ace438d",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -1683,6 +1683,30 @@
     "mtime": 1793225957.2245424,
     "seen": 1793226023.443343,
     "ast_hash": "8be6729928a7ac757f8ffd19a7b34f3f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/projects/project-create.command.ts": {
+    "mtime": 1793226505.1451,
+    "seen": 1793226525.6526704,
+    "ast_hash": "87af823b5512d76fb06e316e41fee4b3",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/projects/project-list.command.ts": {
+    "mtime": 1793226505.146617,
+    "seen": 1793226525.6526704,
+    "ast_hash": "887afd276ac145ebfca8c35f94275db4",
+    "semantic_hash": ""
+  },
+  "apps/server/test/project-commands.e2e-spec.ts": {
+    "mtime": 1793226505.1481388,
+    "seen": 1793226525.6536694,
+    "ast_hash": "2831f8fbe9a5b75fe8aa954b9b5fbc5f",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/project-cli.ts": {
+    "mtime": 1793226505.1496491,
+    "seen": 1793226525.6536694,
+    "ast_hash": "0241ba3bdcb7b72f897731c019f0f451",
     "semantic_hash": ""
   }
 }

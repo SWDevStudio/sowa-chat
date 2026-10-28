@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-migrations.ts": {
-    "mtime": 1793215707.0125365,
-    "seen": 1793215722.3382347,
-    "ast_hash": "5dc3967cf552ed08c45a42f8b6ff8d0a",
+    "mtime": 1793216374.4589975,
+    "seen": 1793216394.7169755,
+    "ast_hash": "fad1d0f458a044e3e81633283c1a1807",
     "semantic_hash": ""
   },
   "apps/server/src/infra/preparation/preparation-runner.spec.ts": {
@@ -1317,6 +1317,18 @@
     "mtime": 1793215707.0185685,
     "seen": 1793215722.3382347,
     "ast_hash": "81eb57a2dddb472216c612c5db1cdc88",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/database/migrations/1793215983154-AddConversationIndexes.ts": {
+    "mtime": 1793216374.461869,
+    "seen": 1793216394.7169755,
+    "ast_hash": "fd8d07356fdf8a4ed346e00dfb74699a",
+    "semantic_hash": ""
+  },
+  "apps/server/test/conversation-indexes.e2e-spec.ts": {
+    "mtime": 1793216374.4646962,
+    "seen": 1793216394.7169755,
+    "ast_hash": "8c90f32b6385b1b88c1dee533f6b6433",
     "semantic_hash": ""
   }
 }

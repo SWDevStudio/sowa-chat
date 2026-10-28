@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793228376.4997993,
-    "seen": 1793228433.1640692,
-    "ast_hash": "013f1501228078c849bd7d36f93dbd1c",
+    "mtime": 1793229462.0294173,
+    "seen": 1793229488.8400056,
+    "ast_hash": "0ff86758a0f13691c19386914f27f29e",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -1761,6 +1761,42 @@
     "mtime": 1793228376.54119,
     "seen": 1793228433.1650753,
     "ast_hash": "d3f93467d1ef1324da4e1f960d6e3d4f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/identity-keys/identity-key-add.command.ts": {
+    "mtime": 1793229462.0294173,
+    "seen": 1793229488.8400056,
+    "ast_hash": "0478509a7f7188d3e773fb00c1422fad",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/identity-keys/identity-key-list.command.ts": {
+    "mtime": 1793229462.0313132,
+    "seen": 1793229488.8400056,
+    "ast_hash": "628ca18f272b632f1c29a8b21ae5be31",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/identity-keys/identity-key-revoke.command.ts": {
+    "mtime": 1793229462.032984,
+    "seen": 1793229488.8400056,
+    "ast_hash": "ad478faeee9ebff25230339d48ae7ec5",
+    "semantic_hash": ""
+  },
+  "apps/server/test/identity-key-commands-launch.e2e-spec.ts": {
+    "mtime": 1793229462.0350094,
+    "seen": 1793229488.8400056,
+    "ast_hash": "ef8f973ca5c9443537999fc04c09f413",
+    "semantic_hash": ""
+  },
+  "apps/server/test/identity-key-commands.e2e-spec.ts": {
+    "mtime": 1793229462.0350094,
+    "seen": 1793229488.8400056,
+    "ast_hash": "c76d5e72361f38dbd93f847fd1627595",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/identity-key-cli.ts": {
+    "mtime": 1793229462.037021,
+    "seen": 1793229488.8400056,
+    "ast_hash": "4be6d92e9a242f5d5f00fda05662c02f",
     "semantic_hash": ""
   }
 }

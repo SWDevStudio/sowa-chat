@@ -1,4 +1,7 @@
 import { Module } from "@nestjs/common";
+import { IdentityKeyAddCommand } from "./cli/identity-keys/identity-key-add.command.js";
+import { IdentityKeyListCommand } from "./cli/identity-keys/identity-key-list.command.js";
+import { IdentityKeyRevokeCommand } from "./cli/identity-keys/identity-key-revoke.command.js";
 import { KeyCreateCommand } from "./cli/keys/key-create.command.js";
 import { KeyGenerateCommand } from "./cli/keys/key-generate.command.js";
 import { KeyListCommand } from "./cli/keys/key-list.command.js";
@@ -31,6 +34,9 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     KeyGenerateCommand,
     KeyListCommand,
     KeyRevokeCommand,
+    IdentityKeyAddCommand,
+    IdentityKeyListCommand,
+    IdentityKeyRevokeCommand,
     ProjectCreateCommand,
     ProjectListCommand,
   ],

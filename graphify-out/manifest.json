@@ -348,9 +348,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api.module.ts": {
-    "mtime": 1793219321.4004614,
-    "seen": 1793220808.2436569,
-    "ast_hash": "a15868dac92994d6137df9e727f2583f",
+    "mtime": 1793221967.6260927,
+    "seen": 1793221984.8873625,
+    "ast_hash": "98cf5043969af0353ea3e12705f33340",
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
@@ -1539,6 +1539,24 @@
     "mtime": 1793221209.0409758,
     "seen": 1793221239.03479,
     "ast_hash": "4aef8f41741bdd1f3a439b137862ebe5",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/request-context/request-context.module.ts": {
+    "mtime": 1793221967.6276164,
+    "seen": 1793221984.8883626,
+    "ast_hash": "82379fa7dc3356591a842c0433782f32",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/request-context/request-context.spec.ts": {
+    "mtime": 1793221967.6291988,
+    "seen": 1793221984.8883626,
+    "ast_hash": "377c3037c5d92f9a218009b094609303",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/request-context/request-context.ts": {
+    "mtime": 1793221967.631573,
+    "seen": 1793221984.8883626,
+    "ast_hash": "0c2951c5ed3d0c0ad111cbf56b31d86d",
     "semantic_hash": ""
   }
 }

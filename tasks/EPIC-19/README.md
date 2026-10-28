@@ -13,7 +13,7 @@
 | 1 | [Сущность посетителя `Visitor`](TASK-1.md) | haiku | sonnet | обычная | — | готова |
 | 2 | [Сущность канала `Channel`](TASK-2.md) | haiku | sonnet | простая | — | готова |
 | 3 | [Сущность диалога `Conversation`](TASK-3.md) | haiku | sonnet | обычная | 1, 2 | готова |
-| 4 | [Сущность участника диалога `Participant`](TASK-4.md) | haiku | sonnet | простая | 3 | не начата |
+| 4 | [Сущность участника диалога `Participant`](TASK-4.md) | haiku | sonnet | простая | 3 | готова |
 | 5 | [Сущность сообщения `Message` с уникальными индексами `seq` и `clientMsgId`](TASK-5.md) | haiku | sonnet | обычная | 3 | в работе |
 | 6 | [Сущность истории действий в диалоге `ConversationEvent`](TASK-6.md) | haiku | sonnet | простая | 3 | готова |
 | 7 | [Регистрация сущностей чата и миграция таблиц, сгенерированная из них](TASK-7.md) | haiku | sonnet | обычная | 4, 5, 6 | не начата |

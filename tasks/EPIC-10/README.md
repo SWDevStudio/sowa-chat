@@ -23,4 +23,4 @@
 | 11 | [Команды `identity-key:add`, `identity-key:list` и `identity-key:revoke`](TASK-11.md) | haiku | sonnet | обычная | 9, 10 | готова |
 | 12 | [Добавление и удаление разрешённых доменов в сервисе проектов](TASK-12.md) | sonnet | sonnet | обычная | 6, 10 | готова |
 | 13 | [Команды `origin:*` и `operator-origin:*`](TASK-13.md) | haiku | sonnet | обычная | 11, 12 | готова |
-| 14 | [Команда `secrets:reencrypt`: `--dry-run`, итог и журнал аудита](TASK-14.md) | sonnet | sonnet | обычная | 7, 12, 13 | не начата |
+| 14 | [Команда `secrets:reencrypt`: `--dry-run`, итог и журнал аудита](TASK-14.md) | sonnet | sonnet | обычная | 7, 12, 13 | готова |

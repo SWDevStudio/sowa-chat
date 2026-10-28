@@ -42,7 +42,7 @@
 | [EPIC-2](EPIC-2/README.md) | Конфигурация и режимы запуска | готов |
 | [EPIC-3](EPIC-3/README.md) | Логи | готов |
 | [EPIC-4](EPIC-4/README.md) | Зоны API | на ревью |
-| [EPIC-5](EPIC-5/README.md) | База данных и миграции | не начат |
+| [EPIC-5](EPIC-5/README.md) | База данных и миграции | на ревью |
 | [EPIC-6](EPIC-6/README.md) | Redis и служебная зона | не начат |
 | [EPIC-7](EPIC-7/README.md) | Обработка HTTP-запросов | на ревью |
 | [EPIC-8](EPIC-8/README.md) | Шина событий и журнал аудита | не начат |

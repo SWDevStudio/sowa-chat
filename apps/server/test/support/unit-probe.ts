@@ -2,6 +2,7 @@ import type { INestApplication, Provider, Type } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { Logger, PinoLogger } from "nestjs-pino";
 import { pino } from "pino";
+import { withOfflineDatabase } from "./offline-database.js";
 
 const testEnv = {
   NODE_ENV: "test",
@@ -38,11 +39,13 @@ export async function createProbeApp(options: ProbeAppOptions = {}): Promise<INe
   vi.resetModules();
   const { ApiModule } = await import("../../src/api.module.js");
   const { useClsMiddleware } = await import("../../src/infra/cls/cls-middleware.js");
-  const moduleRef = await Test.createTestingModule({
-    imports: [ApiModule],
-    controllers: options.controllers,
-    providers: options.providers,
-  }).compile();
+  const moduleRef = await withOfflineDatabase(
+    Test.createTestingModule({
+      imports: [ApiModule],
+      controllers: options.controllers,
+      providers: options.providers,
+    }),
+  ).compile();
   if (options.onLogLine) {
     redirectLogsTo(options.onLogLine);
   }

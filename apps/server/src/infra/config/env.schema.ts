@@ -17,13 +17,21 @@ export type LogLevel = (typeof logLevels)[number];
 
 const logFormats = ["json", "pretty"] as const;
 
-function port(defaultValue: number) {
+function integerInRange(min: number, max: number, defaultValue: number) {
   return z
     .string()
     .regex(/^\d+$/, "must be an integer")
     .transform(Number)
-    .pipe(z.number().min(1).max(65535))
+    .pipe(z.number().min(min).max(max))
     .default(defaultValue);
+}
+
+function port(defaultValue: number) {
+  return integerInRange(1, 65535, defaultValue);
+}
+
+function optionalUrl() {
+  return z.preprocess((value) => (value === "" ? undefined : value), z.url().optional());
 }
 
 const envObjectSchema = z.object({
@@ -34,6 +42,8 @@ const envObjectSchema = z.object({
   SOWA_INTERNAL_PORT: port(8082),
   SOWA_MANAGEMENT_PORT: port(9090),
   DATABASE_URL: z.url(),
+  SOWA_DB_POOL_SIZE: integerInRange(1, 100, 10),
+  SOWA_MIGRATION_DATABASE_URL: optionalUrl(),
   REDIS_URL: z.url(),
   SOWA_S3_ENDPOINT: z.url(),
   SOWA_S3_ACCESS_KEY: nonEmptyString,

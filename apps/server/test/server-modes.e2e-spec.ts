@@ -172,11 +172,16 @@ describe("режимы запуска сервера", { timeout: commandTimeout
     }
   });
 
-  it("worker запускается и завершается с кодом 0", async () => {
+  it("worker запускается и через 3 секунды всё ещё работает", async () => {
     const ports = await findZonePorts();
-    const result = await runToExit(["worker"], serverEnvironment(zonePortsEnv(ports)));
+    const server = spawnServer(["worker"], serverEnvironment(zonePortsEnv(ports)));
+    try {
+      await delay(3000);
 
-    expect(result.exitCode, result.output).toBe(0);
+      expect(server.isStopped(), server.output()).toBe(false);
+    } finally {
+      await server.stop();
+    }
   });
 
   it.each(["migrate", "cli"])("%s запускается и завершается с кодом 0", async (mode) => {

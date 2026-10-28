@@ -5,6 +5,7 @@ import { Test } from "@nestjs/testing";
 import { createConnection, createServer } from "node:net";
 import type { AddressInfo, Server } from "node:net";
 import { findFreePort } from "../../../test/support/e2e-server.js";
+import { withOfflineDatabase } from "../../../test/support/offline-database.js";
 import { stubTestEnv } from "../../../test/support/unit-probe.js";
 import { startZoneProbeApp } from "../../../test/support/zone-probe.js";
 import { Zone } from "./zone.decorator.js";
@@ -164,7 +165,9 @@ describe("ZoneServers", () => {
     const { ApiModule } = await import("../../api.module.js");
     const { configureApiApp } = await import("../../api-app.js");
     const { ZoneServers } = await import("./zone-servers.js");
-    const moduleRef = await Test.createTestingModule({ imports: [ApiModule] }).compile();
+    const moduleRef = await withOfflineDatabase(
+      Test.createTestingModule({ imports: [ApiModule] }),
+    ).compile();
     const expressApp = moduleRef.createNestApplication<NestExpressApplication>({
       bufferLogs: true,
     });

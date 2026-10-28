@@ -37,11 +37,16 @@ describe("AuditLogListener", () => {
   let create: ReturnType<typeof vi.fn>;
   let propagations: unknown[];
 
+  beforeAll(() => {
+    stubTestEnv();
+  });
+
   beforeEach(async () => {
+    const { AppConfigModule } = await import("../../infra/config/config.module.js");
     create = vi.fn().mockResolvedValue({});
     propagations = [];
     moduleRef = await Test.createTestingModule({
-      imports: [TelemetryModule],
+      imports: [AppConfigModule, TelemetryModule],
       providers: [
         AuditLogListener,
         { provide: auditRules, useValue: testAuditRules },

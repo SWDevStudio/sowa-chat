@@ -7,6 +7,8 @@ import type { ZoneProbeApp } from "../../test/support/zone-probe.js";
 import { Zone } from "../infra/zones/zone.decorator.js";
 import type { ApiZone } from "../infra/zones/zone.js";
 import { HttpMetrics } from "./http-metrics/http-metrics.js";
+import { OperationSteps } from "./operation-steps/operation-steps.js";
+import { SlowOperations } from "./slow-operations/slow-operations.js";
 import { TelemetryInterceptor } from "./telemetry.interceptor.js";
 
 @Zone("public")
@@ -134,6 +136,8 @@ describe("TelemetryInterceptor для не http контекста", () => {
         internal: 3,
         management: 4,
       } as never,
+      { current: vi.fn() } as unknown as OperationSteps,
+      { report: vi.fn() } as unknown as SlowOperations,
     );
     const context = new ExecutionContextHost(
       [{}, {}, () => undefined],

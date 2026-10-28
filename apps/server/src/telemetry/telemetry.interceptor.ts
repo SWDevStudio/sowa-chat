@@ -6,12 +6,17 @@ import type { Observable } from "rxjs";
 import { portsConfig } from "../infra/config/ports.config.js";
 import { zoneOfPort } from "../infra/zones/zone-of-port.js";
 import { HttpMetrics } from "./http-metrics/http-metrics.js";
+import { OperationSteps } from "./operation-steps/operation-steps.js";
+import type { OperationTiming } from "./operation-steps/operation-step.js";
+import { SlowOperations } from "./slow-operations/slow-operations.js";
 
 @Injectable()
 export class TelemetryInterceptor implements NestInterceptor {
   constructor(
     @Inject(HttpMetrics) private readonly httpMetrics: HttpMetrics,
     @Inject(portsConfig.KEY) private readonly ports: ConfigType<typeof portsConfig>,
+    @Inject(OperationSteps) private readonly operationSteps: OperationSteps,
+    @Inject(SlowOperations) private readonly slowOperations: SlowOperations,
   ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
@@ -21,8 +26,10 @@ export class TelemetryInterceptor implements NestInterceptor {
     const request = context.switchToHttp().getRequest<Request>();
     const response = context.switchToHttp().getResponse<Response>();
     const startedAt = performance.now();
+    const timing = this.operationSteps.current();
     response.once("finish", () => {
       this.recordHttpMetrics(request, response, startedAt);
+      this.reportSlowOperation(request, timing);
     });
     return next.handle();
   }
@@ -38,6 +45,17 @@ export class TelemetryInterceptor implements NestInterceptor {
       route: request.route.path,
       status: response.statusCode,
       durationSeconds: (performance.now() - startedAt) / 1000,
+    });
+  }
+
+  private reportSlowOperation(request: Request, timing: OperationTiming | undefined): void {
+    if (!timing) {
+      return;
+    }
+    this.slowOperations.report({
+      name: `${request.method} ${request.route.path}`,
+      durationMs: performance.now() - timing.startedAt,
+      steps: timing.steps,
     });
   }
 }

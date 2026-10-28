@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { encryptionKeysSchema } from "./encryption-keys.schema.js";
+import { tokenSigningKeysSchema } from "./token-signing-keys.schema.js";
 
 const portVariables = [
   "SOWA_PUBLIC_PORT",
@@ -51,6 +52,11 @@ const envObjectSchema = z.object({
   SOWA_S3_SECRET_KEY: nonEmptyString,
   SOWA_S3_BUCKET: nonEmptyString,
   SOWA_ENCRYPTION_KEYS: encryptionKeysSchema,
+  SOWA_TOKEN_SIGNING_KEYS: tokenSigningKeysSchema,
+  SOWA_TOKEN_SIGNING_KEY_ID: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.string().optional(),
+  ),
   SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),
   SOWA_LOG_FORMAT: z.enum(logFormats).default("json"),
   SOWA_SLOW_OPERATION_MS: integerInRange(1, 600000, 500),
@@ -84,6 +90,29 @@ function checkEncryptionKeysInProduction(env: EnvObject, context: z.RefinementCt
   });
 }
 
+function checkTokenSigningKeyId(env: EnvObject, context: z.RefinementCtx): void {
+  const keyId = env.SOWA_TOKEN_SIGNING_KEY_ID;
+  const keys = env.SOWA_TOKEN_SIGNING_KEYS ?? [];
+  if (keyId === undefined) {
+    if (keys.length > 0) {
+      context.addIssue({
+        code: "custom",
+        path: ["SOWA_TOKEN_SIGNING_KEY_ID"],
+        message: "is required when SOWA_TOKEN_SIGNING_KEYS is set",
+      });
+    }
+    return;
+  }
+  if (keys.some((key) => key.kid === keyId)) {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_TOKEN_SIGNING_KEY_ID"],
+    message: "must be one of the kids in SOWA_TOKEN_SIGNING_KEYS",
+  });
+}
+
 export const envSchema = envObjectSchema.superRefine((env, context) => {
   for (const variable of portVariables) {
     const other = findPortWithSameValue(env, variable);
@@ -97,6 +126,7 @@ export const envSchema = envObjectSchema.superRefine((env, context) => {
   }
   checkPrettyLogFormat(env, context);
   checkEncryptionKeysInProduction(env, context);
+  checkTokenSigningKeyId(env, context);
 });
 
 export type Env = z.infer<typeof envSchema>;

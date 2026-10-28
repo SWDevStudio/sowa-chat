@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/config.module.ts": {
-    "mtime": 1793219321.467105,
-    "seen": 1793220808.2436569,
-    "ast_hash": "dade44f815b79cbfff9dee6fa28bc3d2",
+    "mtime": 1793221209.0354304,
+    "seen": 1793221239.03377,
+    "ast_hash": "fc7c2419a9067bee46bd4204d798d1af",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/database.config.ts": {
@@ -300,9 +300,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/env.schema.ts": {
-    "mtime": 1793219321.4768891,
-    "seen": 1793220808.2436569,
-    "ast_hash": "d10aafb9f37ef23180897b59fbab32d6",
+    "mtime": 1793221209.0364473,
+    "seen": 1793221239.03479,
+    "ast_hash": "dd6d778844cb3d19967745efd2370f73",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/parse-env.ts": {
@@ -1521,6 +1521,24 @@
     "mtime": 1793220784.9404228,
     "seen": 1793220808.2446575,
     "ast_hash": "871725487a036425f76e3fca3349d3fa",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/token-signing-keys.schema.spec.ts": {
+    "mtime": 1793221209.0389977,
+    "seen": 1793221239.03479,
+    "ast_hash": "ac3790bb5fac5bbd972d1144f4e0c74a",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/token-signing-keys.schema.ts": {
+    "mtime": 1793221209.0399773,
+    "seen": 1793221239.03479,
+    "ast_hash": "324fcf9ad40f7e04eb1f1407e7d4df4e",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/token-signing.config.ts": {
+    "mtime": 1793221209.0409758,
+    "seen": 1793221239.03479,
+    "ast_hash": "4aef8f41741bdd1f3a439b137862ebe5",
     "semantic_hash": ""
   }
 }

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { readArgs, runMain } from "./lib/args.mjs";
+import { logEvent } from "./lib/metrics.mjs";
 import { groupByPackage, hasScript, packageDirOf } from "./lib/packages.mjs";
 import { logFile, mainRoot, worktreePath } from "./lib/paths.mjs";
 import { outputLines, quoteAll, run } from "./lib/shell.mjs";
@@ -71,7 +72,9 @@ function main() {
     runLint(worktree, files),
     ...runTypeChecks(worktree, files),
   ];
-  return reportSteps(steps, logFile(root, epic, `TASK-${task}.check`));
+  const exitCode = reportSteps(steps, logFile(root, epic, `TASK-${task}.check`));
+  logEvent(root, { event: "checked", epic, task, passed: exitCode === 0 });
+  return exitCode;
 }
 
 runMain(main);

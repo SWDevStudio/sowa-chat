@@ -1,4 +1,5 @@
 import { readArgs, runMain } from "./lib/args.mjs";
+import { logEvent } from "./lib/metrics.mjs";
 import { pathsOverlap, readOwnedPaths } from "./lib/owned-paths.mjs";
 import { mainRoot } from "./lib/paths.mjs";
 import { readTasks } from "./lib/task-table.mjs";
@@ -64,7 +65,9 @@ function main() {
     console.log("done");
   }
   if (startable.length === 0 && running.length > 0) {
-    console.log(`waiting ${running.map((task) => task.number).join(" ")}`);
+    const runningNumbers = running.map((task) => task.number);
+    logEvent(root, { event: "waiting", epic, tasks: runningNumbers });
+    console.log(`waiting ${runningNumbers.join(" ")}`);
   }
   return 0;
 }

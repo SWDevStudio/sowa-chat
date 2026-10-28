@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import { readArgs, runMain } from "./lib/args.mjs";
+import { logEvent } from "./lib/metrics.mjs";
 import { epicBranch, mainRoot, taskBranch, worktreePath } from "./lib/paths.mjs";
 import { quote, run, runOrFail } from "./lib/shell.mjs";
 import { isTableTask, setTaskStatus } from "./lib/task-table.mjs";
@@ -44,6 +45,7 @@ function main() {
   if (isTableTask(task)) {
     setTaskStatus(taskRef, "в работе");
   }
+  logEvent(root, { event: "taskStarted", epic, task });
   console.log(`STARTED ${worktree}`);
   return 0;
 }

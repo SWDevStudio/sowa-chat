@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { readArgs, runMain } from "./lib/args.mjs";
+import { logEvent } from "./lib/metrics.mjs";
 import { epicBranch, mainRoot, runsDir, taskBranch, worktreePath } from "./lib/paths.mjs";
 import { quote, run, runOrFail } from "./lib/shell.mjs";
 import { isTableTask, setTaskStatus } from "./lib/task-table.mjs";
@@ -41,6 +42,7 @@ function main() {
     commitWithMessage(root, epic, "[DOCS]: update task status and rework notes");
   }
   removeWorktree(root, epic, task);
+  logEvent(root, { event: "merged", epic, task });
   console.log(`MERGED ${commit}`);
   return 0;
 }

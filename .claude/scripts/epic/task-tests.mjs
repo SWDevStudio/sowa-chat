@@ -1,4 +1,5 @@
 import { readArgs, runMain } from "./lib/args.mjs";
+import { logEvent } from "./lib/metrics.mjs";
 import { mainRoot, worktreePath } from "./lib/paths.mjs";
 import { quoteAll, runOrFail } from "./lib/shell.mjs";
 import { updateTaskRun } from "./lib/task-run.mjs";
@@ -13,6 +14,7 @@ function main() {
   runOrFail('git commit -m "WIP: tests"', worktree);
   const base = runOrFail("git rev-parse HEAD", worktree);
   updateTaskRun({ root, epic, task }, { base, tests });
+  logEvent(root, { event: "testsCommitted", epic, task });
   console.log(`TESTS ${base}`);
   return 0;
 }

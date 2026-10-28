@@ -1,6 +1,6 @@
 import { readArgs, runMain } from "./lib/args.mjs";
 import { logFile, mainRoot } from "./lib/paths.mjs";
-import { outputLines, run, runOrFail } from "./lib/shell.mjs";
+import { outputLines, run } from "./lib/shell.mjs";
 import { reportSteps, runStep } from "./lib/steps.mjs";
 
 const usage = "node .claude/scripts/epic/final-check.mjs <epic>";
@@ -22,15 +22,19 @@ function isInfraRunning(root) {
 function main() {
   const [epic] = readArgs(usage, 1);
   const root = mainRoot();
+  const log = logFile(root, epic, "final");
   const startedInfra = !isInfraRunning(root);
   if (startedInfra) {
-    runOrFail("pnpm infra:up", root);
+    const infra = runStep("infra", "pnpm infra:up", root);
+    if (!infra.ok) {
+      return reportSteps([infra], log);
+    }
   }
   const steps = checks.map(([name, command]) => runStep(name, command, root));
   if (startedInfra) {
     run("pnpm infra:down", root);
   }
-  return reportSteps(steps, logFile(root, epic, "final"));
+  return reportSteps(steps, log);
 }
 
 runMain(main);

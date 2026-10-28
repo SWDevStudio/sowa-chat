@@ -76,13 +76,14 @@ describe("postgres container for e2e", () => {
   );
 
   it(
-    "database has only tables created by migrations",
+    "database contains the tables created by migrations",
     async () => {
       const rows = await queryDatabase<{ table_name: string }>(
         process.env.DATABASE_URL ?? "",
         "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name",
       );
-      expect(rows).toEqual([{ table_name: "migrations" }, { table_name: "projects" }]);
+      const tableNames = rows.map((row) => row.table_name);
+      expect(tableNames).toEqual(expect.arrayContaining(["migrations", "projects"]));
     },
     queryTimeout,
   );

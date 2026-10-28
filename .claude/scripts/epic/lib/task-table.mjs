@@ -28,10 +28,12 @@ function parseDependencies(cell) {
 function toTask(header, cells) {
   const cell = (name) => cells[header.indexOf(name)];
   const hasTestsColumn = header.includes("Тесты");
+  const hasComplexityColumn = header.includes("Сложность");
   return {
     number: Number(cell("№")),
     executor: cell("Исполнитель"),
     testsModel: hasTestsColumn ? cell("Тесты") : "opus",
+    complexity: hasComplexityColumn && cell("Сложность") === "простая" ? "simple" : "normal",
     dependsOn: parseDependencies(cell("Зависит от")),
     status: cell("Статус"),
   };

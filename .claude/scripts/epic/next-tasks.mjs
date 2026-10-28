@@ -51,7 +51,9 @@ function printTask(task) {
     console.log(`developer ${task.number}`);
     return;
   }
-  console.log(`start ${task.number} executor=${task.executor} tests=${task.testsModel}`);
+  console.log(
+    `start ${task.number} executor=${task.executor} tests=${task.testsModel} complexity=${task.complexity}`,
+  );
 }
 
 function main() {

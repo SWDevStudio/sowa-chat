@@ -34,3 +34,8 @@
 - Подписка — `DomainEventBus.subscribe` для каждого имени из списка в `onModuleInit`, а не `@OnEvent`: имена берутся из списка, декоратору их не передать. Единственное приведение типа — `Object.keys(rules) as DomainEventName[]` в `auditedEventNames`.
 - Запись идёт через `txHost.withTransaction(Propagation.Nested, ...)`: внутри чужой транзакции это точка сохранения. Ошибка записи откатывает только её, ловится и пишется в лог `Audit log write failed` с полями `err` и `action`, без данных события. Откат транзакции действия убирает и запись журнала.
 - `AuditModule` подключён в режимах `api`, `worker` и `cli` после `TelemetryModule`.
+
+## 28.10.2026, TASK-1, вопрос исполнителя. Переменные окружения в `domain-event-bus.spec.ts`
+
+- Вопрос: статический импорт `ApiModule`, `WorkerModule`, `CliModule` в тесте падает с `Invalid environment variables`: `ConfigModule.forRoot` с `parseEnv` срабатывает при загрузке, а в `apps/server/vitest.config.ts` переменных нет.
+- Решение: `vitest.config.ts` не менять, правится тест. Модули режимов загружаются через `await import(...)` после `stubTestEnv()` в `beforeAll`, как в `zone-servers.spec.ts`. `vi.resetModules()` не вызывается, иначе `TelemetryModule` в `imports` будет другим экземпляром класса. Общий `setupFiles` со стабом окружения отклонён: он скрыл бы ошибки конфигурации в остальных unit-тестах и меняет файл вне задачи.

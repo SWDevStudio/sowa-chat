@@ -103,6 +103,21 @@
 
 7. Тест `apps/server/src/telemetry/events/domain-event-bus.spec.ts` (vitest). Модуль: `Test.createTestingModule({ imports: [TelemetryModule], providers: [тестовый подписчик] })`, затем `await moduleRef.init()` — без него `@OnEvent` не регистрируется. Типы тестовых событий — `import type` из `../../../test/support/test-domain-events.js`.
 
+   `ApiModule`, `WorkerModule` и `CliModule` статически не импортировать: их цепочка при загрузке вызывает `ConfigModule.forRoot` с `parseEnv`, а в unit-конфиге vitest переменных окружения нет. `apps/server/vitest.config.ts` не менять. Проверка подключения — как в `apps/server/src/infra/zones/zone-servers.spec.ts`: в `describe("TelemetryModule wiring")` сначала `beforeAll(() => { stubTestEnv(); })` (`stubTestEnv` из `../../../test/support/unit-probe.js`), модули режима загружаются динамически внутри теста:
+
+   ```ts
+   it.each([
+     ["ApiModule", async () => (await import("../../api.module.js")).ApiModule],
+     ["WorkerModule", async () => (await import("../../worker.module.js")).WorkerModule],
+     ["CliModule", async () => (await import("../../cli.module.js")).CliModule],
+   ])("%s imports TelemetryModule", async (_name, loadMode) => {
+     const imports: unknown[] = Reflect.getMetadata("imports", await loadMode());
+     expect(imports).toContain(TelemetryModule);
+   });
+   ```
+
+   `vi.resetModules()` здесь не вызывать: после него `telemetry.module.js` загрузится заново, и `TelemetryModule` из статического импорта теста не совпадёт с тем, что в `imports`.
+
 ## Где
 
 - `apps/server/src/telemetry/telemetry.module.ts`, `apps/server/src/telemetry/events/domain-events.ts`, `apps/server/src/telemetry/events/domain-event-bus.ts`, `apps/server/src/telemetry/events/on-domain-event.decorator.ts` — новые файлы.

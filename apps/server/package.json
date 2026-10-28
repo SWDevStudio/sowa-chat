@@ -9,6 +9,8 @@
   "scripts": {
     "build": "nest build",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
+    "migration:generate": "nest build && node --env-file-if-exists=.env node_modules/typeorm/cli.js migration:generate --pretty -d dist/data-source.js",
+    "migration:create": "node node_modules/typeorm/cli.js migration:create",
     "start:api": "nest start -- api",
     "start:worker": "nest start -- worker",
     "start:api:dev": "nest start --watch -- api",

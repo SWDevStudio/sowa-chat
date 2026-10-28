@@ -1,4 +1,5 @@
 import type { DataSourceOptions } from "typeorm";
+import { databaseMigrations } from "./database-migrations.js";
 
 export type DatabaseEntity = new () => object;
 
@@ -17,5 +18,7 @@ export function createDataSourceOptions(connection: DatabaseConnection): DataSou
     synchronize: false,
     applicationName: "sowa-chat-server",
     connectTimeoutMS: 5000,
+    migrations: databaseMigrations,
+    migrationsTransactionMode: "each",
   };
 }

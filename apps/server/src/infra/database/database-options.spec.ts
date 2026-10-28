@@ -1,3 +1,4 @@
+import { databaseMigrations } from "./database-migrations.js";
 import { createDataSourceOptions } from "./database-options.js";
 import type { DatabaseEntity } from "./database-options.js";
 
@@ -37,5 +38,17 @@ describe("createDataSourceOptions", () => {
     const options = createDataSourceOptions({ url, poolSize: 1, entities: [] });
 
     expect(options).toMatchObject({ entities: [], poolSize: 1 });
+  });
+
+  it("passes the explicit migration list", () => {
+    const options = createDataSourceOptions({ url, poolSize: 10, entities: [] });
+
+    expect(options.migrations).toBe(databaseMigrations);
+  });
+
+  it("runs each migration in its own transaction", () => {
+    const options = createDataSourceOptions({ url, poolSize: 10, entities: [] });
+
+    expect(options).toMatchObject({ migrationsTransactionMode: "each" });
   });
 });

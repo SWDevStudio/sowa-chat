@@ -4,6 +4,7 @@ import { AppClsModule } from "./infra/cls/app-cls.module.js";
 import { AppConfigModule } from "./infra/config/config.module.js";
 import { DatabaseModule } from "./infra/database/database.module.js";
 import { createLoggerModule } from "./infra/logging/logger.module.js";
+import { TelemetryModule } from "./telemetry/telemetry.module.js";
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { createLoggerModule } from "./infra/logging/logger.module.js";
     AppClsModule,
     DatabaseModule.forRoot(databaseEntities),
     createLoggerModule("worker"),
+    TelemetryModule,
   ],
 })
 export class WorkerModule {}

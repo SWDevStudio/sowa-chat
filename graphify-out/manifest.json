@@ -1230,9 +1230,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/channels/channel.entity.ts": {
-    "mtime": 1793211851.3499167,
-    "seen": 1793211880.6887536,
-    "ast_hash": "4a5f1cd46c1f6c2af641349e03fdc04e",
+    "mtime": 1793217562.8656726,
+    "seen": 1793217583.0577805,
+    "ast_hash": "00287752dfc547f1c7a3f696071e5e97",
     "semantic_hash": ""
   },
   "apps/server/src/domain/visitors/visitor.entity.spec.ts": {
@@ -1242,9 +1242,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/visitors/visitor.entity.ts": {
-    "mtime": 1793212188.1675692,
-    "seen": 1793212243.5636525,
-    "ast_hash": "191ee4e906209d0f4d06bc6a6eadc1c1",
+    "mtime": 1793217562.8714614,
+    "seen": 1793217583.0577805,
+    "ast_hash": "31f55dd94d0736b96f5b2f8b1b1fe4d5",
     "semantic_hash": ""
   },
   "apps/server/src/domain/conversations/conversation.entity.spec.ts": {
@@ -1254,9 +1254,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/conversations/conversation.entity.ts": {
-    "mtime": 1793212681.0498536,
-    "seen": 1793212703.241766,
-    "ast_hash": "b677cdedcf23b5e5fd9fde629d0966fe",
+    "mtime": 1793217562.8674262,
+    "seen": 1793217583.0577805,
+    "ast_hash": "a2ab070375f55bc16cbce70c7cff45e1",
     "semantic_hash": ""
   },
   "apps/server/src/domain/conversations/conversation-event.entity.spec.ts": {
@@ -1266,9 +1266,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/conversations/conversation-event.entity.ts": {
-    "mtime": 1793213450.510012,
-    "seen": 1793213488.590904,
-    "ast_hash": "dec88745333fcd81aa3a38157fa76890",
+    "mtime": 1793217562.8656726,
+    "seen": 1793217583.0577805,
+    "ast_hash": "718439acd418be4343bc4ae873450714",
     "semantic_hash": ""
   },
   "apps/server/src/domain/conversations/participant.entity.spec.ts": {
@@ -1278,9 +1278,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/conversations/participant.entity.ts": {
-    "mtime": 1793214368.3739042,
-    "seen": 1793214383.1174085,
-    "ast_hash": "dce5f8e45626e9ea258d1a8186d75772",
+    "mtime": 1793217562.8694365,
+    "seen": 1793217583.0577805,
+    "ast_hash": "50938353f77140383e434966b3afb232",
     "semantic_hash": ""
   },
   "apps/server/src/domain/conversations/message.entity.spec.ts": {
@@ -1290,15 +1290,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/conversations/message.entity.ts": {
-    "mtime": 1793214457.7135544,
-    "seen": 1793214472.557069,
-    "ast_hash": "030b3f37b21360a2f0d46924333d1a86",
+    "mtime": 1793217562.8694365,
+    "seen": 1793217583.0577805,
+    "ast_hash": "bd81f9ea5ae6ac476e728869fa295cb9",
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/migrations/1793215389271-CreateChatTables.ts": {
-    "mtime": 1793215707.0145497,
-    "seen": 1793215722.3382347,
-    "ast_hash": "c67589c746e9882f67614f30950b355a",
+    "mtime": 1793217562.8719702,
+    "seen": 1793217583.0577805,
+    "ast_hash": "cad382cf1ec70eb71da1a90a4b8be11a",
     "semantic_hash": ""
   },
   "apps/server/test/chat-tables.e2e-spec.ts": {
@@ -1497,6 +1497,12 @@
     "mtime": 1793216448.120659,
     "seen": 1793216498.3955333,
     "ast_hash": "08b6b76349347f09a7bc495fa6d1ffe9",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/database/sql-in-list.ts": {
+    "mtime": 1793217562.873995,
+    "seen": 1793217583.0577805,
+    "ast_hash": "97af27313c8b9ea4c57dc8155c4d5907",
     "semantic_hash": ""
   }
 }

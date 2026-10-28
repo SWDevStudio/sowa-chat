@@ -1,5 +1,6 @@
 import type { JsonObject } from "@sowa-chat/protocol";
 import {
+  Check,
   Column,
   CreateDateColumn,
   Entity,
@@ -10,23 +11,35 @@ import {
   type Relation,
 } from "typeorm";
 
+import { sqlInList } from "../../infra/database/sql-in-list.js";
 import { Conversation } from "./conversation.entity.js";
 
-export type MessageSenderKind = "visitor" | "operator" | "bot" | "system";
-export type MessageType = "text" | "media" | "system" | "custom";
+export const messageSenderKinds = ["visitor", "operator", "bot", "system"] as const;
+export type MessageSenderKind = (typeof messageSenderKinds)[number];
+
+export const messageTypes = ["text", "media", "system", "custom"] as const;
+export type MessageType = (typeof messageTypes)[number];
 
 @Entity({ name: "messages" })
-@Index(["conversationId", "seq"], { unique: true })
-@Index(["conversationId", "clientMsgId"], { unique: true })
+@Index("IDX_messages_conversation_id_seq", ["conversationId", "seq"], { unique: true })
+@Index("IDX_messages_conversation_id_client_msg_id", ["conversationId", "clientMsgId"], {
+  unique: true,
+})
+@Check("CHK_messages_sender_kind", sqlInList("sender_kind", messageSenderKinds))
+@Check("CHK_messages_type", sqlInList("type", messageTypes))
 export class Message {
-  @PrimaryColumn({ type: "uuid", default: () => "uuidv7()" })
+  @PrimaryColumn({
+    type: "uuid",
+    default: () => "uuidv7()",
+    primaryKeyConstraintName: "PK_messages",
+  })
   id!: string;
 
   @Column({ name: "conversation_id", type: "uuid" })
   conversationId!: string;
 
   @ManyToOne(() => Conversation, { nullable: false, onDelete: "CASCADE" })
-  @JoinColumn({ name: "conversation_id" })
+  @JoinColumn({ name: "conversation_id", foreignKeyConstraintName: "FK_messages_conversation_id" })
   conversation?: Relation<Conversation>;
 
   @Column({ type: "integer" })

@@ -12,17 +12,21 @@ import {
 import { Project } from "../projects/project.entity.js";
 
 @Entity({ name: "visitors" })
-@Index(["projectId", "displayCode"], { unique: true })
-@Index(["projectId", "externalId"], { unique: true })
+@Index("IDX_visitors_project_id_display_code", ["projectId", "displayCode"], { unique: true })
+@Index("IDX_visitors_project_id_external_id", ["projectId", "externalId"], { unique: true })
 export class Visitor {
-  @PrimaryColumn({ type: "uuid", default: () => "uuidv7()" })
+  @PrimaryColumn({
+    type: "uuid",
+    default: () => "uuidv7()",
+    primaryKeyConstraintName: "PK_visitors",
+  })
   id!: string;
 
   @Column({ name: "project_id", type: "uuid" })
   projectId!: string;
 
   @ManyToOne(() => Project, { nullable: false, onDelete: "CASCADE" })
-  @JoinColumn({ name: "project_id" })
+  @JoinColumn({ name: "project_id", foreignKeyConstraintName: "FK_visitors_project_id" })
   project?: Relation<Project>;
 
   @Column({ name: "display_code", type: "integer", nullable: true })
@@ -50,7 +54,7 @@ export class Visitor {
   mergedIntoId!: string | null;
 
   @ManyToOne(() => Visitor, { nullable: true, onDelete: "SET NULL" })
-  @JoinColumn({ name: "merged_into_id" })
+  @JoinColumn({ name: "merged_into_id", foreignKeyConstraintName: "FK_visitors_merged_into_id" })
   mergedInto?: Relation<Visitor> | null;
 
   @Column({ name: "first_seen_at", type: "timestamptz", default: () => "now()" })

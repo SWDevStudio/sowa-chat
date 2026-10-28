@@ -5,7 +5,11 @@ import { Project } from "../projects/project.entity.js";
 
 @Entity({ name: "channels" })
 export class Channel {
-  @PrimaryColumn({ type: "uuid", default: () => "uuidv7()" })
+  @PrimaryColumn({
+    type: "uuid",
+    default: () => "uuidv7()",
+    primaryKeyConstraintName: "PK_channels",
+  })
   id!: string;
 
   @Column({ name: "project_id", type: "uuid" })
@@ -18,6 +22,6 @@ export class Channel {
   isActive!: boolean;
 
   @ManyToOne(() => Project, { nullable: false, onDelete: "CASCADE" })
-  @JoinColumn({ name: "project_id" })
+  @JoinColumn({ name: "project_id", foreignKeyConstraintName: "FK_channels_project_id" })
   project?: Relation<Project>;
 }

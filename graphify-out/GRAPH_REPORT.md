@@ -1,7 +1,7 @@
-# Graph Report - EPIC-7-7  (2026-10-28)
+# Graph Report - EPIC-7-review  (2026-10-28)
 
 ## Corpus Check
-- 114 files · ~21,151 words
+- 114 files · ~21,152 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 10 file(s) not represented in the graph (top: (none) 9, .example 1)
 
@@ -11,7 +11,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c7f80dc8`
+- Built from commit: `ff1caafc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -38,13 +38,13 @@
 - rules
 - bot-sdk/package.json
 - server-sdk/package.json
-- api-app.ts
-- @nestjs/common
-- config.module.ts
+- api-docs.ts
+- zone.guard.spec.ts
+- env.schema.ts
 - scripts
 - zod-serialization.spec.ts
 - server-protocol.e2e-spec.ts
-- NeutralProbeController
+- api-versioning.spec.ts
 - Zone
 - security-headers.spec.ts
 - request-id.e2e-spec.ts
@@ -57,7 +57,7 @@
 - ref_node_path
 - nest-cli.json
 - server-errors.spec.ts
-- zone.guard.spec.ts
+- MixedZoneController
 - server-sdk/tsconfig.json
 - unit-probe.ts
 - BodyProbeController
@@ -89,7 +89,7 @@
 - @sowa-chat/protocol@workspace:*
 - typeorm@^1.1.2
 - pino-http
-- protocol/src/index.ts
+- json-object-limits.spec.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `@nestjs/common` - 41 edges
@@ -204,15 +204,15 @@ Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@c
 Cohesion: 0.12
 Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@catalog:, exports, tsdown, @types/node (+10 more)
 
-### Community 22 - "api-app.ts"
+### Community 22 - "api-docs.ts"
 Cohesion: 0.22
 Nodes (11): DocumentedZone, documentForZone(), isUnderAnyPrefix(), onlyOnManagementPort(), zonePathPrefixes, ApiZone, apiZones, ZoneGuard (+3 more)
 
-### Community 23 - "@nestjs/common"
+### Community 23 - "zone.guard.spec.ts"
 Cohesion: 0.10
 Nodes (11): calls, ProbeBodyDto, ProbeCall, ProbeQueryDto, CapturedResponse, FakeRequest, guardedControllers, startApp() (+3 more)
 
-### Community 24 - "config.module.ts"
+### Community 24 - "env.schema.ts"
 Cohesion: 0.09
 Nodes (17): checkPrettyLogFormat(), Env, EnvObject, envObjectSchema, envSchema, findPortWithSameValue(), logFormats, Env (+9 more)
 
@@ -228,7 +228,7 @@ Nodes (7): entries(), errorEntriesOf(), Issue, LogEntry, ProbeResponse, ProbeRes
 Cohesion: 0.27
 Nodes (7): CommandResult, findFreePort(), repositoryRoot, respondsToHttp(), serverDirectory, startBuiltServer(), waitForHttp()
 
-### Community 28 - "NeutralProbeController"
+### Community 28 - "api-versioning.spec.ts"
 Cohesion: 0.25
 Nodes (4): NeutralProbeController, probeControllers, SecondVersionProbeController, VersionedProbeController
 
@@ -280,7 +280,7 @@ Nodes (5): collection, compilerOptions, deleteOutDir, $schema, sourceRoot
 Cohesion: 0.19
 Nodes (15): errorCodeByStatus, errorCodeOfStatus(), apiErrorResponse(), httpErrorResponse(), internalErrorMessage, internalErrorResponse(), toErrorResponse(), validationErrorResponse() (+7 more)
 
-### Community 41 - "zone.guard.spec.ts"
+### Community 41 - "MixedZoneController"
 Cohesion: 0.24
 Nodes (3): MixedZoneController, OperatorZoneController, UnzonedController
 
@@ -312,7 +312,7 @@ Nodes (3): JsonObjectValidator, encoder, utf8ByteLength()
 Cohesion: 0.23
 Nodes (4): startListening(), stopListening(), ZoneServers, @nestjs/common
 
-### Community 115 - "protocol/src/index.ts"
+### Community 115 - "json-object-limits.spec.ts"
 Cohesion: 0.09
 Nodes (16): defaultLimits, isAccepted(), jsonLength(), objectOfJsonBytes(), Schema, schemaWith(), createJsonObjectSchema(), defaultLimits (+8 more)
 
@@ -324,13 +324,13 @@ Nodes (16): defaultLimits, isAccepted(), jsonLength(), objectOfJsonBytes(), Sche
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `@nestjs/common` to `http-error.filter.spec.ts`, `api-app.ts`, `api-docs.spec.ts`, `main.ts`, `zone-servers.spec.ts`, `dependencies`, `server-errors.spec.ts`, `unit-probe.ts`, `server/package.json`, `api-exception.ts`, `api-app.ts`, `@nestjs/common`, `zod-serialization.spec.ts`, `NeutralProbeController`, `Zone`, `security-headers.spec.ts`?**
+- **Why does `@nestjs/common` connect `@nestjs/common` to `http-error.filter.spec.ts`, `api-app.ts`, `api-docs.spec.ts`, `main.ts`, `zone-servers.spec.ts`, `dependencies`, `server-errors.spec.ts`, `unit-probe.ts`, `server/package.json`, `api-exception.ts`, `api-docs.ts`, `zone.guard.spec.ts`, `zod-serialization.spec.ts`, `api-versioning.spec.ts`, `Zone`, `security-headers.spec.ts`?**
   _High betweenness centrality (0.170) - this node is a cross-community bridge._
 - **What connects `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json` to the rest of the system?**
   _5 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `http-error.filter.spec.ts` be split into smaller, more focused modules?**
   _Cohesion score 0.13405797101449277 - nodes in this community are weakly interconnected._
-- **Why does `Zone()` connect `Zone` to `api-docs.spec.ts`, `http-error.filter.spec.ts`, `ErrorProbeController`, `zone-servers.spec.ts`, `server-errors.spec.ts`, `zone.guard.spec.ts`, `BodyProbeController`, `ValidationProbeController`, `ServerErrorsProbeController`, `@nestjs/common`, `zod-serialization.spec.ts`, `NeutralProbeController`, `security-headers.spec.ts`?**
+- **Why does `Zone()` connect `Zone` to `api-docs.spec.ts`, `http-error.filter.spec.ts`, `ErrorProbeController`, `zone-servers.spec.ts`, `server-errors.spec.ts`, `MixedZoneController`, `BodyProbeController`, `ValidationProbeController`, `ServerErrorsProbeController`, `zone.guard.spec.ts`, `zod-serialization.spec.ts`, `api-versioning.spec.ts`, `security-headers.spec.ts`?**
   _High betweenness centrality (0.062) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06984126984126984 - nodes in this community are weakly interconnected._

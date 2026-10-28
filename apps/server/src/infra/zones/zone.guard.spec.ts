@@ -72,8 +72,10 @@ interface CapturedResponse {
   body: unknown;
 }
 
+const sharedRequestId = "zone-guard-spec-request";
+
 async function capture(url: string, method = "GET"): Promise<CapturedResponse> {
-  const response = await fetch(url, { method });
+  const response = await fetch(url, { method, headers: { "X-Request-Id": sharedRequestId } });
   return { status: response.status, body: await response.json() };
 }
 
@@ -91,7 +93,7 @@ function requestOnPort(localPort: number | undefined, originalUrl = "/v1/probe")
   return { method: "GET", originalUrl, socket: { localPort } };
 }
 
-describe("ZoneGuard через порты зон", { timeout: 20_000 }, () => {
+describe("ZoneGuard через порты зон", () => {
   const apps: INestApplication[] = [];
 
   async function startApp(controllers = guardedControllers) {

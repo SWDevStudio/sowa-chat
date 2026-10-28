@@ -92,7 +92,7 @@ async function findZonePorts(): Promise<ZonePorts> {
   };
 }
 
-describe("ZoneServers", { timeout: 20_000 }, () => {
+describe("ZoneServers", () => {
   let app: INestApplication | undefined;
 
   afterEach(async () => {

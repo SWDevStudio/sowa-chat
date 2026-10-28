@@ -564,9 +564,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/offline-database.ts": {
-    "mtime": 1793219321.608967,
-    "seen": 1793220808.2436569,
-    "ast_hash": "55bb61492e04a26dca77d113df2e6886",
+    "mtime": 1793229096.3979628,
+    "seen": 1793229122.3903458,
+    "ast_hash": "de83ed74fee8a4ac6bfcc82823e6dae0",
     "semantic_hash": ""
   },
   "apps/server/src/data-source.spec.ts": {
@@ -1158,9 +1158,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/env.schema.slow-operations.spec.ts": {
-    "mtime": 1793219321.4746776,
-    "seen": 1793220808.2436569,
-    "ast_hash": "74db4ab10dfd9158230641c12c446ea9",
+    "mtime": 1793229096.394142,
+    "seen": 1793229122.3903458,
+    "ast_hash": "60ba6e13f748fb38708f87b8478dba1c",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/slow-operations.config.ts": {
@@ -1614,9 +1614,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operators.module.ts": {
-    "mtime": 1793225455.9002602,
-    "seen": 1793225564.1537237,
-    "ast_hash": "4765fd4b0b718021b08e2ec101ceacfb",
+    "mtime": 1793229096.3897755,
+    "seen": 1793229122.3903458,
+    "ast_hash": "3a1968801a8c30fdb556fe7730c8c163",
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operators.repository.ts": {
@@ -1686,9 +1686,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api/operator/operator-auth.guard.ts": {
-    "mtime": 1793227783.3361163,
-    "seen": 1793227858.8239017,
-    "ast_hash": "1addfd2f2cdcbdcca5ab0c247fb85743",
+    "mtime": 1793229096.384515,
+    "seen": 1793229122.3903458,
+    "ast_hash": "df957afcd6aa468215f98bae6c621ded",
     "semantic_hash": ""
   },
   "apps/server/src/api/operator/operator-auth.module.ts": {
@@ -1737,6 +1737,24 @@
     "mtime": 1793228454.7980895,
     "seen": 1793228512.4440699,
     "ast_hash": "4d7aaeb1a5b37056ff3b2478d1407ca9",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/operators/disabled-operators.spec.ts": {
+    "mtime": 1793229096.3861318,
+    "seen": 1793229122.3903458,
+    "ast_hash": "58ca8b20041769af1e12bca9393043c1",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/operators/disabled-operators.ts": {
+    "mtime": 1793229096.3861318,
+    "seen": 1793229122.3903458,
+    "ast_hash": "e0844a2c2df44e9352f59a1bf521e906",
+    "semantic_hash": ""
+  },
+  "apps/server/test/disabled-operators.e2e-spec.ts": {
+    "mtime": 1793229096.3959346,
+    "seen": 1793229122.3903458,
+    "ast_hash": "4f7b702cf2ba1f60b790eef9098cfb6d",
     "semantic_hash": ""
   }
 }

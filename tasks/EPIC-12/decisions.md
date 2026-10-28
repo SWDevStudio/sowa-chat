@@ -72,4 +72,4 @@ PLAN.md закрепляет только путь `POST /v1/server/operator-tok
 ## 29.10.2026, TASK-12. Список блокировок
 
 - `DisabledOperators` (`load`, `add`, `remove`, `has`) загружает ID при `onApplicationBootstrap`; `add` и `remove` вызывать будет EPIC-14 (команды `operator:disable` и `operator:enable`, рассылка между репликами). Загрузка при старте нужна уже здесь: иначе оператор, заблокированный до старта реплики, проходил бы до истечения токена.
-- Unit-тесты с `ApiModule` работают на заглушке базы, поэтому `withOfflineDatabase` подменяет `OperatorsRepository` заглушкой `findDisabledIds: async () => []`.
+- Unit-тесты с `ApiModule` работают на заглушке базы, поэтому заглушка DataSource в `withOfflineDatabase` отдаёт у `manager.getRepository` репозиторий с `find: async () => []`, и `OperatorsRepository.findDisabledIds` при `app.init()` возвращает пустой список без переопределения самого репозитория.

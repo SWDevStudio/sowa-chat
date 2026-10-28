@@ -2,6 +2,7 @@ import { type CanActivate, type ExecutionContext, Inject, Injectable } from "@ne
 import { operatorRoles } from "@sowa-chat/protocol";
 import type { Request } from "express";
 import { z } from "zod";
+import { DisabledOperators } from "../../domain/operators/disabled-operators.js";
 import { ApiException } from "../../infra/http/api-exception.js";
 import { bearerToken } from "../../infra/http/bearer-token.js";
 import { RequestContext } from "../../infra/request-context/request-context.js";
@@ -19,6 +20,7 @@ export class OperatorAuthGuard implements CanActivate {
     @Inject(TokensService) private readonly tokens: TokensService,
     @Inject(RequestContext) private readonly requestContext: RequestContext,
     @Inject(OperationSteps) private readonly operationSteps: OperationSteps,
+    @Inject(DisabledOperators) private readonly disabledOperators: DisabledOperators,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -34,6 +36,9 @@ export class OperatorAuthGuard implements CanActivate {
     }
     const claims = operatorClaimsSchema.safeParse(verified.claims);
     if (!claims.success) {
+      throw this.unauthorized();
+    }
+    if (this.disabledOperators.has(verified.subject)) {
       throw this.unauthorized();
     }
     this.requestContext.setProjectId(claims.data.projectId);

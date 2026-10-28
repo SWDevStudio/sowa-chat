@@ -2,7 +2,7 @@
 
 Исполнитель: haiku
 Зависит от: TASK-3, TASK-6
-Владеет: apps/server/src/infra/http/body-limit.ts, apps/server/src/infra/http/body-limit.spec.ts, apps/server/src/api-app.ts, apps/server/src/main.ts, apps/server/test/support/zone-probe.ts
+Владеет: apps/server/src/infra/http/body-limit.ts, apps/server/src/infra/http/body-parser-error.middleware.ts, apps/server/src/infra/http/body-limit.spec.ts, apps/server/src/api-app.ts, apps/server/src/main.ts, apps/server/test/support/zone-probe.ts, apps/server/src/infra/zones/zone-servers.spec.ts
 Ветка: feature/EPIC-7
 
 ## Что сделать
@@ -21,17 +21,18 @@
 
    - `NestExpressApplication` — `import type` из `@nestjs/platform-express`. Свои парсеры, зарегистрированные до `app.init()`, Nest не дублирует своими по умолчанию.
    - `body-parser` проверяет размер по `Content-Length` и по мере чтения, до разбора JSON, и отдаёт ошибку со свойствами `status` и `type` (`entity.too.large` — 413). Без перевода Nest считает её неизвестной ошибкой и фильтр ответил бы 500.
-   - `bodyParserErrorToHttpException(error: unknown, _request: Request, _response: Response, next: NextFunction): void` — Express-обработчик ошибок (ровно четыре параметра). Если `error` — `Error` и у него есть числовое `status` и свойство `type` (так выглядят ошибки `body-parser`), вызвать `next(new HttpException(error.message, status))`. Иначе `next(error)`. Дальше ошибку обрабатывает фильтр из TASK-3: 413 → `payloadTooLarge`.
+   - `bodyParserErrorToHttpException(error: unknown, _request: Request, _response: Response, next: NextFunction): void` — Express-обработчик ошибок (ровно четыре параметра). Лежит в отдельном файле `apps/server/src/infra/http/body-parser-error.middleware.ts`, `body-limit.ts` импортирует его оттуда: для `*.middleware.ts` в `.oxlintrc.json` уже есть override `max-params: 5`. `.oxlintrc.json` не менять, правило комментарием не отключать. Если `error` — `Error` и у него есть числовое `status` и свойство `type` (так выглядят ошибки `body-parser`), вызвать `next(new HttpException(error.message, status))`. Иначе `next(error)`. Дальше ошибку обрабатывает фильтр из TASK-3: 413 → `payloadTooLarge`.
 
 2. `configureApiApp` в `apps/server/src/api-app.ts` принимает `NestExpressApplication` вместо `INestApplication` и вызывает `useBodyLimit(app)` сразу после `useSecurityHeaders(app)`.
 
 3. Создание приложения с типом Express:
    - `apps/server/src/main.ts`, `runApi`: `NestFactory.create<NestExpressApplication>(ApiModule, { bufferLogs: true })`. Остальной `main.ts` не трогать.
    - `apps/server/test/support/zone-probe.ts`: `moduleRef.createNestApplication<NestExpressApplication>({ bufferLogs: true })`, тип поля `app` в `ZoneProbeApp` не менять.
+   - `apps/server/src/infra/zones/zone-servers.spec.ts`, тест про `EADDRINUSE`: `moduleRef.createNestApplication<NestExpressApplication>({ bufferLogs: true })`. Больше в файле ничего не менять. Сигнатуру `configureApiApp` не ослаблять до `INestApplication` и не приводить тип внутри через `as`.
 
 ## Где
 
-- `apps/server/src/infra/http/body-limit.ts` — новый файл; `apps/server/src/api-app.ts`, `apps/server/src/main.ts`, `apps/server/test/support/zone-probe.ts` — правки.
+- `apps/server/src/infra/http/body-limit.ts`, `apps/server/src/infra/http/body-parser-error.middleware.ts` — новые файлы; `apps/server/src/infra/zones/zone-servers.spec.ts` — одна правка; `apps/server/src/api-app.ts`, `apps/server/src/main.ts`, `apps/server/test/support/zone-probe.ts` — правки.
 - Тест: `apps/server/src/infra/http/body-limit.spec.ts` на `startZoneProbeApp`. Тестовый контроллер `@Zone("public")`, `@Controller("visitor/body-probe")`, `@Post()` с `@Body() body: unknown`, возвращает `{ received: true }`.
 
 ## Требования из плана
@@ -59,4 +60,4 @@
 
 ## История доработок
 
-—
+- 28.10.2026, вопрос исполнителя: `max-params` на обработчике ошибок и TS2345 в `zone-servers.spec.ts`. Ответ записан в «Что сделать» и «Где».

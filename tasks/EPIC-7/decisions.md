@@ -60,3 +60,8 @@ EPIC-5 меняет те же файлы. При слиянии эпиков в 
 - `apps/server/src/main.ts`: EPIC-7 меняет только `runApi` (TASK-7), EPIC-5 — только `runMigrate`.
 - `apps/server/test/support/e2e-app.ts` (EPIC-5 TASK-8): если `createE2eApp` будет вызывать `configureApiApp`, приложение нужно создавать как `NestExpressApplication`.
 - `apps/server/test/support/unit-probe.ts` EPIC-7 не меняет.
+
+## 28.10.2026, TASK-7. Вопрос исполнителя: `max-params` и тип приложения в `zone-servers.spec.ts`
+
+- Express-обработчик ошибок `body-parser` с четырьмя параметрами вынесен в `apps/server/src/infra/http/body-parser-error.middleware.ts`. Для `*.middleware.ts` в `.oxlintrc.json` уже есть override `max-params: 5`, так что конфиг не меняется и правило не отключается комментарием.
+- `configureApiApp` остаётся с `NestExpressApplication`. В `zone-servers.spec.ts` приложение создаётся через `createNestApplication<NestExpressApplication>`. Ослабить сигнатуру до `INestApplication` и привести тип через `as` хуже: компилятор перестал бы ловить вызов с не-Express-приложением. Файл добавлен во «Владеет» TASK-7, другие задачи эпика его не владеют.

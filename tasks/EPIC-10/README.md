@@ -18,7 +18,7 @@
 | 6 | [Сервис проектов: создание с `pk_` и `sk_` одной транзакцией, поиск по имени и список](TASK-6.md) | sonnet | opus | обычная | 3, 4 | готова |
 | 7 | [Перешифровка секретов: реестр зашифрованных полей и перешифровка пачками](TASK-7.md) | sonnet | opus | обычная | — | готова |
 | 8 | [Команды `project:create` и `project:list`](TASK-8.md) | haiku | sonnet | обычная | 2, 6 | готова |
-| 9 | [Команды `key:create`, `key:list` и `key:revoke`](TASK-9.md) | sonnet | sonnet | обычная | 8 | в работе |
+| 9 | [Команды `key:create`, `key:list` и `key:revoke`](TASK-9.md) | sonnet | sonnet | обычная | 8 | готова |
 | 10 | [Сервис identity-ключей: добавление, список, отзыв и журнал аудита](TASK-10.md) | sonnet | sonnet | обычная | 5, 6 | готова |
 | 11 | [Команды `identity-key:add`, `identity-key:list` и `identity-key:revoke`](TASK-11.md) | haiku | sonnet | обычная | 9, 10 | не начата |
 | 12 | [Добавление и удаление разрешённых доменов в сервисе проектов](TASK-12.md) | sonnet | sonnet | обычная | 6, 10 | готова |

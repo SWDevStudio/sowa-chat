@@ -14,9 +14,6 @@ export function toErrorResponse(exception: unknown, requestId: string): ErrorRes
   if (exception instanceof ZodValidationException) {
     return validationErrorResponse(exception.getZodError(), requestId);
   }
-  if (exception instanceof ApiException) {
-    return apiErrorResponse(exception, requestId);
-  }
   if (exception instanceof HttpException) {
     return httpErrorResponse(exception, requestId);
   }
@@ -42,7 +39,7 @@ function validationErrorResponse(zodError: unknown, requestId: string): ErrorRes
   };
 }
 
-function apiErrorResponse(exception: ApiException, requestId: string): ErrorResponse {
+function httpErrorResponse(exception: HttpException, requestId: string): ErrorResponse {
   const statusCode = exception.getStatus();
   if (statusCode >= 500) {
     return internalErrorResponse(requestId, statusCode);
@@ -50,26 +47,13 @@ function apiErrorResponse(exception: ApiException, requestId: string): ErrorResp
   const body: ErrorResponse = {
     statusCode,
     message: exception.message,
-    code: exception.code,
+    code: exception instanceof ApiException ? exception.code : errorCodeOfStatus(statusCode),
     requestId,
   };
-  if (!exception.details) {
+  if (!(exception instanceof ApiException) || !exception.details) {
     return body;
   }
   return { ...body, details: exception.details };
-}
-
-function httpErrorResponse(exception: HttpException, requestId: string): ErrorResponse {
-  const status = exception.getStatus();
-  if (status >= 500) {
-    return internalErrorResponse(requestId, status);
-  }
-  return {
-    statusCode: status,
-    message: exception.message,
-    code: errorCodeOfStatus(status),
-    requestId,
-  };
 }
 
 function internalErrorResponse(requestId: string, statusCode = 500): ErrorResponse {

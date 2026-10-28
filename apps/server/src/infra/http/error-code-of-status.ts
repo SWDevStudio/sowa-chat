@@ -1,15 +1,19 @@
 import { errorCodes } from "@sowa-chat/protocol";
 import type { ErrorCode } from "@sowa-chat/protocol";
+import { errorCodeStatuses } from "./api-exception.js";
 
-const errorCodeByStatus = new Map<number, ErrorCode>([
-  [400, errorCodes.validationFailed],
-  [401, errorCodes.unauthorized],
-  [403, errorCodes.forbidden],
-  [404, errorCodes.notFound],
-  [409, errorCodes.conflict],
-  [413, errorCodes.payloadTooLarge],
-  [429, errorCodes.rateLimited],
-]);
+function indexCodesByStatus(): Map<number, ErrorCode> {
+  const codeByStatus = new Map<number, ErrorCode>();
+  for (const code of Object.values(errorCodes)) {
+    const status = errorCodeStatuses[code];
+    if (!codeByStatus.has(status)) {
+      codeByStatus.set(status, code);
+    }
+  }
+  return codeByStatus;
+}
+
+const errorCodeByStatus = indexCodesByStatus();
 
 export function errorCodeOfStatus(status: number): ErrorCode {
   const code = errorCodeByStatus.get(status);

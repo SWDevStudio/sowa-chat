@@ -16,6 +16,6 @@
 | 4 | [Переменная `SOWA_ENCRYPTION_KEYS`: разбор списка ключей и конфиг](TASK-4.md) | haiku | sonnet | обычная | — | готова |
 | 5 | [Сущность и миграция `identity_keys`](TASK-5.md) | haiku | sonnet | обычная | 2 | готова |
 | 6 | [Выпуск, проверка по хешу и отзыв ключей `server` и `bot`](TASK-6.md) | sonnet | opus | обычная | 1, 2, 3 | готова |
-| 7 | [Шифрование секретов AES-256-GCM с версией ключа](TASK-7.md) | sonnet | opus | обычная | 4 | не начата |
-| 8 | [`SOWA_ENCRYPTION_KEYS` обязателен в production](TASK-8.md) | haiku | sonnet | обычная | 4 | не начата |
+| 7 | [Шифрование секретов AES-256-GCM с версией ключа](TASK-7.md) | sonnet | opus | обычная | 4 | готова |
+| 8 | [`SOWA_ENCRYPTION_KEYS` обязателен в production](TASK-8.md) | haiku | sonnet | обычная | 4 | в работе |
 | 9 | [Колонка `projects.public_key` для publicKey сайта](TASK-9.md) | haiku | sonnet | обычная | 5 | готова |

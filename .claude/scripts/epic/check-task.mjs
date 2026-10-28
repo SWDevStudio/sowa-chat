@@ -19,6 +19,9 @@ function changedFiles(worktree, base) {
 }
 
 function checkTestsUntouched(worktree, { base, tests }) {
+  if (tests.length === 0) {
+    return passedStep("tests untouched", "Task has no own tests");
+  }
   const result = run(`git diff --name-only ${base} -- ${quoteAll(tests)}`, worktree);
   const touched = outputLines(result.output);
   if (touched.length > 0) {

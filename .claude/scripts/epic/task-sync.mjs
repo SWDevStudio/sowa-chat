@@ -45,12 +45,22 @@ function finishMerge(worktree) {
   return 0;
 }
 
+function commitWork(worktree) {
+  const changes = outputLines(run("git status --porcelain", worktree).output);
+  if (changes.length === 0) {
+    return;
+  }
+  runOrFail("git add -A", worktree);
+  runOrFail('git commit -m "WIP: work"', worktree);
+}
+
 function main() {
   const [epic, task] = readArgs(usage, 2);
   const worktree = worktreePath(mainRoot(), epic, task);
   if (isMerging(worktree)) {
     return finishMerge(worktree);
   }
+  commitWork(worktree);
   if (run(`git merge --no-edit ${epicBranch(epic)}`, worktree).ok) {
     console.log("SYNCED");
     return 0;

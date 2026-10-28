@@ -16,5 +16,5 @@ PostgreSQL через TypeORM, миграции, транзакции, тест�
 | 4 | [Список миграций, DataSource для CLI TypeORM и скрипты `migration:generate`, `migration:create`](TASK-4.md) | haiku | sonnet | 3 | готова |
 | 5 | [Режим `migrate`: шаги подготовки по порядку, коды выхода, миграции в e2e](TASK-5.md) | sonnet | sonnet | 4 | готова |
 | 6 | [Сущность `Project` и миграция таблицы `projects`](TASK-6.md) | haiku | sonnet | 5 | готова |
-| 7 | [Транзакции `@Transactional()` и образцовый репозиторий проектов](TASK-7.md) | sonnet | opus | 6 | не начата |
-| 8 | [E2e: фикстура проекта, очистка таблиц между тестами, запуск приложения](TASK-8.md) | haiku | sonnet | 6 | не начата |
+| 7 | [Транзакции `@Transactional()` и образцовый репозиторий проектов](TASK-7.md) | sonnet | opus | 6 | в работе |
+| 8 | [E2e: фикстура проекта, очистка таблиц между тестами, запуск приложения](TASK-8.md) | haiku | sonnet | 6 | готова |

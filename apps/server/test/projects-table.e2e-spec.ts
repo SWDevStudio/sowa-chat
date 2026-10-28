@@ -30,7 +30,7 @@ describe("таблица projects", () => {
     await dataSource.query("DELETE FROM projects");
   });
 
-  it("имеет колонки нужных типов, все NOT NULL", async () => {
+  it("имеет колонки нужных типов", async () => {
     const rows: ColumnRow[] = await dataSource.query(
       "SELECT column_name, data_type, udt_name, is_nullable FROM information_schema.columns WHERE table_name = 'projects'",
     );
@@ -41,8 +41,10 @@ describe("таблица projects", () => {
       "created_at",
       "id",
       "name",
+      "public_key",
       "settings",
     ]);
+    expect(byName.get("public_key")).toMatchObject({ data_type: "text", is_nullable: "YES" });
     expect(byName.get("id")).toMatchObject({ data_type: "uuid", is_nullable: "NO" });
     expect(byName.get("name")).toMatchObject({ data_type: "text", is_nullable: "NO" });
     expect(byName.get("allowed_origins")).toMatchObject({
@@ -93,6 +95,53 @@ describe("таблица projects", () => {
     const error = await repository.save(repository.create({ name: "dup" })).catch((e) => e);
 
     expect(error.driverError?.code).toBe(uniqueViolationCode);
+  });
+
+  it("сохраняет проект с publicKey и читает его обратно", async () => {
+    const repository = dataSource.getRepository(Project);
+
+    await repository.save(repository.create({ name: "keyed", publicKey: "pk_abc" }));
+    const found = await repository.findOneByOrFail({ name: "keyed" });
+
+    expect(found.publicKey).toBe("pk_abc");
+  });
+
+  it("проект без publicKey читается с null", async () => {
+    const repository = dataSource.getRepository(Project);
+
+    await repository.save(repository.create({ name: "nokey" }));
+    const found = await repository.findOneByOrFail({ name: "nokey" });
+
+    expect(found.publicKey).toBeNull();
+  });
+
+  it("второй проект с тем же publicKey не сохраняется: код 23505", async () => {
+    const repository = dataSource.getRepository(Project);
+    await repository.save(repository.create({ name: "first", publicKey: "pk_same" }));
+
+    const error = await repository
+      .save(repository.create({ name: "second", publicKey: "pk_same" }))
+      .catch((e) => e);
+
+    expect(error.driverError?.code).toBe(uniqueViolationCode);
+  });
+
+  it("два проекта без publicKey сохраняются", async () => {
+    const repository = dataSource.getRepository(Project);
+
+    await repository.save(repository.create({ name: "n1" }));
+    await repository.save(repository.create({ name: "n2" }));
+
+    expect(await repository.count()).toBe(2);
+  });
+
+  it("проекты с разными publicKey сохраняются", async () => {
+    const repository = dataSource.getRepository(Project);
+
+    await repository.save(repository.create({ name: "k1", publicKey: "pk_1" }));
+    await repository.save(repository.create({ name: "k2", publicKey: "pk_2" }));
+
+    expect(await repository.count()).toBe(2);
   });
 
   it("проекты с разными name сохраняются", async () => {

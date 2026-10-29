@@ -1,28 +1,20 @@
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Test } from "@nestjs/testing";
 import type { TestingModule } from "@nestjs/testing";
+import type { Cache } from "cache-manager";
 import { createHash, randomUUID } from "node:crypto";
-import { crc32 } from "node:zlib";
 import { AuditLogEntry } from "../src/domain/audit/audit-log-entry.entity.js";
 import { ApiKey } from "../src/domain/keys/api-key.entity.js";
 import { ApiKeysService } from "../src/domain/keys/api-keys.service.js";
-import { base62Alphabet, encodeBase62 } from "../src/domain/keys/base62.js";
 import { parseKey } from "../src/domain/keys/key-format.js";
 import { KeysModule } from "../src/domain/keys/keys.module.js";
 import { WorkerModule } from "../src/worker.module.js";
 import { createProject } from "./support/fixtures.js";
+import { forgeKeyWithSameLookupPrefix } from "./support/forged-api-keys.js";
 import { useTestDatabase } from "./support/test-database.js";
 
 function sha256(text: string): Buffer {
   return createHash("sha256").update(text).digest();
-}
-
-function forgeKeyWithSameLookupPrefix(key: string): string {
-  const [prefix = "", body = ""] = key.split("_");
-  const index = 30;
-  const replacement = base62Alphabet.split("").find((char) => char !== body[index]) ?? "0";
-  const forgedBody = body.slice(0, index) + replacement + body.slice(index + 1);
-  const checksum = encodeBase62(BigInt(crc32(`${prefix}_${forgedBody}`)), 6);
-  return `${prefix}_${forgedBody}_${checksum}`;
 }
 
 describe("ключи server и bot", () => {
@@ -237,6 +229,7 @@ describe("ключи server и bot", () => {
       await keys.verify(issued.key, "server");
       await shiftLastUsedAt(issued.apiKeyId, "2 minutes");
       const shifted = await lastUsedAt(issued.apiKeyId);
+      await moduleRef.get<Cache>(CACHE_MANAGER).clear();
 
       await keys.verify(issued.key, "server");
 

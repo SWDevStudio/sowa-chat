@@ -7,6 +7,7 @@ import {
   storedRow,
 } from "../../../test/support/api-keys-service-probe.js";
 import type { ApiKeysServiceProbe } from "../../../test/support/api-keys-service-probe.js";
+import { cacheKeys } from "../../infra/cache/cache-keys.js";
 import { base62Alphabet } from "./base62.js";
 import { generateKey } from "./key-format.js";
 import { hashKey } from "./key-hash.js";
@@ -162,5 +163,122 @@ describe("ApiKeysService.verify", () => {
 
       expect(probe.repository.touchLastUsedAt).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe("ApiKeysService.verify с кэшем", () => {
+  let probe: ApiKeysServiceProbe;
+  const cacheKey = cacheKeys.apiKey(lookupPrefixOf(serverKey, "server"));
+
+  beforeEach(async () => {
+    vi.mocked(timingSafeEqual).mockClear();
+    probe = await createApiKeysServiceProbe();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  it("вторая verify берёт ключ из кэша: тот же результат без findByPrefix и touchLastUsedAt", async () => {
+    probe.repository.findByPrefix.mockResolvedValue(storedRow(serverKey, "server"));
+
+    const first = await probe.service.verify(serverKey, "server");
+    const second = await probe.service.verify(serverKey, "server");
+
+    expect(second).toEqual(first);
+    expect(second).toEqual({ apiKeyId: "api-key-1", projectId: "project-1", botId: null });
+    expect(probe.repository.findByPrefix).toHaveBeenCalledTimes(1);
+    expect(probe.repository.touchLastUsedAt).toHaveBeenCalledTimes(1);
+  });
+
+  it("на попадании хеш присланного ключа сравнивается через timingSafeEqual", async () => {
+    probe.repository.findByPrefix.mockResolvedValue(storedRow(serverKey, "server"));
+    await probe.service.verify(serverKey, "server");
+    vi.mocked(timingSafeEqual).mockClear();
+
+    await probe.service.verify(serverKey, "server");
+
+    expect(probe.repository.findByPrefix).toHaveBeenCalledTimes(1);
+    expect(timingSafeEqual).toHaveBeenCalled();
+  });
+
+  it("кладёт по lookupPrefix запись с keyHash в hex, без Buffer и открытого ключа", async () => {
+    const key = generateKey("botKey");
+    probe.repository.findByPrefix.mockResolvedValue(storedRow(key, "bot"));
+
+    await probe.service.verify(key, "bot");
+
+    const cached = await probe.cache.get(cacheKeys.apiKey(lookupPrefixOf(key, "bot")));
+    expect(cached).toEqual({
+      apiKeyId: "api-key-1",
+      projectId: "project-1",
+      botId: "bot-1",
+      kind: "bot",
+      keyHash: sha256(key).toString("hex"),
+    });
+    expect(Object.values(cached as object).some((value) => Buffer.isBuffer(value))).toBe(false);
+    expect(JSON.stringify(cached)).not.toContain(key);
+  });
+
+  it.each([
+    ["нет строки", null],
+    ["строка другого вида", storedRow(serverKey, "server", { kind: "bot", botId: "bot-1" })],
+    ["другой хеш", storedRow(serverKey, "server", { keyHash: sha256(generateKey("serverKey")) })],
+    ["отозванный ключ", storedRow(serverKey, "server", { revokedAt: new Date("2026-02-01") })],
+  ] as const)("%s — не кэшируется: каждая verify идёт в БД", async (_name, row) => {
+    probe.repository.findByPrefix.mockResolvedValue(row);
+
+    await expect(probe.service.verify(serverKey, "server")).resolves.toBeUndefined();
+    await expect(probe.service.verify(serverKey, "server")).resolves.toBeUndefined();
+
+    expect(probe.repository.findByPrefix).toHaveBeenCalledTimes(2);
+    expect(await probe.cache.get(cacheKey)).toBeUndefined();
+  });
+
+  it("touchLastUsedAt упал — verify падает, в кэше ничего нет", async () => {
+    probe.repository.findByPrefix.mockResolvedValue(storedRow(serverKey, "server"));
+    probe.repository.touchLastUsedAt.mockRejectedValue(new Error("db down"));
+
+    await expect(probe.service.verify(serverKey, "server")).rejects.toThrow("db down");
+
+    expect(await probe.cache.get(cacheKey)).toBeUndefined();
+  });
+
+  it("запись в кэше с чужим хешем — undefined без findByPrefix", async () => {
+    await probe.cache.set(cacheKey, {
+      apiKeyId: "api-key-1",
+      projectId: "project-1",
+      botId: null,
+      kind: "server",
+      keyHash: sha256(generateKey("serverKey")).toString("hex"),
+    });
+
+    await expect(probe.service.verify(serverKey, "server")).resolves.toBeUndefined();
+
+    expect(probe.repository.findByPrefix).not.toHaveBeenCalled();
+    expect(probe.repository.touchLastUsedAt).not.toHaveBeenCalled();
+  });
+
+  it("запись в кэше другого вида — undefined без findByPrefix", async () => {
+    const key = generateKey("botKey");
+    await probe.cache.set(cacheKeys.apiKey(lookupPrefixOf(key, "bot")), {
+      apiKeyId: "api-key-1",
+      projectId: "project-1",
+      botId: null,
+      kind: "server",
+      keyHash: sha256(key).toString("hex"),
+    });
+
+    await expect(probe.service.verify(key, "bot")).resolves.toBeUndefined();
+
+    expect(probe.repository.findByPrefix).not.toHaveBeenCalled();
+  });
+
+  it("неразобранный ключ не читает кэш", async () => {
+    const get = vi.spyOn(probe.cache, "get");
+
+    await expect(probe.service.verify("garbage", "server")).resolves.toBeUndefined();
+
+    expect(get).not.toHaveBeenCalled();
   });
 });

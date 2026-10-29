@@ -1356,15 +1356,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/api-keys.service.spec.ts": {
-    "mtime": 1793256882.797118,
-    "seen": 1793258167.0674505,
-    "ast_hash": "3400c814003b975a8a5df2ff4c045b90",
+    "mtime": 1793262358.2763352,
+    "seen": 1793262393.7679265,
+    "ast_hash": "599472a986ebe42ca108b0c0565c2460",
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/api-keys.service.ts": {
-    "mtime": 1793256882.7976754,
-    "seen": 1793258167.0674505,
-    "ast_hash": "838c15a77f1fa61dce978366833e4e8e",
+    "mtime": 1793262358.279336,
+    "seen": 1793262393.7679265,
+    "ast_hash": "94f186cb5679d91226f87f24525d4f6c",
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/base62.spec.ts": {
@@ -1482,9 +1482,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/api-keys.e2e-spec.ts": {
-    "mtime": 1793256883.0666943,
-    "seen": 1793258167.0674505,
-    "ast_hash": "e51ee4acf0edb5afabfb957cc57ee144",
+    "mtime": 1793262358.2852616,
+    "seen": 1793262393.7689202,
+    "ast_hash": "8ffb51e107b2d4d1b18de2b3a6c6ee35",
     "semantic_hash": ""
   },
   "apps/server/test/identity-keys-table.e2e-spec.ts": {
@@ -1494,9 +1494,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/api-keys-service-probe.ts": {
-    "mtime": 1793256883.1261852,
-    "seen": 1793258167.0674505,
-    "ast_hash": "08b6b76349347f09a7bc495fa6d1ffe9",
+    "mtime": 1793262358.2887936,
+    "seen": 1793262393.7699187,
+    "ast_hash": "ae5cf7f8b0dcb6179daa771677b6d575",
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/sql-in-list.ts": {
@@ -2211,6 +2211,18 @@
     "mtime": 1793260057.7407067,
     "seen": 1793260083.8711588,
     "ast_hash": "6b1c5f0f6ed8abb76486dfc25e719822",
+    "semantic_hash": ""
+  },
+  "apps/server/test/api-keys-cache.e2e-spec.ts": {
+    "mtime": 1793262358.2822628,
+    "seen": 1793262393.7689202,
+    "ast_hash": "a79dec9becafc6b3af774c95d84e5351",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/forged-api-keys.ts": {
+    "mtime": 1793262358.2918065,
+    "seen": 1793262393.7699187,
+    "ast_hash": "ddb51f2ff55f337a1faa4efbfdcdac9c",
     "semantic_hash": ""
   }
 }

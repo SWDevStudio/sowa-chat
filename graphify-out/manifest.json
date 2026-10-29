@@ -684,9 +684,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/projects/projects.repository.ts": {
-    "mtime": 1793256882.8594768,
-    "seen": 1793258167.0674505,
-    "ast_hash": "e167cef8452da34bc74a120cf2527f13",
+    "mtime": 1793260057.73671,
+    "seen": 1793260083.8695145,
+    "ast_hash": "1914dd40677d40cc9968ed61e0fdfd84",
     "semantic_hash": ""
   },
   "apps/server/test/transactions.e2e-spec.ts": {
@@ -1626,9 +1626,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/projects/projects.service.ts": {
-    "mtime": 1793256882.8625448,
-    "seen": 1793258167.0674505,
-    "ast_hash": "1e873f83d97a640650d684658db6c380",
+    "mtime": 1793260057.7387025,
+    "seen": 1793260083.8695145,
+    "ast_hash": "4a2618783ce84fcbc7038f39bf2402b9",
     "semantic_hash": ""
   },
   "apps/server/test/projects-service.e2e-spec.ts": {
@@ -1644,9 +1644,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/projects-service-probe.ts": {
-    "mtime": 1793256883.1573226,
-    "seen": 1793258167.0674505,
-    "ast_hash": "6c77896da830a178a2faf880bc4a77ec",
+    "mtime": 1793260057.7439172,
+    "seen": 1793260083.8711588,
+    "ast_hash": "8a5644b1a8508f8f488cc42e85682d11",
     "semantic_hash": ""
   },
   "apps/server/src/domain/keys/identity-keys.repository.ts": {
@@ -2187,6 +2187,30 @@
     "mtime": 1793259074.8122237,
     "seen": 1793259114.5779595,
     "ast_hash": "06d8e8b189299dd8d3b335b66e3beac5",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/projects/project-snapshot.spec.ts": {
+    "mtime": 1793260057.7301607,
+    "seen": 1793260083.8695145,
+    "ast_hash": "ffdccea0133ebca9f8adef9bbc697c90",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/projects/project-snapshot.ts": {
+    "mtime": 1793260057.7321763,
+    "seen": 1793260083.8695145,
+    "ast_hash": "cbf22bc631fece422b5d50a1e6a55b8a",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/projects/projects-snapshot-cache.spec.ts": {
+    "mtime": 1793260057.733173,
+    "seen": 1793260083.8695145,
+    "ast_hash": "bdde6007ecd2559bcb2b1a8cd1991bcb",
+    "semantic_hash": ""
+  },
+  "apps/server/test/project-snapshot-cache.e2e-spec.ts": {
+    "mtime": 1793260057.7407067,
+    "seen": 1793260083.8711588,
+    "ast_hash": "6b1c5f0f6ed8abb76486dfc25e719822",
     "semantic_hash": ""
   }
 }

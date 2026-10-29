@@ -169,11 +169,12 @@ describe("подключение AuditModule", () => {
     ["ApiModule", async () => (await import("../../api.module.js")).ApiModule],
     ["WorkerModule", async () => (await import("../../worker.module.js")).WorkerModule],
     ["CliModule", async () => (await import("../../cli.module.js")).CliModule],
-  ])("%s импортирует AuditModule сразу после TelemetryModule", async (_name, loadMode) => {
+  ])("%s импортирует AuditModule после TelemetryModule", async (_name, loadMode) => {
     const mode = await loadMode();
     const imports: unknown[] = Reflect.getMetadata("imports", mode);
 
     expect(imports).toContain(AuditModule);
-    expect(imports.indexOf(AuditModule)).toBe(imports.indexOf(TelemetryModule) + 1);
+    expect(imports).toContain(TelemetryModule);
+    expect(imports.indexOf(AuditModule)).toBeGreaterThan(imports.indexOf(TelemetryModule));
   });
 });

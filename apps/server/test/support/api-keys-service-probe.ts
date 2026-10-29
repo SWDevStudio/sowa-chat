@@ -1,5 +1,7 @@
+import { CACHE_MANAGER, CacheModule } from "@nestjs/cache-manager";
 import { Test } from "@nestjs/testing";
 import { TransactionHost } from "@nestjs-cls/transactional";
+import type { Cache } from "cache-manager";
 import { createHash } from "node:crypto";
 import type { Mock } from "vitest";
 import type { ApiKey, ApiKeyKind } from "../../src/domain/keys/api-key.entity.js";
@@ -24,6 +26,7 @@ export interface ApiKeysServiceProbe {
   service: ApiKeysService;
   repository: ApiKeysRepositoryStub;
   publish: Mock;
+  cache: Cache;
 }
 
 export function deferred(): Deferred {
@@ -90,11 +93,17 @@ export async function createApiKeysServiceProbe(): Promise<ApiKeysServiceProbe> 
   };
   const publish = vi.fn().mockResolvedValue(undefined);
   const moduleRef = await Test.createTestingModule({
+    imports: [CacheModule.register()],
     providers: [
       ApiKeysService,
       { provide: ApiKeysRepository, useValue: repository },
       { provide: DomainEventBus, useValue: { publish } },
     ],
   }).compile();
-  return { service: moduleRef.get(ApiKeysService), repository, publish };
+  return {
+    service: moduleRef.get(ApiKeysService),
+    repository,
+    publish,
+    cache: moduleRef.get<Cache>(CACHE_MANAGER),
+  };
 }

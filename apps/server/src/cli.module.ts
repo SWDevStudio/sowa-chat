@@ -14,12 +14,17 @@ import {
   OriginListCommand,
   OriginRemoveCommand,
 } from "./cli/origins/origin.commands.js";
+import {
+  OperatorDisableCommand,
+  OperatorEnableCommand,
+} from "./cli/operators/operator.commands.js";
 import { ProjectCreateCommand } from "./cli/projects/project-create.command.js";
 import { ProjectListCommand } from "./cli/projects/project-list.command.js";
 import { SecretsReencryptCommand } from "./cli/secrets/secrets-reencrypt.command.js";
 import { databaseEntities } from "./database-entities.js";
 import { AuditModule } from "./domain/audit/audit.module.js";
 import { KeysModule } from "./domain/keys/keys.module.js";
+import { OperatorsModule } from "./domain/operators/operators.module.js";
 import { ProjectsModule } from "./domain/projects/projects.module.js";
 import { AppCacheModule } from "./infra/cache/app-cache.module.js";
 import { AppClsModule } from "./infra/cls/app-cls.module.js";
@@ -39,6 +44,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     AppCacheModule,
     AuditModule,
     KeysModule,
+    OperatorsModule,
     ProjectsModule,
     SecretsReencryptionModule,
   ],
@@ -56,6 +62,8 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     OperatorOriginAddCommand,
     OperatorOriginRemoveCommand,
     OperatorOriginListCommand,
+    OperatorDisableCommand,
+    OperatorEnableCommand,
     ProjectCreateCommand,
     ProjectListCommand,
     SecretsReencryptCommand,

@@ -3,6 +3,7 @@ import { runCliInProcess } from "../../../test/support/cli-run.js";
 import type { CliRunResult } from "../../../test/support/cli-run.js";
 import { parseKey } from "../../domain/keys/key-format.js";
 import { encryptionKeysSchema } from "../../infra/config/encryption-keys.schema.js";
+import { envSchema } from "../../infra/config/env.schema.js";
 import { parseEnv } from "../../infra/config/parse-env.js";
 import { tokenSigningKeysSchema } from "../../infra/config/token-signing-keys.schema.js";
 
@@ -47,10 +48,8 @@ function linesOf(result: CliRunResult): string[] {
 }
 
 function clearConfigEnv(): void {
-  for (const name of Object.keys(process.env)) {
-    if (name.startsWith("SOWA_") || name === "DATABASE_URL" || name === "REDIS_URL") {
-      vi.stubEnv(name, undefined);
-    }
+  for (const name of Object.keys(envSchema.shape)) {
+    vi.stubEnv(name, undefined);
   }
 }
 

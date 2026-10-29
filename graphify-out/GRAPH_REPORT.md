@@ -1,17 +1,17 @@
 # Graph Report - hector-chat-epic-11  (2026-10-29)
 
 ## Corpus Check
-- 489 files · ~131,362 words
+- 489 files · ~131,359 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 12 file(s) not represented in the graph (top: (none) 10, .example 1, .log 1)
 
 ## Summary
-- 3380 nodes · 8622 edges · 167 communities (132 shown, 35 thin omitted)
+- 3380 nodes · 8624 edges · 167 communities (132 shown, 35 thin omitted)
 - Extraction: 97% EXTRACTED · 3% INFERRED · 0% AMBIGUOUS · INFERRED: 220 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b62f8472`
+- Built from commit: `89cf493e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 

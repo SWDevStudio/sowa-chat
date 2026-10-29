@@ -173,9 +173,9 @@ describe("redisAppendOnlyCheck", () => {
 });
 
 describe("registeredEnvironmentChecks", () => {
-  it("содержит обе проверки Redis в конце списка в этом порядке", () => {
-    const tail = registeredEnvironmentChecks.slice(-2);
+  it("содержит обе проверки Redis после проверок настроек в этом порядке", () => {
+    const redisChecks = registeredEnvironmentChecks.slice(3, 5);
 
-    expect(tail).toEqual([redisEvictionPolicyCheck, redisAppendOnlyCheck]);
+    expect(redisChecks).toEqual([redisEvictionPolicyCheck, redisAppendOnlyCheck]);
   });
 });

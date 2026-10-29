@@ -207,10 +207,10 @@ describe("postgresSchemaChangesCheck", () => {
 });
 
 describe("registeredEnvironmentChecks", () => {
-  it("содержит три проверки PostgreSQL в конце списка в этом порядке", () => {
-    const tail = registeredEnvironmentChecks.slice(-3);
+  it("содержит три проверки PostgreSQL после проверок Redis в этом порядке", () => {
+    const postgresChecks = registeredEnvironmentChecks.slice(5, 8);
 
-    expect(tail).toEqual([
+    expect(postgresChecks).toEqual([
       postgresVersionCheck,
       postgresSuperuserCheck,
       postgresSchemaChangesCheck,

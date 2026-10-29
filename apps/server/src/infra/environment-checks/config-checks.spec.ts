@@ -62,21 +62,15 @@ describe("exampleSecretValues", () => {
 
 describe("registeredEnvironmentChecks", () => {
   it("содержит три проверки настроек, все работают и при старте, и в doctor", () => {
-    expect(registeredEnvironmentChecks).toEqual([
-      publicUrlsHttpsCheck,
-      exampleSecretsCheck,
-      s3PublicUrlCheck,
-    ]);
-    expect(registeredEnvironmentChecks.map((check) => check.name)).toEqual([
+    const configChecks = registeredEnvironmentChecks.slice(0, 3);
+
+    expect(configChecks).toEqual([publicUrlsHttpsCheck, exampleSecretsCheck, s3PublicUrlCheck]);
+    expect(configChecks.map((check) => check.name)).toEqual([
       "publicUrlsHttps",
       "exampleSecrets",
       "s3PublicUrl",
     ]);
-    expect(registeredEnvironmentChecks.map((check) => check.onlyInDoctor)).toEqual([
-      false,
-      false,
-      false,
-    ]);
+    expect(configChecks.map((check) => check.onlyInDoctor)).toEqual([false, false, false]);
   });
 });
 

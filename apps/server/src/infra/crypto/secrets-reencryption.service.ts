@@ -53,20 +53,12 @@ interface FieldResult {
 }
 
 interface VersionRow {
-  version: string | null;
+  version: number | null;
   count: number;
 }
 
 function toVersionCount(field: EncryptedField, row: VersionRow): FieldVersionCount {
-  const version = row.version === null ? null : Number(row.version);
-  return { ...field, version, count: row.count };
-}
-
-function compareVersionCounts(first: FieldVersionCount, second: FieldVersionCount): number {
-  if (first.version === null || second.version === null) {
-    return Number(first.version === null) - Number(second.version === null);
-  }
-  return first.version - second.version;
+  return { ...field, version: row.version, count: row.count };
 }
 
 @Injectable()
@@ -103,7 +95,7 @@ export class SecretsReencryptionService {
     const counts: FieldVersionCount[] = [];
     for (const field of this.fields) {
       const rows = await this.selectVersionCounts(field);
-      counts.push(...rows.map((row) => toVersionCount(field, row)).sort(compareVersionCounts));
+      counts.push(...rows.map((row) => toVersionCount(field, row)));
     }
     return counts;
   }
@@ -197,8 +189,8 @@ export class SecretsReencryptionService {
     const table = this.escape(field.table);
     const column = this.escape(field.column);
     return this.txHost.tx.query(
-      `SELECT substring(${column} from '^v([0-9]+)\\.') AS "version", count(*)::int AS "count" ` +
-        `FROM ${table} WHERE ${column} IS NOT NULL GROUP BY 1 ORDER BY 1`,
+      `SELECT substring(${column} from '^v([0-9]+)\\.')::int AS "version", count(*)::int AS "count" ` +
+        `FROM ${table} WHERE ${column} IS NOT NULL GROUP BY 1 ORDER BY 1 NULLS LAST`,
     );
   }
 

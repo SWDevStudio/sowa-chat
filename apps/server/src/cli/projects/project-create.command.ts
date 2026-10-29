@@ -1,15 +1,13 @@
 import { Inject } from "@nestjs/common";
 import { Command, CommandRunner, Option } from "nest-commander";
 import { ProjectsService } from "../../domain/projects/projects.service.js";
-import { writeLine } from "../cli-output.js";
+import { serverKeyOnceWarning, writeLine, writeWarning } from "../cli-output.js";
 
 interface ProjectCreateOptions {
   name: string;
   origin?: string[];
   operatorOrigin?: string[];
 }
-
-const onceWarning = "serverKey is shown only once: store it in your secret storage now\n";
 
 @Command({
   name: "project:create",
@@ -49,6 +47,6 @@ export class ProjectCreateCommand extends CommandRunner {
     writeLine(`name: ${project.name}`);
     writeLine(`publicKey: ${project.publicKey}`);
     writeLine(`serverKey: ${project.serverKey}`);
-    process.stderr.write(onceWarning);
+    writeWarning(serverKeyOnceWarning);
   }
 }

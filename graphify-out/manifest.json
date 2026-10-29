@@ -1548,9 +1548,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli/cli-output.ts": {
-    "mtime": 1793223678.704092,
-    "seen": 1793223700.84448,
-    "ast_hash": "2be5a199b70cf0bd8abae4e2b4eff3b9",
+    "mtime": 1793233117.4956405,
+    "seen": 1793233133.4131231,
+    "ast_hash": "23eca3d36c9878ec457c82c942fd8be5",
     "semantic_hash": ""
   },
   "apps/server/src/cli/cli-runner.ts": {
@@ -1602,9 +1602,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/crypto/secrets-reencryption.service.ts": {
-    "mtime": 1793230950.4903026,
-    "seen": 1793230973.2389226,
-    "ast_hash": "779fd694d01d6f28f8c9b20cb7c75d1c",
+    "mtime": 1793233117.5005517,
+    "seen": 1793233133.4131231,
+    "ast_hash": "20a5ed490891373a2750b0ed28f550cc",
     "semantic_hash": ""
   },
   "apps/server/test/secrets-reencryption.e2e-spec.ts": {
@@ -1686,9 +1686,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli/projects/project-create.command.ts": {
-    "mtime": 1793226505.1451,
-    "seen": 1793226525.6526704,
-    "ast_hash": "87af823b5512d76fb06e316e41fee4b3",
+    "mtime": 1793233117.4989245,
+    "seen": 1793233133.4131231,
+    "ast_hash": "2265173f8daa4ca1d937a7a7aa6c52fe",
     "semantic_hash": ""
   },
   "apps/server/src/cli/projects/project-list.command.ts": {
@@ -1722,9 +1722,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli/keys/key-create.command.ts": {
-    "mtime": 1793228376.5033302,
-    "seen": 1793228433.1640692,
-    "ast_hash": "5d07e4baf544f90aa66e7f1518a541ed",
+    "mtime": 1793233117.4972856,
+    "seen": 1793233133.4131231,
+    "ast_hash": "bab89c36a698b95863e96067077916b1",
     "semantic_hash": ""
   },
   "apps/server/src/cli/keys/key-list.command.ts": {

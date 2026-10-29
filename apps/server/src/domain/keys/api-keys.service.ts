@@ -15,6 +15,7 @@ export type KeyActorKind = Extract<ActorKind, "cli" | "system">;
 interface IssueApiKeyBaseInput {
   projectId: string;
   actorKind: KeyActorKind;
+  key?: string;
 }
 
 export type IssueApiKeyInput =
@@ -45,6 +46,12 @@ export interface ApiKeySummary {
   revokedAt: Date | null;
 }
 
+export class InvalidApiKeyError extends Error {
+  constructor(keyType: KeyType) {
+    super(`Key is not a valid ${keyType}: check its prefix, length and checksum`);
+  }
+}
+
 export const keyTypeByKind: Record<ApiKeyKind, KeyType> = {
   server: "serverKey",
   bot: "botKey",
@@ -60,7 +67,10 @@ export class ApiKeysService {
   @Transactional()
   async issue(input: IssueApiKeyInput): Promise<IssuedApiKey> {
     const keyType = keyTypeByKind[input.kind];
-    const key = generateKey(keyType);
+    const key = input.key ?? generateKey(keyType);
+    if (input.key !== undefined && !parseKey(input.key, keyType)) {
+      throw new InvalidApiKeyError(keyType);
+    }
     const row = await this.repository.create({
       projectId: input.projectId,
       kind: input.kind,

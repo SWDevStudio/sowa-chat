@@ -1,17 +1,17 @@
 # Graph Report - hector-chat-epic-11  (2026-10-29)
 
 ## Corpus Check
-- 370 files · ~89,380 words
+- 373 files · ~91,256 words
 - Verdict: corpus is large enough that graph structure adds value.
 - Unclassified: 11 file(s) not represented in the graph (top: (none) 10, .example 1)
 
 ## Summary
-- 2610 nodes · 6050 edges · 157 communities (116 shown, 41 thin omitted)
-- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 147 edges (avg confidence: 0.85)
+- 2632 nodes · 6147 edges · 148 communities (114 shown, 34 thin omitted)
+- Extraction: 98% EXTRACTED · 2% INFERRED · 0% AMBIGUOUS · INFERRED: 152 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `dddd0ee9`
+- Built from commit: `eba1bee9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -22,7 +22,7 @@
 - log-level-warn.spec.ts
 - devDependencies
 - server-modes.e2e-spec.ts
-- operator-auth-guard.e2e-spec.ts
+- logger.module.ts
 - env.schema.ts
 - compilerOptions
 - HttpMetrics
@@ -38,7 +38,7 @@
 - rules
 - bot-sdk/package.json
 - server-sdk/package.json
-- http-error.filter.spec.ts
+- api-exception.ts
 - RequestContext
 - AuditLogEntry
 - scripts
@@ -49,25 +49,25 @@
 - request-id.e2e-spec.ts
 - chat-tables.e2e-spec.ts
 - key-format.ts
-- zone.guard.spec.ts
+- MixedZoneController
 - ConversationEvent
 - development-secrets-file.ts
 - tsconfig.build.json
 - ValidationProbeController
-- config.module.ts
+- main.ts
 - nest-cli.json
 - zone-probe.ts
-- @nestjs/common
+- ProjectsRepository
 - server-sdk/tsconfig.json
 - zod-serialization.spec.ts
-- identity-keys-table.e2e-spec.ts
+- migrate.module.ts
 - RedactionProbeController
 - api-keys-service-probe.ts
 - identity-key-commands.e2e-spec.ts
-- projects.service.spec.ts
+- participant.entity.spec.ts
 - cli.module.ts
 - database-connection.e2e-spec.ts
-- project-origins.e2e-spec.ts
+- initial-project.e2e-spec.ts
 - operator-auth.guard.ts
 - protocol/src/index.ts
 - Project
@@ -79,63 +79,63 @@
 - worker.module.ts
 - request-id.spec.ts
 - KeyCreateCommand
-- environment-check.ts
+- ApiKeysService
 - ref_node_crypto
 - encryption.service.spec.ts
-- origin-cli.ts
-- .publish
+- project-cli.ts
+- conversation.entity.spec.ts
 - config-startup.e2e-spec.ts
-- .publish
+- identity-keys.service.ts
 - server-protocol.e2e-spec.ts
 - projects.service.ts
 - OperationSteps
 - api-versioning.spec.ts
 - InternalProbeController
-- Conversation
-- operators.module.ts
+- conversation.entity.ts
+- http-error.filter.spec.ts
 - cls-middleware.ts
-- identity-keys.service.ts
+- telemetry.interceptor.spec.ts
 - health.module.ts
 - operators.repository.ts
 - .getByName
 - workspace-check-types.e2e-spec.ts
-- operators.service.ts
+- error-response.ts
 - key-cli.ts
 - CreateChatTables1793215389271
 - audited-events.spec.ts
 - secrets-reencrypt-command.e2e-spec.ts
 - secrets-reencryption.service.ts
-- zone.ts
+- zone.guard.spec.ts
 - Message
 - encryption-keys.schema.spec.ts
 - SecretsReencryptionService
 - ApiKey
-- redis.module.ts
+- ReplicaReadiness
 - log-redaction.e2e-spec.ts
 - database-entities.ts
 - cli-mode.e2e-spec.ts
 - operator-auth-guard.e2e-spec.ts
-- json-object-limits.spec.ts
+- operation-steps.ts
 - IdentityKeyAddCommand
 - JsonObjectValidator
 - slow-operations.ts
-- log-redaction.spec.ts
+- unit-probe.ts
 - Zone
 - cli.module.ts
-- IdentityKey
-- environment-checks.service.ts
+- Controller
+- server-errors.spec.ts
 - redis-connection.e2e-spec.ts
-- server/package.json
-- identity-key-pem.ts
+- pg
+- packages-build.e2e-spec.ts
 - SlowProbeController
 - tokens.service.spec.ts
 - DomainEventBus
-- body-limit.spec.ts
+- BodyProbeController
 - secrets-reencryption.service.ts
-- operator-token.controller.ts
+- server-key-guard.e2e-spec.ts
 - body-limit.ts
 - test-database.ts
-- ZoneServers
+- ProjectListCommand
 - ProjectsService
 - env.schema.logging.spec.ts
 - token-signing-keys.schema.ts
@@ -143,59 +143,53 @@
 - health.e2e-spec.ts
 - ErrorProbeController
 - env.schema.spec.ts
-- identity-keys.e2e-spec.ts
+- KeyRevokeCommand
 - encrypted-secret.spec.ts
-- @aws-sdk/client-s3@^3.1151.0
+- ZonedController
 - @aws-sdk/s3-request-presigner@^3.1151.0
-- redis-connection.e2e-spec.ts
+- encryption-keys.schema.ts
 - zod-serialization.spec.ts
 - database-connection.e2e-spec.ts
-- @nestjs/swagger
-- @nestjs/cache-manager@^12.0.1
-- @nestjs/microservices@^12.1.3
+- DatabaseStepSubscriber
+- TelemetryProbeController
+- sharp@^0.35.5
 - @nestjs/platform-socket.io@^12.1.3
-- status.controller.spec.ts
-- OperationStepsProbeController
-- RedisModule
-- bullmq@^6.3.15
-- @nest-lab/throttler-storage-redis@^1.2.0
-- @nestjs/throttler@^6.7.1
+- socket.io@^4.8.4
 - @nestjs/websockets@^12.1.3
 - pino-http
-- vitest@catalog:
 
 ## God Nodes (most connected - your core abstractions)
 1. `@nestjs/common` - 134 edges
 2. `typeorm` - 59 edges
 3. `Zone()` - 50 edges
-4. `Project` - 43 edges
-5. `@nestjs/testing` - 38 edges
-6. `ProjectsService` - 35 edges
-7. `useTestDatabase()` - 33 edges
-8. `ApiKey` - 27 edges
-9. `findFreePort()` - 27 edges
-10. `@nestjs/config` - 26 edges
+4. `Project` - 44 edges
+5. `@nestjs/testing` - 39 edges
+6. `ProjectsService` - 39 edges
+7. `useTestDatabase()` - 34 edges
+8. `ApiKey` - 28 edges
+9. `ApiKeysService` - 28 edges
+10. `findFreePort()` - 27 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `OperatorProfile` --references--> `OperatorRole`  [EXTRACTED]
+  apps/server/src/domain/operators/operators.repository.ts → packages/protocol/src/operator-role.ts
 - `RequestOperator` --references--> `OperatorRole`  [EXTRACTED]
   apps/server/src/infra/request-context/request-context.ts → packages/protocol/src/operator-role.ts
 - `AuditLogEntry` --references--> `JsonObject`  [EXTRACTED]
   apps/server/src/domain/audit/audit-log-entry.entity.ts → packages/protocol/src/json-types.ts
-- `ConversationEvent` --references--> `JsonObject`  [EXTRACTED]
-  apps/server/src/domain/conversations/conversation-event.entity.ts → packages/protocol/src/json-types.ts
-- `Conversation` --references--> `JsonObject`  [EXTRACTED]
-  apps/server/src/domain/conversations/conversation.entity.ts → packages/protocol/src/json-types.ts
-- `Message` --references--> `JsonObject`  [EXTRACTED]
-  apps/server/src/domain/conversations/message.entity.ts → packages/protocol/src/json-types.ts
+- `NewAuditLogEntry` --references--> `JsonObject`  [EXTRACTED]
+  apps/server/src/domain/audit/audit-log.repository.ts → packages/protocol/src/json-types.ts
+- `AuditRecord` --references--> `JsonObject`  [EXTRACTED]
+  apps/server/src/domain/audit/audit-rule.ts → packages/protocol/src/json-types.ts
 
 ## Import Cycles
 - None detected.
 
-## Communities (157 total, 41 thin omitted)
+## Communities (148 total, 34 thin omitted)
 
 ### Community 0 - "database-migrations.ts"
-Cohesion: 0.06
-Nodes (15): databaseMigrations, migrationFiles, migrationsDirectory, CreateProjects1793193549883, CreateAuditLog1793200000000, AddConversationIndexes1793215983154, CreateApiKeys1793300000000, CreateIdentityKeys1793300001000 (+7 more)
+Cohesion: 0.07
+Nodes (9): CreateProjects1793193549883, CreateAuditLog1793200000000, AddConversationIndexes1793215983154, CreateApiKeys1793300000000, CreateIdentityKeys1793300001000, AddProjectsPublicKey1793300002000, AddProjectsOperatorAllowedOrigins1793300003000, CreateOperators1793300003000 (+1 more)
 
 ### Community 1 - "bot-sdk/tsconfig.json"
 Cohesion: 0.29
@@ -211,15 +205,15 @@ Nodes (8): hasMessage(), infoProbe, isProbeRequestEntry(), LevelLogEntry, LevelP
 
 ### Community 4 - "devDependencies"
 Cohesion: 0.06
-Nodes (33): devDependencies, dependency-cruiser@^18.6.0, @nestjs/cli@^12.0.0, @nestjs/schematics@^12.0.0, @nestjs/testing@^12.0.1, pino-pretty@^13.2.0, socket.io-client@catalog:, source-map-support@^0.5.21 (+25 more)
+Nodes (44): author, bin, sowa-chat, description, devDependencies, dependency-cruiser@^18.6.0, @nestjs/cli@^12.0.0, @nestjs/schematics@^12.0.0 (+36 more)
 
 ### Community 5 - "server-modes.e2e-spec.ts"
 Cohesion: 0.13
 Nodes (13): Env, fetchStatus(), findFreePort(), findZonePorts(), modes, repositoryRoot, RunningServer, RunResult (+5 more)
 
-### Community 6 - "operator-auth-guard.e2e-spec.ts"
-Cohesion: 0.19
-Nodes (13): getProbe(), withToken(), encodePart(), flipSignatureBit(), ForgedTokenInput, forgeToken(), forgeUnsecuredToken(), publicKeyPemBytes() (+5 more)
+### Community 6 - "logger.module.ts"
+Cohesion: 0.20
+Nodes (15): createLogDestination(), logFileDescriptor(), LogDestination, stdoutModes, baseOptions(), createLoggerModule(), jsonOptions(), prettyOptions() (+7 more)
 
 ### Community 7 - "env.schema.ts"
 Cohesion: 0.12
@@ -230,8 +224,8 @@ Cohesion: 0.10
 Nodes (20): compilerOptions, allowSyntheticDefaultImports, declaration, emitDecoratorMetadata, esModuleInterop, experimentalDecorators, incremental, isolatedModules (+12 more)
 
 ### Community 10 - "config.module.ts"
-Cohesion: 0.24
-Nodes (15): appConfig, compileConfigModule(), compileWith(), stubTestEnv(), testEnv, databaseConfig, encryptionConfig, environmentChecksConfig (+7 more)
+Cohesion: 0.05
+Nodes (50): ioredis@^6.0.0, appConfig, compileConfigModule(), compileWith(), stubTestEnv(), testEnv, databaseConfig, encryptionConfig (+42 more)
 
 ### Community 11 - "protocol/tsconfig.json"
 Cohesion: 0.29
@@ -242,8 +236,8 @@ Cohesion: 0.10
 Nodes (21): author, dependencies, socket.io-client@catalog:, description, devDependencies, tsdown@catalog:, exports, ./operator (+13 more)
 
 ### Community 13 - "dependencies"
-Cohesion: 0.07
-Nodes (29): dependencies, cache-manager@^7.2.9, file-type@^22.1.1, helmet@^8.3.0, nest-commander@^3.21.0, @nestjs/bullmq@^12.0.0, nestjs-cls@^7.0.1, @nestjs-cls/transactional@^4.0.1 (+21 more)
+Cohesion: 0.05
+Nodes (40): dependencies, bullmq@^6.3.15, cache-manager@^7.2.9, file-type@^22.1.1, helmet@^8.3.0, jose@^6.2.12, nest-commander@^3.21.0, @nest-lab/throttler-storage-redis@^1.2.0 (+32 more)
 
 ### Community 14 - "protocol/package.json"
 Cohesion: 0.10
@@ -277,225 +271,229 @@ Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@c
 Cohesion: 0.12
 Nodes (18): author, description, devDependencies, tsdown@catalog:, @types/node@catalog:, exports, tsdown, @types/node (+10 more)
 
-### Community 22 - "http-error.filter.spec.ts"
-Cohesion: 0.07
-Nodes (32): OperatorDisabledFilter, ApiException, ApiExceptionInput, errorCodeStatuses, ErrorDetail, ApiHttpModule, errorCodeByStatus, errorCodeOfStatus() (+24 more)
+### Community 22 - "api-exception.ts"
+Cohesion: 0.16
+Nodes (12): ApiException, ApiExceptionInput, errorCodeStatuses, ErrorDetail, errorCodeByStatus, ErrorCode, errorCodes, errorDetailSchema (+4 more)
 
 ### Community 23 - "RequestContext"
-Cohesion: 0.06
-Nodes (14): OperatorRoleGuard, createGuard(), createRequestContext(), GuardFixture, ProbeController, SupervisorOnlyController, SupervisorOnly(), supervisorOnlyMetadataKey (+6 more)
+Cohesion: 0.07
+Nodes (13): OperatorRoleGuard, createGuard(), createRequestContext(), GuardFixture, ProbeController, SupervisorOnly(), supervisorOnlyMetadataKey, RequestContextModule (+5 more)
 
 ### Community 24 - "AuditLogEntry"
-Cohesion: 0.11
-Nodes (14): ActorKind, actorKinds, AuditLogEntry, IssueApiKeyInput, WorkerModule, ColumnRow, expectedColumns, apiKeyRows() (+6 more)
+Cohesion: 0.15
+Nodes (7): ActorKind, actorKinds, AuditLogEntry, NewAuditLogEntry, AuditRecord, ColumnRow, expectedColumns
 
 ### Community 25 - "scripts"
 Cohesion: 0.12
 Nodes (16): scripts, build, check-types, migration:create, migration:generate, start:api, start:api:dev, start:migrate (+8 more)
 
 ### Community 26 - "origin.commands.ts"
-Cohesion: 0.10
-Nodes (7): listOriginsOf(), OperatorOriginAddCommand, OperatorOriginListCommand, OperatorOriginRemoveCommand, OriginAddCommand, OriginListCommand, OriginRemoveCommand
+Cohesion: 0.08
+Nodes (15): readPem(), addOriginTo(), describeAdd(), describeRemove(), listOriginsOf(), OperatorOriginAddCommand, OperatorOriginListCommand, OperatorOriginRemoveCommand (+7 more)
 
 ### Community 27 - "logging.e2e-spec.ts"
 Cohesion: 0.18
 Nodes (11): expectOnlyJsonLines(), fetchStatus(), logEntries(), LogEntry, outputLines(), repositoryRoot, RunResult, serverEnvironment() (+3 more)
 
 ### Community 28 - ".create"
-Cohesion: 0.25
-Nodes (3): ScenarioError, SecondProjectsRepository, TransactionScenarios
+Cohesion: 0.16
+Nodes (6): AuditScenarios, happenedIn(), ScenarioError, ScenarioError, SecondProjectsRepository, TransactionScenarios
 
 ### Community 30 - "request-id.e2e-spec.ts"
-Cohesion: 0.25
-Nodes (9): entriesForPath(), isResponding(), logEntries(), LogEntry, ProbeResult, repositoryRoot, sendRequest(), waitForPathEntries() (+1 more)
+Cohesion: 0.23
+Nodes (10): entriesForPath(), isResponding(), logEntries(), LogEntry, ProbeResult, repositoryRoot, sendRequest(), waitForPathEntries() (+2 more)
 
 ### Community 31 - "chat-tables.e2e-spec.ts"
-Cohesion: 0.06
-Nodes (32): Message, MessageSenderKind, messageSenderKinds, MessageType, messageTypes, ColumnRow, ForeignKeyRow, IndexRow (+24 more)
+Cohesion: 0.07
+Nodes (29): ColumnRow, ForeignKeyRow, IndexRow, tableNames, IndexRow, PlanRow, countRows(), createChannel() (+21 more)
 
 ### Community 32 - "key-format.ts"
 Cohesion: 0.12
-Nodes (19): base, base62Alphabet, encodeBase62(), buildLookupPrefix(), computeChecksum(), generateKey(), isBase62(), keyPrefixes (+11 more)
+Nodes (15): InvalidApiKeyError, base, base62Alphabet, encodeBase62(), buildLookupPrefix(), computeChecksum(), generateKey(), isBase62() (+7 more)
 
-### Community 33 - "zone.guard.spec.ts"
-Cohesion: 0.11
-Nodes (8): CapturedResponse, FakeRequest, guardedControllers, MixedZoneController, OperatorZoneController, startApp(), unitPorts, UnzonedController
+### Community 33 - "MixedZoneController"
+Cohesion: 0.24
+Nodes (3): MixedZoneController, OperatorZoneController, UnzonedController
 
 ### Community 34 - "ConversationEvent"
 Cohesion: 0.15
 Nodes (7): ConversationEvent, columns(), expectedColumns, findColumn(), findRelation(), relations(), relationTarget()
 
 ### Community 35 - "development-secrets-file.ts"
-Cohesion: 0.20
+Cohesion: 0.22
 Nodes (16): createDevelopmentSecrets(), defaultDevelopmentSecretsDirectory, DevelopmentMainProject, DevelopmentSecrets, developmentSecretsFileName, developmentSecretsPath(), developmentSecretsSchema, hasErrorCode() (+8 more)
 
 ### Community 36 - "tsconfig.build.json"
 Cohesion: 0.29
 Nodes (6): compilerOptions, rootDir, exclude, extends, include, ./tsconfig.json
 
-### Community 38 - "config.module.ts"
-Cohesion: 0.06
-Nodes (34): cliName, commanderArgv(), runCliCommand(), startupLogLevels, CliModule, DatabaseMigrationStep, createLogDestination(), logFileDescriptor() (+26 more)
+### Community 38 - "main.ts"
+Cohesion: 0.11
+Nodes (16): ApiModule, cliName, commanderArgv(), runCliCommand(), startupLogLevels, CliModule, createContext(), mode (+8 more)
 
 ### Community 39 - "nest-cli.json"
 Cohesion: 0.33
 Nodes (5): collection, compilerOptions, deleteOutDir, $schema, sourceRoot
 
 ### Community 40 - "zone-probe.ts"
-Cohesion: 0.11
-Nodes (25): configureApiApp(), noStore(), useSecurityHeaders(), LogDestination, findZonePorts(), probeControllers, LogEntry, findFreePort() (+17 more)
+Cohesion: 0.07
+Nodes (29): configureApiApp(), HealthBody, HealthEntry, DependencyStatusBody, StatusBody, noStore(), useSecurityHeaders(), findZonePorts() (+21 more)
 
-### Community 41 - "@nestjs/common"
-Cohesion: 0.16
-Nodes (9): ServerAuthModule, KeysModule, ProjectsModule, NewProject, ORIGIN_COLUMNS, OriginsRow, @nestjs-cls/transactional, @nestjs-cls/transactional-adapter-typeorm (+1 more)
+### Community 41 - "ProjectsRepository"
+Cohesion: 0.11
+Nodes (9): OriginList, originLists, initialProjectLockName, NewProject, ORIGIN_COLUMNS, OriginsRow, ProjectsRepository, @nestjs-cls/transactional-adapter-typeorm (+1 more)
 
 ### Community 42 - "server-sdk/tsconfig.json"
 Cohesion: 0.29
 Nodes (6): compilerOptions, lib, types, extends, include, ../../tsconfig.base.json
 
-### Community 45 - "identity-keys-table.e2e-spec.ts"
-Cohesion: 0.32
-Nodes (6): jose@^6.2.12, identityKeyAlgorithms, ColumnRow, expectedColumns, jwk, jose
+### Community 45 - "migrate.module.ts"
+Cohesion: 0.20
+Nodes (4): DatabaseMigrationStep, PreparationRunner, PreparationStep, preparationSteps
 
 ### Community 47 - "api-keys-service-probe.ts"
 Cohesion: 0.24
 Nodes (12): eventFields, keyTypeByKind, serverKey, ApiKeysRepositoryStub, ApiKeysServiceProbe, createApiKeysServiceProbe(), createdRow(), deferred (+4 more)
 
 ### Community 48 - "identity-key-commands.e2e-spec.ts"
-Cohesion: 0.23
-Nodes (17): addKey(), runCliInProcess(), addEd25519Key(), addIdentityKey(), addP256Key(), generateRsaPublicPem(), identityKeyListHeader, listIdentityKeys() (+9 more)
+Cohesion: 0.22
+Nodes (19): addKey(), runCliInProcess(), addEd25519Key(), addIdentityKey(), addP256Key(), generateRsaPublicPem(), identityKeyListHeader, listIdentityKeys() (+11 more)
 
-### Community 49 - "projects.service.spec.ts"
-Cohesion: 0.23
-Nodes (8): IssuedApiKey, InvalidProjectNameError, ProjectAlreadyExistsError, createProjectsServiceProbe(), issuedServerKey, projectRow(), ProjectsServiceProbe, runWithoutTransaction()
+### Community 49 - "participant.entity.spec.ts"
+Cohesion: 0.14
+Nodes (7): Participant, columns(), expectedColumns, findColumn(), findRelation(), relations(), relationTarget()
 
 ### Community 50 - "cli.module.ts"
-Cohesion: 0.10
-Nodes (13): emptyCell, serverKeyOnceWarning, writeLine(), writeWarning(), IdentityKeyAddOptions, readPem(), IdentityKeyRevokeOptions, KeyCreateOptions (+5 more)
+Cohesion: 0.16
+Nodes (13): emptyCell, serverKeyOnceWarning, writeLine(), writeTable(), writeWarning(), IdentityKeyAddOptions, IdentityKeyRevokeOptions, KeyCreateOptions (+5 more)
 
 ### Community 51 - "database-connection.e2e-spec.ts"
 Cohesion: 0.17
 Nodes (14): runToExit(), ApiRun, fetchStatus(), LogEntry, repositoryRoot, runApiWithRequest(), RunResult, runToExit() (+6 more)
 
-### Community 52 - "project-origins.e2e-spec.ts"
-Cohesion: 0.20
-Nodes (9): columns, createMain(), emptyLists, eventNames, listRow(), lists, originAuditRows(), otherList (+1 more)
+### Community 52 - "initial-project.e2e-spec.ts"
+Cohesion: 0.09
+Nodes (22): SupervisorOnlyController, IssueApiKeyInput, ProjectsModule, CreatedProject, WorkerModule, apiKeyRows(), expectSingleProject(), projectCreatedRows() (+14 more)
 
 ### Community 53 - "operator-auth.guard.ts"
-Cohesion: 0.14
+Cohesion: 0.11
 Nodes (6): OperatorAuthGuard, ServerKeyGuard, OperatorTokenClaims, operatorTokenClaimsSchema, bearerToken(), FakeRequestInput
 
 ### Community 54 - "protocol/src/index.ts"
-Cohesion: 0.10
-Nodes (15): createEventEnvelopeSchema(), EventEnvelope, eventEnvelopeSchema, MessageCreatedEnvelope, messageCreatedSchema, validEnvelope, jsonObjectSchema, JsonValue (+7 more)
+Cohesion: 0.06
+Nodes (28): createEventEnvelopeSchema(), EventEnvelope, eventEnvelopeSchema, MessageCreatedEnvelope, messageCreatedSchema, validEnvelope, defaultLimits, isAccepted() (+20 more)
 
 ### Community 55 - "Project"
-Cohesion: 0.06
-Nodes (24): NewAuditLogEntry, AuditRecord, Channel, channelColumns(), findColumn(), ConversationCloseReason, conversationCloseReasons, ConversationStatus (+16 more)
+Cohesion: 0.10
+Nodes (16): database, loadDataSource(), databaseEntities, Channel, channelColumns(), findColumn(), identityKeyAlgorithms, Project (+8 more)
 
 ### Community 57 - ".probe"
-Cohesion: 0.22
-Nodes (3): prom-client@^15.1.3, MetricsController, prom-client
+Cohesion: 0.18
+Nodes (4): prom-client@^15.1.3, MetricsController, MetricsModule, prom-client
 
 ### Community 58 - "migrate-mode.e2e-spec.ts"
-Cohesion: 0.21
-Nodes (10): BrokenMigration1700000000000, countMigrationRows(), createDatabase(), migrateEnvironment(), repositoryRoot, runMigrate(), RunResult, unreachableUrl() (+2 more)
+Cohesion: 0.19
+Nodes (11): BrokenMigration1700000000000, countMigrationRows(), createDatabase(), migrateEnvironment(), repositoryRoot, runMigrate(), RunResult, unreachableUrl() (+3 more)
 
 ### Community 59 - "identity-key-list.command.ts"
-Cohesion: 0.08
-Nodes (15): formatDate(), writeTable(), header, IdentityKeyListCommand, IdentityKeyListOptions, toRow(), header, KeyListCommand (+7 more)
+Cohesion: 0.20
+Nodes (5): formatDate(), header, IdentityKeyListCommand, IdentityKeyListOptions, toRow()
 
 ### Community 60 - "test-secrets.ts"
 Cohesion: 0.18
 Nodes (16): createReencryptionModule(), createRegisteredFieldsModule(), createTestSecretsTable(), dropTestSecretsTable(), initModule(), insertVersion1Secrets(), key1, key2 (+8 more)
 
 ### Community 61 - "worker.module.ts"
-Cohesion: 0.15
-Nodes (10): AuditLogListener, eventValues, happened, personalValues, AuditLogRepository, auditedEventNames(), AuditRule, auditRules (+2 more)
+Cohesion: 0.12
+Nodes (11): AuditLogListener, eventValues, happened, personalValues, AuditLogRepository, auditedEventNames(), AuditRule, auditRules (+3 more)
 
 ### Community 62 - "request-id.spec.ts"
-Cohesion: 0.08
-Nodes (14): createRequestIdProbeApp(), entriesOf(), expectRequestIdInAllEntries(), isRequestEntryOf(), isServiceEntryOf(), LogEntry, ProbeController, ProbeResponse (+6 more)
+Cohesion: 0.14
+Nodes (9): entriesOf(), expectRequestIdInAllEntries(), isRequestEntryOf(), isServiceEntryOf(), LogEntry, ProbeController, ProbeResponse, ProbeService (+1 more)
 
-### Community 64 - "environment-check.ts"
-Cohesion: 0.24
-Nodes (13): CheckContext, CheckFinding, CheckLevel, CheckResult, EnvironmentCheck, CheckPlace, checksForPlace(), findProblems() (+5 more)
+### Community 64 - "ApiKeysService"
+Cohesion: 0.14
+Nodes (6): header, KeyListCommand, KeyListOptions, toRow(), ApiKeysService, Replica
 
 ### Community 65 - "ref_node_crypto"
-Cohesion: 0.33
+Cohesion: 0.30
 Nodes (7): firstTokenSigningKeyIds, GeneratedSecret, generatedSecrets, SecretsMode, generateEncryptionKeyEntry(), generateTokenSigningKeyEntry(), minimalEnv
 
 ### Community 66 - "encryption.service.spec.ts"
 Cohesion: 0.12
 Nodes (14): CryptoModule, authTagLength, formatEncryptedSecret(), ivLength, parseEncryptedSecret(), CurrentKey, EncryptionService, SecretDecryptionError (+6 more)
 
-### Community 67 - "origin-cli.ts"
-Cohesion: 0.24
-Nodes (11): badOrigins, helpEntries, prefixes, addOrigins(), OriginAction, OriginCommandOptions, originGroups, originsOf() (+3 more)
+### Community 67 - "project-cli.ts"
+Cohesion: 0.13
+Nodes (20): badOrigins, helpEntries, prefixes, CliRunResult, addOrigins(), OriginAction, OriginCommandOptions, OriginGroup (+12 more)
 
-### Community 68 - ".publish"
-Cohesion: 0.29
-Nodes (3): AuditScenarios, happenedIn(), ScenarioError
+### Community 68 - "conversation.entity.spec.ts"
+Cohesion: 0.15
+Nodes (7): columns(), expectedColumns, findColumn(), findRelation(), relations(), relationTarget(), Visitor
 
 ### Community 69 - "config-startup.e2e-spec.ts"
-Cohesion: 0.24
+Cohesion: 0.22
 Nodes (8): Env, isConfigVariable(), repositoryRoot, RunResult, serverEntry, serverEnvironment(), systemEnvironment(), validEnv
 
+### Community 70 - "identity-keys.service.ts"
+Cohesion: 0.06
+Nodes (26): KeyActorKind, IdentityKey, IdentityKeyAlgorithm, algorithmOf(), InvalidIdentityKeyError, isP256(), ParsedIdentityKey, parseIdentityPublicKey() (+18 more)
+
 ### Community 71 - "server-protocol.e2e-spec.ts"
-Cohesion: 0.27
+Cohesion: 0.31
 Nodes (7): CommandResult, findFreePort(), repositoryRoot, respondsToHttp(), serverDirectory, startBuiltServer(), waitForHttp()
 
 ### Community 72 - "projects.service.ts"
-Cohesion: 0.12
-Nodes (21): addOriginTo(), describeAdd(), describeRemove(), OriginOptions, ProjectOptions, removeOriginFrom(), ALLOWED_PROTOCOLS, InvalidOriginError (+13 more)
+Cohesion: 0.13
+Nodes (19): ALLOWED_PROTOCOLS, InvalidOriginError, isOriginOnly(), normalizeOrigin(), normalizeOrigins(), parseUrl(), ChangeOriginInput, InvalidProjectNameError (+11 more)
 
 ### Community 73 - "OperationSteps"
-Cohesion: 0.12
-Nodes (6): DatabaseStepSubscriber, OperationStep, operationSteps, OperationTiming, OperationSteps, operationTimingKey
+Cohesion: 0.19
+Nodes (3): OperationStep, OperationSteps, OperationStepsProbeController
 
 ### Community 74 - "api-versioning.spec.ts"
-Cohesion: 0.25
-Nodes (4): NeutralProbeController, probeControllers, SecondVersionProbeController, VersionedProbeController
+Cohesion: 0.32
+Nodes (3): NeutralProbeController, SecondVersionProbeController, VersionedProbeController
 
 ### Community 75 - "InternalProbeController"
 Cohesion: 0.27
 Nodes (4): InternalProbeController, ManagementProbeController, OperatorProbeController, PublicProbeController
 
-### Community 76 - "Conversation"
-Cohesion: 0.07
-Nodes (13): Conversation, ConversationEventActorKind, conversationEventActorKinds, Participant, ParticipantKind, participantKinds, columns(), expectedColumns (+5 more)
+### Community 76 - "conversation.entity.ts"
+Cohesion: 0.10
+Nodes (14): Conversation, ConversationCloseReason, conversationCloseReasons, ConversationStatus, conversationStatuses, ConversationEventActorKind, conversationEventActorKinds, MessageSenderKind (+6 more)
 
-### Community 77 - "operators.module.ts"
-Cohesion: 0.22
-Nodes (4): OperatorAuthModule, ServerApiModule, OperatorsModule, TokensModule
+### Community 77 - "http-error.filter.spec.ts"
+Cohesion: 0.17
+Nodes (6): HttpErrorFilter, responseZodErrorOf(), knownKeys, ProbeBodyDto, requestIdHeader, requestIdOfResponse()
 
 ### Community 78 - "cls-middleware.ts"
-Cohesion: 0.31
-Nodes (6): ApiModule, useClsMiddleware(), echoRequestId(), resolveRequestId(), beginOperation(), createE2eApp()
+Cohesion: 0.46
+Nodes (4): useClsMiddleware(), echoRequestId(), resolveRequestId(), createE2eApp()
 
-### Community 79 - "identity-keys.service.ts"
-Cohesion: 0.21
-Nodes (9): KeyActorKind, IdentityKeyAlgorithm, ParsedIdentityKey, NewIdentityKey, AddedIdentityKey, AddIdentityKeyInput, IdentityKeyKidTakenError, InvalidIdentityKeyIdError (+1 more)
+### Community 79 - "telemetry.interceptor.spec.ts"
+Cohesion: 0.15
+Nodes (7): HttpLabel, HttpMetrics, HttpRequestRecord, labelNames, readMetricLines(), zoneUrl(), rxjs
 
 ### Community 80 - "health.module.ts"
-Cohesion: 0.09
-Nodes (11): DependencyChecks, HealthController, HealthModule, ReplicaReadiness, readServerVersion(), StatusController, DependencyStatus, ServerStatus (+3 more)
+Cohesion: 0.13
+Nodes (9): DependencyChecks, HealthModule, readServerVersion(), StatusController, DependencyStatus, ServerStatus, StatusService, toDependencyStatus() (+1 more)
 
 ### Community 81 - "operators.repository.ts"
 Cohesion: 0.13
-Nodes (3): DisabledOperators, Probe, OperatorsRepository
+Nodes (7): DisabledOperators, Probe, OperatorsModule, OperatorProfile, OperatorsRepository, TokensModule, @nestjs/common
 
 ### Community 83 - "workspace-check-types.e2e-spec.ts"
 Cohesion: 0.28
 Nodes (8): CommandResult, librariesWithOwnChecks, plannedCheckTypesTasks(), PlannedTask, probePath(), repositoryRoot, runInRoot(), writeProbe()
 
-### Community 84 - "operators.service.ts"
-Cohesion: 0.10
-Nodes (11): Operator, OperatorProfile, IssuedOperatorToken, IssueOperatorTokenInput, OperatorDisabledError, OperatorsService, operatorTokenTtlSeconds, input (+3 more)
+### Community 84 - "error-response.ts"
+Cohesion: 0.29
+Nodes (7): OperatorDisabledFilter, OperatorDisabledError, errorCodeOfStatus(), httpErrorResponse(), internalErrorResponse(), toErrorResponse(), validationErrorResponse()
 
 ### Community 85 - "key-cli.ts"
-Cohesion: 0.17
-Nodes (25): toLookupPrefix(), CliRunResult, auditRowsByAction(), createdKey(), createKey(), insertBotKey(), keyListHeader, keyRowByPrefix() (+17 more)
+Cohesion: 0.22
+Nodes (18): hashKey(), CreateProjectInput, auditRowsByAction(), createdKey(), createKey(), insertBotKey(), keyListHeader, keyRowByPrefix() (+10 more)
 
 ### Community 87 - "audited-events.spec.ts"
 Cohesion: 0.15
@@ -509,117 +507,113 @@ Nodes (14): clearRegisteredFields(), dryRunHeader, emptyRegistryLine, encryption
 Cohesion: 0.16
 Nodes (11): describeUndecryptable(), dryRunHeader, fieldName(), reencryptHeader, SecretsReencryptCommand, SecretsReencryptOptions, toReencryptionRow(), toVersionRow() (+3 more)
 
-### Community 90 - "zone.ts"
-Cohesion: 0.15
-Nodes (17): HealthBody, HealthEntry, DocumentedZone, documentForZone(), isUnderAnyPrefix(), onlyOnManagementPort(), setupApiDocs(), zonePathPrefixes (+9 more)
+### Community 90 - "zone.guard.spec.ts"
+Cohesion: 0.10
+Nodes (19): probeControllers, DocumentedZone, documentForZone(), isUnderAnyPrefix(), onlyOnManagementPort(), setupApiDocs(), zonePathPrefixes, probeControllers (+11 more)
 
 ### Community 91 - "Message"
-Cohesion: 0.27
-Nodes (6): columns(), expectedColumns, findColumn(), findRelation(), relations(), relationTarget()
+Cohesion: 0.12
+Nodes (7): Message, columns(), expectedColumns, findColumn(), findRelation(), relations(), relationTarget()
 
 ### Community 92 - "encryption-keys.schema.spec.ts"
-Cohesion: 0.21
-Nodes (12): EncryptionKey, encryptionKeysSchema, parseEntry(), parseKeys(), reject(), describeErrors(), key1, key1Bytes (+4 more)
+Cohesion: 0.29
+Nodes (7): describeErrors(), key1, key1Bytes, key2, key2Bytes, parseKeys(), requiredEnv
 
 ### Community 94 - "ApiKey"
 Cohesion: 0.07
-Nodes (15): ApiKey, ApiKeyKind, apiKeyKinds, ApiKeysRepository, NewApiKey, ApiKeysService, hashMatches(), IssueApiKeyBaseInput (+7 more)
-
-### Community 95 - "redis.module.ts"
-Cohesion: 0.32
-Nodes (7): ioredis@^6.0.0, closeRedis(), createRedisClient(), redisStartupTimeoutMs, FakeRedis, waitForRedis(), ioredis
+Nodes (15): ApiKey, ApiKeyKind, apiKeyKinds, ApiKeysRepository, NewApiKey, ApiKeySummary, hashMatches(), IssueApiKeyBaseInput (+7 more)
 
 ### Community 96 - "log-redaction.e2e-spec.ts"
-Cohesion: 0.31
-Nodes (8): isRequestEntry(), isResponding(), logEntries(), LogEntry, repositoryRoot, waitForRequestEntry(), waitUntilResponding(), RunningServer
+Cohesion: 0.36
+Nodes (7): isRequestEntry(), isResponding(), logEntries(), LogEntry, repositoryRoot, waitForRequestEntry(), waitUntilResponding()
 
 ### Community 97 - "database-entities.ts"
-Cohesion: 0.15
-Nodes (13): database, loadDataSource(), DatabaseMigration, createDataSourceOptions(), DatabaseConnection, DatabaseEntity, FirstEntity, SecondEntity (+5 more)
+Cohesion: 0.19
+Nodes (12): DatabaseMigration, databaseMigrations, createDataSourceOptions(), DatabaseConnection, DatabaseEntity, FirstEntity, SecondEntity, runDatabaseMigrations() (+4 more)
 
 ### Community 98 - "cli-mode.e2e-spec.ts"
 Cohesion: 0.21
 Nodes (8): expectSingleServerKey(), nonEmptyLines(), repositoryRoot, runMainCli(), runNode(), RunResult, runSowaChat(), serverDirectory
 
 ### Community 99 - "operator-auth-guard.e2e-spec.ts"
-Cohesion: 0.12
-Nodes (15): OperatorController(), DisabledProbeController, issueOperator(), issueOperator(), get(), getAs(), RolesProbeController, IssuedOperator (+7 more)
+Cohesion: 0.10
+Nodes (22): OperatorController(), IssuedOperatorToken, IssueOperatorTokenInput, OperatorsService, operatorTokenTtlSeconds, DisabledProbeController, issueOperator(), getProbe() (+14 more)
 
-### Community 100 - "json-object-limits.spec.ts"
-Cohesion: 0.21
-Nodes (7): defaultLimits, isAccepted(), jsonLength(), objectOfJsonBytes(), Schema, schemaWith(), createJsonObjectSchema()
+### Community 100 - "operation-steps.ts"
+Cohesion: 0.33
+Nodes (4): nestjs-cls@^7.0.1, beginOperation(), operationTimingKey, nestjs-cls
 
 ### Community 102 - "JsonObjectValidator"
-Cohesion: 0.17
-Nodes (9): defaultLimits, forbiddenKeys, IssuePath, jsonObjectBaseSchema, JsonObjectValidator, Violation, JsonObjectLimits, encoder (+1 more)
+Cohesion: 0.28
+Nodes (3): JsonObjectValidator, encoder, utf8ByteLength()
 
 ### Community 103 - "slow-operations.ts"
-Cohesion: 0.27
-Nodes (5): slowOperationsConfig, StepTimes, FinishedOperation, roundSteps(), SlowOperations
+Cohesion: 0.18
+Nodes (7): operationSteps, OperationTiming, StepTimes, FinishedOperation, SlowOperationsModule, roundSteps(), SlowOperations
 
-### Community 104 - "log-redaction.spec.ts"
-Cohesion: 0.20
-Nodes (10): allOutput(), CapturedLogs, createRedactionProbeApp(), fieldValueOf(), integratorDataFields, LogEntry, logFromService(), messageAndContactFields (+2 more)
+### Community 104 - "unit-probe.ts"
+Cohesion: 0.12
+Nodes (17): LogDestination, allOutput(), CapturedLogs, createRedactionProbeApp(), fieldValueOf(), integratorDataFields, LogEntry, logFromService() (+9 more)
 
 ### Community 105 - "Zone"
-Cohesion: 0.07
-Nodes (21): ServerController(), controllers, DocsProbeDto, documentOf(), InternalDocsProbeController, OpenApiDocument, OpenApiSchema, OperatorDocsProbeController (+13 more)
+Cohesion: 0.15
+Nodes (11): controllers, DocsProbeDto, documentOf(), InternalDocsProbeController, OpenApiDocument, OpenApiSchema, OperatorDocsProbeController, PublicDocsProbeController (+3 more)
 
 ### Community 106 - "cli.module.ts"
-Cohesion: 0.10
-Nodes (16): databaseEntities, AuditModule, AppClsModule, AppConfigModule, createTypeOrmModule(), DatabaseModule, getTypeOrmModule(), typeOrmModules (+8 more)
+Cohesion: 0.09
+Nodes (15): OperatorAuthModule, ServerApiModule, ServerAuthModule, AuditModule, AppClsModule, AppConfigModule, createTypeOrmModule(), DatabaseModule (+7 more)
 
-### Community 108 - "environment-checks.service.ts"
-Cohesion: 0.31
-Nodes (6): EnvironmentCheckError, describeResult(), EnvironmentChecksService, createService(), environmentChecks, registeredEnvironmentChecks
+### Community 107 - "Controller"
+Cohesion: 0.23
+Nodes (5): InternalProbeController, ManagementProbeController, OperatorProbeController, PublicProbeController, VisitorProbeController
+
+### Community 108 - "server-errors.spec.ts"
+Cohesion: 0.28
+Nodes (7): internalErrorMessage, ApiExceptionInput, entries(), errorEntriesOf(), hasStackWith(), LogEntry, stringsInside()
 
 ### Community 109 - "redis-connection.e2e-spec.ts"
-Cohesion: 0.10
-Nodes (15): filesReadingProcessEnv(), sourceDirectory, sourceFiles(), packageJson, builtFiles, CommandResult, entriesByPackage, plannedBuildTasks() (+7 more)
+Cohesion: 0.13
+Nodes (9): filesReadingProcessEnv(), sourceDirectory, sourceFiles(), migrationFiles, migrationsDirectory, packageJson, IdentityRow, VersionRow (+1 more)
 
-### Community 110 - "server/package.json"
-Cohesion: 0.10
-Nodes (19): author, bin, sowa-chat, reflect-metadata@^0.2.2, rxjs@^7.8.1, sharp@^0.35.5, socket.io@^4.8.4, zod@catalog: (+11 more)
+### Community 110 - "pg"
+Cohesion: 0.14
+Nodes (8): @aws-sdk/client-s3@^3.1151.0, pg@^8.23.1, reflect-metadata@^0.2.2, @sowa-chat/protocol@workspace:*, @aws-sdk/client-s3, pg, reflect-metadata, @sowa-chat/protocol
 
-### Community 111 - "identity-key-pem.ts"
-Cohesion: 0.27
-Nodes (7): algorithmOf(), InvalidIdentityKeyError, isP256(), parseIdentityPublicKey(), readPublicKeyObject(), captureError(), expectInvalidKey()
+### Community 111 - "packages-build.e2e-spec.ts"
+Cohesion: 0.25
+Nodes (7): builtFiles, CommandResult, entriesByPackage, plannedBuildTasks(), PlannedTask, repositoryRoot, runInRoot()
+
+### Community 112 - "SlowProbeController"
+Cohesion: 0.24
+Nodes (3): LogEntry, pause(), SlowProbeController
 
 ### Community 115 - "tokens.service.spec.ts"
-Cohesion: 0.09
-Nodes (23): TokenSigningKey, SignedToken, SignTokenInput, ConsumerModule, TestTokenSigningConfigModule, TokenConsumer, TokenAudience, tokenAudiences (+15 more)
+Cohesion: 0.10
+Nodes (29): SignTokenInput, ConsumerModule, TestTokenSigningConfigModule, TokenConsumer, tokenAudiences, encodePart(), flipSignatureBit(), ForgedTokenInput (+21 more)
 
 ### Community 120 - "DomainEventBus"
-Cohesion: 0.16
-Nodes (11): DomainEventBus, happened, TestListener, DomainEventHandler, DomainEventName, OnDomainEvent(), DomainEvents, ../../src/telemetry/events/domain-events.js (+3 more)
-
-### Community 121 - "body-limit.spec.ts"
-Cohesion: 0.11
-Nodes (6): BodyProbeController, calls, ProbeBodyDto, ProbeCall, ProbeQueryDto, ZoneProbeApp
+Cohesion: 0.21
+Nodes (10): happened, TestListener, DomainEventHandler, DomainEventName, OnDomainEvent(), DomainEvents, ../../src/telemetry/events/domain-events.js, TestHappenedEvent (+2 more)
 
 ### Community 122 - "secrets-reencryption.service.ts"
 Cohesion: 0.17
 Nodes (11): encryptedFields, registeredEncryptedFields, SecretsReencryptionModule, BatchResult, FieldResult, ReencryptInput, reencryptionBatchSize, ReencryptionReport (+3 more)
 
-### Community 123 - "operator-token.controller.ts"
-Cohesion: 0.17
-Nodes (6): nestjs-zod@^5.5.0, OperatorTokenController, OperatorTokenRequestDto, OperatorTokenResponseDto, OperatorTokenResponse, nestjs-zod
+### Community 123 - "server-key-guard.e2e-spec.ts"
+Cohesion: 0.07
+Nodes (18): nestjs-zod@^5.5.0, OperatorTokenController, OperatorTokenRequestDto, OperatorTokenResponseDto, ServerController(), calls, ProbeBodyDto, ProbeCall (+10 more)
 
 ### Community 124 - "body-limit.ts"
 Cohesion: 0.43
 Nodes (5): bodyLimit, useBodyLimit(), BodyParserError, bodyParserErrorToHttpException(), isBodyParserError()
 
 ### Community 125 - "test-database.ts"
-Cohesion: 0.16
-Nodes (10): createProjectWithKey(), internalAgent(), postToken(), createProjectRequest(), ColumnRow, ConstraintRow, expectedColumns, createProject() (+2 more)
+Cohesion: 0.06
+Nodes (23): Operator, input, Probe, signedToken, TokenSigningKey, SignedToken, TokenAudience, TokensService (+15 more)
 
-### Community 126 - "ZoneServers"
-Cohesion: 0.29
-Nodes (3): startListening(), stopListening(), ZoneServers
-
-### Community 127 - "ProjectsService"
-Cohesion: 0.15
-Nodes (3): ProjectsRepository, ProjectNotFoundError, ProjectsService
+### Community 126 - "ProjectListCommand"
+Cohesion: 0.25
+Nodes (3): formatOrigins(), ProjectListCommand, toRow()
 
 ### Community 128 - "env.schema.logging.spec.ts"
 Cohesion: 0.33
@@ -630,52 +624,44 @@ Cohesion: 0.29
 Nodes (6): parseEntry(), parseKeys(), parsePrivateKey(), reject(), requiredEnv, tokenSigningKeysSchema
 
 ### Community 131 - "health.e2e-spec.ts"
-Cohesion: 0.20
-Nodes (8): DependencyStatusBody, fetchStatus(), repositoryRoot, serverEnvironment(), serverPackageJson, StatusBody, waitForHttpStatus(), Env
-
-### Community 134 - "identity-keys.e2e-spec.ts"
-Cohesion: 0.42
-Nodes (6): IdentityKeysService, expectNoKeyRows(), expectNoRows(), auditRows(), auditRowsByAction(), identityKeyRows()
+Cohesion: 0.22
+Nodes (7): DependencyStatusBody, fetchStatus(), repositoryRoot, serverEnvironment(), serverPackageJson, StatusBody, waitForHttpStatus()
 
 ### Community 135 - "encrypted-secret.spec.ts"
 Cohesion: 0.20
 Nodes (7): EncryptedSecret, ciphertext, iv, tag, validCiphertext, validIv, validTag
 
-### Community 138 - "redis-connection.e2e-spec.ts"
-Cohesion: 0.27
-Nodes (7): fetchStatus(), repositoryRoot, RunResult, serverEnvironment(), unreachableRedisUrl(), waitForHttpStatus(), useTestRedis()
+### Community 138 - "encryption-keys.schema.ts"
+Cohesion: 0.60
+Nodes (5): EncryptionKey, encryptionKeysSchema, parseEntry(), parseKeys(), reject()
 
 ### Community 139 - "zod-serialization.spec.ts"
 Cohesion: 0.25
 Nodes (6): entries(), errorEntriesOf(), Issue, LogEntry, ProbeResponse, ProbeResponseDto
 
 ### Community 140 - "database-connection.e2e-spec.ts"
-Cohesion: 0.29
+Cohesion: 0.25
 Nodes (6): fetchStatus(), repositoryRoot, RunResult, serverEnvironment(), unreachableDatabaseUrl(), waitForHttpStatus()
-
-### Community 145 - "status.controller.spec.ts"
-Cohesion: 0.33
-Nodes (3): DependencyStatusBody, StatusBody, redisUrl()
 
 ## Knowledge Gaps
 - **5 isolated node(s):** `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json`
-  These have ≤1 connection - possible missing edges. (Counts symbols only; 947 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **41 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+  These have ≤1 connection - possible missing edges. (Counts symbols only; 953 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **34 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `@nestjs/common` connect `@nestjs/common` to `log-level-warn.spec.ts`, `operator-auth-guard.e2e-spec.ts`, `config.module.ts`, `zod-serialization.spec.ts`, `dependencies`, `status.controller.spec.ts`, `http-error.filter.spec.ts`, `RequestContext`, `key-format.ts`, `zone.guard.spec.ts`, `config.module.ts`, `zone-probe.ts`, `cli.module.ts`, `operator-auth.guard.ts`, `.probe`, `identity-key-list.command.ts`, `worker.module.ts`, `request-id.spec.ts`, `environment-check.ts`, `encryption.service.spec.ts`, `projects.service.ts`, `OperationSteps`, `api-versioning.spec.ts`, `operators.module.ts`, `cls-middleware.ts`, `identity-keys.service.ts`, `health.module.ts`, `operators.repository.ts`, `operators.service.ts`, `secrets-reencryption.service.ts`, `zone.ts`, `ApiKey`, `redis.module.ts`, `operator-auth-guard.e2e-spec.ts`, `slow-operations.ts`, `log-redaction.spec.ts`, `Zone`, `cli.module.ts`, `environment-checks.service.ts`, `server/package.json`, `tokens.service.spec.ts`, `DomainEventBus`, `body-limit.spec.ts`, `secrets-reencryption.service.ts`, `operator-token.controller.ts`, `body-limit.ts`, `test-database.ts`?**
-  _High betweenness centrality (0.290) - this node is a cross-community bridge._
+- **Why does `@nestjs/common` connect `operators.repository.ts` to `log-level-warn.spec.ts`, `devDependencies`, `logger.module.ts`, `config.module.ts`, `zod-serialization.spec.ts`, `dependencies`, `api-exception.ts`, `RequestContext`, `AuditLogEntry`, `origin.commands.ts`, `main.ts`, `zone-probe.ts`, `ProjectsRepository`, `migrate.module.ts`, `cli.module.ts`, `initial-project.e2e-spec.ts`, `operator-auth.guard.ts`, `.probe`, `identity-key-list.command.ts`, `worker.module.ts`, `request-id.spec.ts`, `ApiKeysService`, `encryption.service.spec.ts`, `identity-keys.service.ts`, `projects.service.ts`, `http-error.filter.spec.ts`, `cls-middleware.ts`, `telemetry.interceptor.spec.ts`, `health.module.ts`, `error-response.ts`, `secrets-reencryption.service.ts`, `zone.guard.spec.ts`, `ApiKey`, `operator-auth-guard.e2e-spec.ts`, `operation-steps.ts`, `slow-operations.ts`, `unit-probe.ts`, `Zone`, `cli.module.ts`, `server-errors.spec.ts`, `SlowProbeController`, `tokens.service.spec.ts`, `DomainEventBus`, `secrets-reencryption.service.ts`, `server-key-guard.e2e-spec.ts`, `body-limit.ts`, `test-database.ts`?**
+  _High betweenness centrality (0.263) - this node is a cross-community bridge._
 - **What connects `./tsconfig.json`, `../../tsconfig.base.json`, `../../tsconfig.base.json` to the rest of the system?**
   _5 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `database-migrations.ts` be split into smaller, more focused modules?**
-  _Cohesion score 0.06294326241134751 - nodes in this community are weakly interconnected._
-- **Why does `typeorm` connect `database-migrations.ts` to `identity-keys.e2e-spec.ts`, `database-connection.e2e-spec.ts`, `dependencies`, `AuditLogEntry`, `chat-tables.e2e-spec.ts`, `ConversationEvent`, `@nestjs/common`, `identity-keys-table.e2e-spec.ts`, `Project`, `migrate-mode.e2e-spec.ts`, `test-secrets.ts`, `environment-check.ts`, `origin-cli.ts`, `OperationSteps`, `Conversation`, `operators.repository.ts`, `key-cli.ts`, `secrets-reencrypt-command.e2e-spec.ts`, `Message`, `ApiKey`, `database-entities.ts`, `operator-auth-guard.e2e-spec.ts`, `cli.module.ts`, `environment-checks.service.ts`, `redis-connection.e2e-spec.ts`, `server/package.json`, `test-database.ts`?**
-  _High betweenness centrality (0.094) - this node is a cross-community bridge._
+  _Cohesion score 0.07394957983193277 - nodes in this community are weakly interconnected._
+- **Why does `typeorm` connect `Project` to `database-migrations.ts`, `devDependencies`, `config.module.ts`, `database-connection.e2e-spec.ts`, `dependencies`, `chat-tables.e2e-spec.ts`, `ConversationEvent`, `ProjectsRepository`, `participant.entity.spec.ts`, `migrate-mode.e2e-spec.ts`, `test-secrets.ts`, `project-cli.ts`, `conversation.entity.spec.ts`, `identity-keys.service.ts`, `conversation.entity.ts`, `operators.repository.ts`, `key-cli.ts`, `CreateChatTables1793215389271`, `secrets-reencrypt-command.e2e-spec.ts`, `Message`, `ApiKey`, `database-entities.ts`, `operator-auth-guard.e2e-spec.ts`, `operation-steps.ts`, `redis-connection.e2e-spec.ts`, `test-database.ts`?**
+  _High betweenness centrality (0.084) - this node is a cross-community bridge._
 - **Should `package.json` be split into smaller, more focused modules?**
   _Cohesion score 0.06984126984126984 - nodes in this community are weakly interconnected._
-- **Why does `@nestjs/testing` connect `zone-probe.ts` to `devDependencies`, `identity-keys.e2e-spec.ts`, `config.module.ts`, `redis-connection.e2e-spec.ts`, `database-connection.e2e-spec.ts`, `RequestContext`, `AuditLogEntry`, `key-format.ts`, `config.module.ts`, `@nestjs/common`, `api-keys-service-probe.ts`, `projects.service.spec.ts`, `project-origins.e2e-spec.ts`, `test-secrets.ts`, `worker.module.ts`, `encryption.service.spec.ts`, `OperationSteps`, `cls-middleware.ts`, `operators.repository.ts`, `operators.service.ts`, `key-cli.ts`, `cli.module.ts`, `server/package.json`, `tokens.service.spec.ts`, `DomainEventBus`, `test-database.ts`?**
-  _High betweenness centrality (0.029) - this node is a cross-community bridge._
+- **Why does `@nestjs/testing` connect `zone-probe.ts` to `devDependencies`, `logger.module.ts`, `config.module.ts`, `database-connection.e2e-spec.ts`, `RequestContext`, `AuditLogEntry`, `key-format.ts`, `ProjectsRepository`, `api-keys-service-probe.ts`, `initial-project.e2e-spec.ts`, `test-secrets.ts`, `worker.module.ts`, `encryption.service.spec.ts`, `identity-keys.service.ts`, `projects.service.ts`, `cls-middleware.ts`, `operators.repository.ts`, `key-cli.ts`, `operation-steps.ts`, `unit-probe.ts`, `tokens.service.spec.ts`, `DomainEventBus`, `test-database.ts`?**
+  _High betweenness centrality (0.032) - this node is a cross-community bridge._
 - **Should `devDependencies` be split into smaller, more focused modules?**
   _Cohesion score 0.06060606060606061 - nodes in this community are weakly interconnected._

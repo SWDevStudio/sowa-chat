@@ -9,6 +9,8 @@ const ORIGIN_COLUMNS: Record<OriginList, string> = {
   operatorAllowedOrigins: "operator_allowed_origins",
 };
 
+export const initialProjectLockName = "sowa-chat:initial-project";
+
 interface OriginsRow {
   origins: string[];
 }
@@ -30,6 +32,12 @@ export class ProjectsRepository {
   async create(input: NewProject): Promise<Project> {
     const repository = this.txHost.tx.getRepository(Project);
     return repository.save(repository.create(input));
+  }
+
+  async lockInitialProject(): Promise<void> {
+    await this.txHost.tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+      initialProjectLockName,
+    ]);
   }
 
   async findByName(name: string): Promise<Project | null> {

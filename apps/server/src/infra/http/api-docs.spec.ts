@@ -111,10 +111,13 @@ describe("OpenAPI по зонам", () => {
       expect(paths).not.toContain("/v1/operator/docs-probe");
     });
 
-    it("JSON публичной зоны содержит только /v1/visitor/docs-probe", async () => {
+    it("JSON публичной зоны содержит пути visitor и не содержит других зон", async () => {
       const paths = Object.keys((await documentOf("public")).paths);
 
-      expect(paths).toEqual(["/v1/visitor/docs-probe"]);
+      expect(paths).toContain("/v1/visitor/docs-probe");
+      expect(paths).toContain("/v1/visitor/session");
+      expect(paths).not.toContain("/v1/operator/docs-probe");
+      expect(paths).not.toContain("/v1/server/docs-probe");
     });
 
     it("JSON операторской зоны содержит только /v1/operator/docs-probe", async () => {

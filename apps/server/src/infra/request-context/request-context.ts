@@ -4,10 +4,15 @@ import { ClsService } from "nestjs-cls";
 
 const projectIdKey = "requestProjectId";
 const operatorKey = "requestOperator";
+const visitorKey = "requestVisitor";
 
 export interface RequestOperator {
   operatorId: string;
   role: OperatorRole;
+}
+
+export interface RequestVisitor {
+  visitorId: string;
 }
 
 @Injectable()
@@ -28,6 +33,14 @@ export class RequestContext {
 
   operator(): RequestOperator {
     return this.valueOrThrow<RequestOperator>(operatorKey, "Request operator is not set");
+  }
+
+  setVisitor(visitor: RequestVisitor): void {
+    this.cls.set(visitorKey, visitor);
+  }
+
+  visitor(): RequestVisitor {
+    return this.valueOrThrow<RequestVisitor>(visitorKey, "Request visitor is not set");
   }
 
   private valueOrThrow<T>(key: string, missingMessage: string): T {

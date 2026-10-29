@@ -10,3 +10,13 @@ export { operatorRoles } from "./operator-role.js";
 export type { OperatorRole } from "./operator-role.js";
 export { operatorTokenRequestSchema, operatorTokenResponseSchema } from "./operator-token.js";
 export type { OperatorTokenRequest, OperatorTokenResponse } from "./operator-token.js";
+export {
+  visitorSessionRefreshRequestSchema,
+  visitorSessionRequestSchema,
+  visitorSessionResponseSchema,
+} from "./visitor-session.js";
+export type {
+  VisitorSessionRefreshRequest,
+  VisitorSessionRequest,
+  VisitorSessionResponse,
+} from "./visitor-session.js";

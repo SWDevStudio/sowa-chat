@@ -546,9 +546,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/database-entities.ts": {
-    "mtime": 1793256881.1106803,
-    "seen": 1793257636.9205928,
-    "ast_hash": "f7afce547fe84d6bf607aeb5f261f1c9",
+    "mtime": 1793258089.9004629,
+    "seen": 1793258106.2928407,
+    "ast_hash": "e2600a3c62c3a5066061b75e9e9bc9c2",
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-options.ts": {
@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-migrations.ts": {
-    "mtime": 1793256881.2154815,
-    "seen": 1793257636.9205928,
-    "ast_hash": "c9277c7223aaec221566e5ec5956c2e5",
+    "mtime": 1793258089.9098518,
+    "seen": 1793258106.2928407,
+    "ast_hash": "7b75a06cfc97823a328b7234b0604d21",
     "semantic_hash": ""
   },
   "apps/server/src/infra/preparation/preparation-runner.spec.ts": {
@@ -2133,6 +2133,30 @@
     "mtime": 1793256881.603357,
     "seen": 1793257636.9205928,
     "ast_hash": "871725487a036425f76e3fca3349d3fa",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/visitors/visitor-session.entity.spec.ts": {
+    "mtime": 1793258089.9098518,
+    "seen": 1793258106.2928407,
+    "ast_hash": "610ed62a5ffe1f2852620ac57e9adf66",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/visitors/visitor-session.entity.ts": {
+    "mtime": 1793258089.9098518,
+    "seen": 1793258106.2928407,
+    "ast_hash": "a23338ce065b7b94d302eb13c1334434",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/database/migrations/1793300004000-CreateVisitorSessions.ts": {
+    "mtime": 1793258089.9098518,
+    "seen": 1793258106.2928407,
+    "ast_hash": "4c7962210a1abdcc297c1ebb52765fe4",
+    "semantic_hash": ""
+  },
+  "apps/server/test/visitor-sessions-table.e2e-spec.ts": {
+    "mtime": 1793258089.9098518,
+    "seen": 1793258106.2928407,
+    "ast_hash": "e65d95fb77a1fdd4f7c5be1bbd3f7554",
     "semantic_hash": ""
   }
 }

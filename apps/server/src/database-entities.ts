@@ -9,6 +9,7 @@ import { IdentityKey } from "./domain/keys/identity-key.entity.js";
 import { Operator } from "./domain/operators/operator.entity.js";
 import { Project } from "./domain/projects/project.entity.js";
 import { Visitor } from "./domain/visitors/visitor.entity.js";
+import { VisitorSession } from "./domain/visitors/visitor-session.entity.js";
 import type { DatabaseEntity } from "./infra/database/database-options.js";
 
 export const databaseEntities: DatabaseEntity[] = [
@@ -23,4 +24,5 @@ export const databaseEntities: DatabaseEntity[] = [
   ApiKey,
   IdentityKey,
   Operator,
+  VisitorSession,
 ];

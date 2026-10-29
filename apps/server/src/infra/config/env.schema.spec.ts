@@ -8,6 +8,9 @@ const requiredEnv = {
   SOWA_S3_SECRET_KEY: "sowa-dev-secret",
   SOWA_S3_BUCKET: "sowa-chat",
   SOWA_ENCRYPTION_KEYS: "1:AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
+  SOWA_TOKEN_SIGNING_KEYS:
+    "test-1:MC4CAQAwBQYDK2VwBCIEIAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxgZGhscHR4f",
+  SOWA_TOKEN_SIGNING_KEY_ID: "test-1",
 };
 
 type Env = Record<string, string | undefined>;
@@ -106,6 +109,59 @@ describe("envSchema", () => {
       const env = { ...requiredEnv, SOWA_ENV: "production" };
 
       expect(isAccepted(env)).toBe(true);
+    });
+  });
+
+  describe("SOWA_TOKEN_SIGNING_KEYS", () => {
+    const withoutKeys: Env = {
+      ...requiredEnv,
+      SOWA_TOKEN_SIGNING_KEYS: undefined,
+      SOWA_TOKEN_SIGNING_KEY_ID: undefined,
+    };
+
+    it("обязательна в production и называется в ошибке", () => {
+      const env = { ...withoutKeys, SOWA_ENV: "production" };
+
+      expect(isAccepted(env)).toBe(false);
+      expect(describeErrors(env)).toContain(
+        "SOWA_TOKEN_SIGNING_KEYS: is required when SOWA_ENV is production",
+      );
+    });
+
+    it("обязательна, когда SOWA_ENV не задана", () => {
+      expect(isAccepted(withoutKeys)).toBe(false);
+      expect(describeErrors(withoutKeys)).toContain("SOWA_TOKEN_SIGNING_KEYS");
+    });
+
+    it("необязательна в development без обеих переменных", () => {
+      const env = { ...withoutKeys, SOWA_ENV: "development" };
+
+      expect(isAccepted(env)).toBe(true);
+    });
+
+    it("принимается в production с ключом test-1", () => {
+      const env = { ...requiredEnv, SOWA_ENV: "production" };
+
+      expect(isAccepted(env)).toBe(true);
+    });
+
+    it("в production не проходит с одним SOWA_TOKEN_SIGNING_KEY_ID без ключей", () => {
+      const env = { ...withoutKeys, SOWA_ENV: "production", SOWA_TOKEN_SIGNING_KEY_ID: "test-1" };
+
+      expect(isAccepted(env)).toBe(false);
+      expect(describeErrors(env)).toContain("SOWA_TOKEN_SIGNING_KEYS");
+    });
+
+    it("в production не проходит с пустой строкой вместо ключей", () => {
+      const env = { ...requiredEnv, SOWA_ENV: "production", SOWA_TOKEN_SIGNING_KEYS: "" };
+
+      expect(isAccepted(env)).toBe(false);
+    });
+
+    it("ошибка не содержит значение ключа", () => {
+      const env = { ...withoutKeys, SOWA_ENV: "production" };
+
+      expect(describeErrors(env)).not.toContain("MC4CAQAwBQYDK2VwBCIEIAABAgMEBQYH");
     });
   });
 

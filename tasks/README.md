@@ -49,7 +49,7 @@
 | [EPIC-9](EPIC-9/README.md) | Ключи и шифрование секретов | на ревью |
 | [EPIC-10](EPIC-10/README.md) | CLI | не начат |
 | [EPIC-11](EPIC-11/README.md) | Режимы development и production | не начат |
-| [EPIC-12](EPIC-12/README.md) | Доступ бекенда и операторов | не начат |
+| [EPIC-12](EPIC-12/README.md) | Доступ бекенда и операторов | на ревью |
 | [EPIC-13](EPIC-13/README.md) | Сессия посетителя | не начат |
 | [EPIC-14](EPIC-14/README.md) | Кэш и синхронизация реплик | не начат |
 | [EPIC-15](EPIC-15/README.md) | Телеметрия запросов | на ревью |

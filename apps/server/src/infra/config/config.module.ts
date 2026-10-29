@@ -9,6 +9,7 @@ import { portsConfig } from "./ports.config.js";
 import { redisConfig } from "./redis.config.js";
 import { s3Config } from "./s3.config.js";
 import { slowOperationsConfig } from "./slow-operations.config.js";
+import { tokenSigningConfig } from "./token-signing.config.js";
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { slowOperationsConfig } from "./slow-operations.config.js";
         portsConfig,
         databaseConfig,
         encryptionConfig,
+        tokenSigningConfig,
         redisConfig,
         s3Config,
         loggingConfig,

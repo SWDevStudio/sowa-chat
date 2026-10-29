@@ -6,3 +6,7 @@ export { createJsonObjectSchema, jsonObjectSchema } from "./json-object-schema.j
 export type { JsonObject, JsonObjectLimits, JsonValue } from "./json-types.js";
 export { pageQuerySchema } from "./page-query.js";
 export type { PageQuery } from "./page-query.js";
+export { operatorRoles } from "./operator-role.js";
+export type { OperatorRole } from "./operator-role.js";
+export { operatorTokenRequestSchema, operatorTokenResponseSchema } from "./operator-token.js";
+export type { OperatorTokenRequest, OperatorTokenResponse } from "./operator-token.js";

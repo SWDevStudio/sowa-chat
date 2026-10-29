@@ -1,6 +1,7 @@
 import type {
   ApiKeyEvent,
   IdentityKeyEvent,
+  OperatorBlockEvent,
   ProjectCreatedEvent,
   ProjectOriginsEvent,
   SecretsReencryptedEvent,
@@ -51,6 +52,17 @@ function projectOriginsAuditRecord(event: ProjectOriginsEvent): AuditRecord {
   };
 }
 
+function operatorBlockAuditRecord(event: OperatorBlockEvent): AuditRecord {
+  return {
+    projectId: event.projectId,
+    actorKind: event.actorKind,
+    actorId: null,
+    targetKind: "operator",
+    targetId: event.operatorId,
+    data: { externalId: event.externalId },
+  };
+}
+
 function secretsReencryptedAuditRecord(event: SecretsReencryptedEvent): AuditRecord {
   return {
     projectId: null,
@@ -70,5 +82,7 @@ export const auditedEvents: AuditRules = {
   "project.created": projectCreatedAuditRecord,
   "project.allowedOriginsChanged": projectOriginsAuditRecord,
   "project.operatorAllowedOriginsChanged": projectOriginsAuditRecord,
+  "operator.disabled": operatorBlockAuditRecord,
+  "operator.enabled": operatorBlockAuditRecord,
   "secrets.reencrypted": secretsReencryptedAuditRecord,
 };

@@ -13,6 +13,10 @@ export interface OperatorProfile {
   role: OperatorRole;
 }
 
+interface OperatorIdRow {
+  id: string;
+}
+
 @Injectable()
 export class OperatorsRepository {
   constructor(
@@ -29,11 +33,34 @@ export class OperatorsRepository {
     });
   }
 
+  async findByExternalId(projectId: string, externalId: string): Promise<Operator | null> {
+    return this.txHost.tx.getRepository(Operator).findOneBy({ projectId, externalId });
+  }
+
+  async markDisabled(projectId: string, externalId: string): Promise<string | undefined> {
+    return this.updateOperatorId(
+      `UPDATE "operators" SET "disabled_at" = now() WHERE "project_id" = $1 AND "external_id" = $2 AND "disabled_at" IS NULL RETURNING "id"`,
+      [projectId, externalId],
+    );
+  }
+
+  async markEnabled(projectId: string, externalId: string): Promise<string | undefined> {
+    return this.updateOperatorId(
+      `UPDATE "operators" SET "disabled_at" = NULL WHERE "project_id" = $1 AND "external_id" = $2 AND "disabled_at" IS NOT NULL RETURNING "id"`,
+      [projectId, externalId],
+    );
+  }
+
   async findDisabledIds(): Promise<string[]> {
     const operators = await this.txHost.tx.getRepository(Operator).find({
       select: { id: true },
       where: { disabledAt: Not(IsNull()) },
     });
     return operators.map(({ id }) => id);
+  }
+
+  private async updateOperatorId(sql: string, parameters: string[]): Promise<string | undefined> {
+    const [rows] = (await this.txHost.tx.query(sql, parameters)) as [OperatorIdRow[], number];
+    return rows[0]?.id;
   }
 }

@@ -27,6 +27,13 @@ export interface ProjectOriginsEvent {
   actorKind: "cli" | "system";
 }
 
+export interface OperatorBlockEvent {
+  operatorId: string;
+  projectId: string;
+  externalId: string;
+  actorKind: "cli" | "system";
+}
+
 export interface SecretsReencryptedEvent {
   reencrypted: number;
   undecryptable: number;
@@ -41,6 +48,8 @@ export interface DomainEvents {
   "project.created": ProjectCreatedEvent;
   "project.allowedOriginsChanged": ProjectOriginsEvent;
   "project.operatorAllowedOriginsChanged": ProjectOriginsEvent;
+  "operator.disabled": OperatorBlockEvent;
+  "operator.enabled": OperatorBlockEvent;
   "secrets.reencrypted": SecretsReencryptedEvent;
 }
 

@@ -924,9 +924,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/telemetry/events/domain-events.ts": {
-    "mtime": 1793256883.0419981,
-    "seen": 1793258167.0674505,
-    "ast_hash": "0111368c4b7ec9f6188dc89e674c2456",
+    "mtime": 1793263242.7019556,
+    "seen": 1793263277.904649,
+    "ast_hash": "c3519a28d3826c0228ec904cfef61a93",
     "semantic_hash": ""
   },
   "apps/server/src/telemetry/events/on-domain-event.decorator.ts": {
@@ -978,9 +978,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/audit/audited-events.ts": {
-    "mtime": 1793256882.7488575,
-    "seen": 1793258167.0674505,
-    "ast_hash": "4009af769ae96ea22e6da8c0828935a4",
+    "mtime": 1793263242.6952963,
+    "seen": 1793263277.904649,
+    "ast_hash": "68e7e2eb4879ba8ff6fbaa4055d9a65f",
     "semantic_hash": ""
   },
   "apps/server/test/support/test-audit-rules.ts": {
@@ -1956,21 +1956,21 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operators.repository.ts": {
-    "mtime": 1793256882.8191288,
-    "seen": 1793258167.0674505,
-    "ast_hash": "732242f689175a39819f589e5220148a",
+    "mtime": 1793263242.6973598,
+    "seen": 1793263277.904649,
+    "ast_hash": "cc8e6b14e8ca89c5eca0e82117cabf35",
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operators.service.spec.ts": {
-    "mtime": 1793256882.8201296,
-    "seen": 1793258167.0674505,
-    "ast_hash": "b76b863c75a96ff3c10209f8c2bf1076",
+    "mtime": 1793263242.6978943,
+    "seen": 1793263277.904649,
+    "ast_hash": "b6d4bc9fe97832ea0311d0592ba6cc2d",
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operators.service.ts": {
-    "mtime": 1793256882.821841,
-    "seen": 1793258167.0674505,
-    "ast_hash": "a3926ebee00560e533b1f7a406135a8e",
+    "mtime": 1793263242.6999314,
+    "seen": 1793263277.904649,
+    "ast_hash": "10ac7fabdb529fc738c6bf12c2f8e9c7",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/token-signing-keys.schema.spec.ts": {
@@ -2223,6 +2223,24 @@
     "mtime": 1793262358.2918065,
     "seen": 1793262393.7699187,
     "ast_hash": "ddb51f2ff55f337a1faa4efbfdcdac9c",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/audit/audited-operator-events.spec.ts": {
+    "mtime": 1793263242.696321,
+    "seen": 1793263277.904649,
+    "ast_hash": "f45b266b71dc11fa16fd01b292928487",
+    "semantic_hash": ""
+  },
+  "apps/server/test/operator-disable.e2e-spec.ts": {
+    "mtime": 1793263242.7019556,
+    "seen": 1793263277.9056485,
+    "ast_hash": "3db6428ef3a1582db746c7a041b69e28",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/without-transaction.ts": {
+    "mtime": 1793263242.7051232,
+    "seen": 1793263277.9056485,
+    "ast_hash": "1d100f027a02cb7b9cb907d7787a9d22",
     "semantic_hash": ""
   }
 }

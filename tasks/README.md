@@ -47,7 +47,7 @@
 | [EPIC-7](EPIC-7/README.md) | Обработка HTTP-запросов | на ревью |
 | [EPIC-8](EPIC-8/README.md) | Шина событий и журнал аудита | на ревью |
 | [EPIC-9](EPIC-9/README.md) | Ключи и шифрование секретов | на ревью |
-| [EPIC-10](EPIC-10/README.md) | CLI | не начат |
+| [EPIC-10](EPIC-10/README.md) | CLI | на ревью |
 | [EPIC-11](EPIC-11/README.md) | Режимы development и production | не начат |
 | [EPIC-12](EPIC-12/README.md) | Доступ бекенда и операторов | не начат |
 | [EPIC-13](EPIC-13/README.md) | Сессия посетителя | не начат |

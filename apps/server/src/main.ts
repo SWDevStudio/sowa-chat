@@ -5,6 +5,7 @@ import { Logger } from "nestjs-pino";
 import { configureApiApp } from "./api-app.js";
 import { ApiModule } from "./api.module.js";
 import { runCliCommand } from "./cli/cli-runner.js";
+import { EnvironmentChecksService } from "./infra/environment-checks/environment-checks.service.js";
 import { PreparationRunner } from "./infra/preparation/preparation-runner.js";
 import { ZoneServers } from "./infra/zones/zone-servers.js";
 import { MigrateModule } from "./migrate.module.js";
@@ -26,11 +27,13 @@ async function runApi() {
   const app = await NestFactory.create<NestExpressApplication>(ApiModule, { bufferLogs: true });
   configureApiApp(app);
   await app.init();
+  await app.get(EnvironmentChecksService).verifyAtStartup();
   await app.get(ZoneServers).listen(app);
 }
 
 async function runWorker() {
-  await createContext(WorkerModule);
+  const app = await createContext(WorkerModule);
+  await app.get(EnvironmentChecksService).verifyAtStartup();
 }
 
 async function runMigrate() {

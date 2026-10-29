@@ -7,6 +7,7 @@ import { AuditModule } from "./domain/audit/audit.module.js";
 import { AppClsModule } from "./infra/cls/app-cls.module.js";
 import { AppConfigModule } from "./infra/config/config.module.js";
 import { DatabaseModule } from "./infra/database/database.module.js";
+import { EnvironmentChecksModule } from "./infra/environment-checks/environment-checks.module.js";
 import { ApiHttpModule } from "./infra/http/api-http.module.js";
 import { HealthModule } from "./infra/health/health.module.js";
 import { createLoggerModule } from "./infra/logging/logger.module.js";
@@ -22,6 +23,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     RequestContextModule,
     DatabaseModule.forRoot(databaseEntities),
     RedisModule,
+    EnvironmentChecksModule,
     createLoggerModule("api"),
     TelemetryModule,
     AuditModule,

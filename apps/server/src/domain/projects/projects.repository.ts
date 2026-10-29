@@ -36,6 +36,10 @@ export class ProjectsRepository {
     return this.txHost.tx.getRepository(Project).findOneBy({ name });
   }
 
+  async findByPublicKey(publicKey: string): Promise<Project | null> {
+    return this.txHost.tx.getRepository(Project).findOneBy({ publicKey });
+  }
+
   async findAll(): Promise<Project[]> {
     return this.txHost.tx.getRepository(Project).find({ order: { name: "ASC" } });
   }

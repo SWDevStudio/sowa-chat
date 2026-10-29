@@ -1,52 +1,85 @@
-# EPIC-13 / TASK-2. Создание сессии по publicKey
+# EPIC-13 / TASK-2. Схемы сессии посетителя в `protocol`
 
-Исполнитель: sonnet
-Зависит от: TASK-1
+Исполнитель: haiku
+Зависит от: —
+Владеет: packages/protocol/src/visitor-session.ts, packages/protocol/src/visitor-session.spec.ts, packages/protocol/src/index.ts
+Коммит: [PROTOCOL]: add visitor session request and response schemas
 Ветка: feature/EPIC-13
 
 ## Что сделать
 
-1. `POST /v1/visitor/session` (публичная зона):
-   - тело: `{ publicKey }`, схема в `protocol`;
-   - проект ищется по `projects.public_key`; не найден — 401 `unauthorized`;
-   - создаётся анонимный посетитель и сессия;
-   - ответ: `{ accessToken, accessTokenExpiresAt, refreshToken }`.
-2. Access-токен — JWT на 1 час, `aud` `visitor`, в claims — ID посетителя и ID проекта.
-3. Refresh-токен — случайная строка из 32 байт; в БД только её SHA-256. Срок жизни — `SOWA_VISITOR_REFRESH_TTL_DAYS`, по умолчанию 30 дней.
-4. Guard посетителя для контроллеров `/v1/visitor/*` (кроме самого создания сессии): проверяет access-токен, кладёт ID посетителя и проекта в контекст запроса. Без токена или с неверным — 401.
+Схемы тел `POST /v1/visitor/session` и `POST /v1/visitor/session/refresh` — публичный контракт: их используют сервер (TASK-5, TASK-7) и SDK посетителя. Образец — `packages/protocol/src/operator-token.ts` и его тест `operator-token.spec.ts`.
+
+1. `packages/protocol/src/visitor-session.ts`:
+
+   ```ts
+   import { z } from "zod";
+
+   export const visitorSessionRequestSchema = z.object({
+     publicKey: z.string().min(1).max(128),
+   });
+
+   export type VisitorSessionRequest = z.infer<typeof visitorSessionRequestSchema>;
+
+   export const visitorSessionRefreshRequestSchema = z.object({
+     refreshToken: z.string().min(1).max(128),
+   });
+
+   export type VisitorSessionRefreshRequest = z.infer<typeof visitorSessionRefreshRequestSchema>;
+
+   export const visitorSessionResponseSchema = z.object({
+     accessToken: z.string(),
+     accessTokenExpiresAt: z.iso.datetime(),
+     refreshToken: z.string(),
+   });
+
+   export type VisitorSessionResponse = z.infer<typeof visitorSessionResponseSchema>;
+   ```
+
+   `publicKey` и `refreshToken` не обрезаются (`trim` нет): ключ и токен сравниваются точно. Формат `pk_` схема не проверяет — это делает сервер (`parseKey`), чтобы правило формата ключей было в одном месте. Неизвестные поля отбрасываются (поведение `z.object` по умолчанию).
+
+2. `packages/protocol/src/index.ts`: добавить в конец
+
+   ```ts
+   export {
+     visitorSessionRefreshRequestSchema,
+     visitorSessionRequestSchema,
+     visitorSessionResponseSchema,
+   } from "./visitor-session.js";
+   export type {
+     VisitorSessionRefreshRequest,
+     VisitorSessionRequest,
+     VisitorSessionResponse,
+   } from "./visitor-session.js";
+   ```
 
 ## Где
 
-- `apps/server/src/domain/visitors/` — сервис сессий.
-- `apps/server/src/api/visitor/` — контроллер и guard.
-- `packages/protocol/src/` — схемы.
+- `packages/protocol/src/visitor-session.ts` — новый файл.
+- `packages/protocol/src/index.ts` — экспорты.
+- Тест: `packages/protocol/src/visitor-session.spec.ts` (vitest, импорт из `./index.js`, как `operator-token.spec.ts`; `pnpm --filter @sowa-chat/protocol test`).
 
 ## Требования из плана
 
-| Кто | Чем авторизуется | Где хранится секрет | Что может |
-|---|---|---|---|
-| Сайт (браузер) | publicKey `pk_…` | не секрет, виден всем | только создать сессию посетителя; защищён allowed origins и rate limit |
-| Посетитель | токен посетителя (короткий access + refresh) | localStorage браузера | только свои диалоги |
-
-- Токены посетителя: access-токен (JWT, 1 час) и одноразовый refresh-токен (у нас хранится хеш).
-- Анонимная история на устройстве держится на этом токене.
+- `POST /v1/visitor/session`: `publicKey` → токен посетителя.
+- Токены посетителя: access-токен (JWT, 1 час) и одноразовый refresh-токен.
+- camelCase в JSON API; даты в ответах — строки ISO 8601, как `expiresAt` в `operatorTokenResponseSchema`.
 
 ## Документация
 
-- https://docs.nestjs.com/security/authentication
-- https://docs.nestjs.com/guards
+- https://zod.dev/api#iso-datetimes
 
 ## Критерии приёмки
 
-- Верный `publicKey` — 201 и пара токенов; access-токен проходит guard посетителя.
-- Неверный `publicKey` — 401.
-- В БД нет открытого refresh-токена.
-- Токен оператора на маршруте посетителя — 401.
+- `visitorSessionRequestSchema` принимает `{ publicKey: "pk_…" }`, отбрасывает неизвестные поля и не принимает отсутствующий, пустой, не строковый `publicKey` и строку длиннее 128 символов; пробелы вокруг ключа не обрезаются.
+- `visitorSessionRefreshRequestSchema` — те же проверки для `refreshToken`.
+- `visitorSessionResponseSchema` принимает `{ accessToken, accessTokenExpiresAt: new Date().toISOString(), refreshToken }` и не принимает `accessTokenExpiresAt` не в ISO 8601 (например `"tomorrow"`) и ответ без любого из трёх полей.
+- Схемы и типы доступны из точки входа `@sowa-chat/protocol` (`expectTypeOf` для трёх типов).
 
 ## Чего не делать
 
-- Не делать обновление токена — это TASK-3.
-- Не делать лимиты по IP и CORS — это эпик лимитов.
+- Не проверять в схеме формат `pk_` и контрольную сумму.
+- Не трогать другие схемы `protocol`.
 
 ## История доработок
 

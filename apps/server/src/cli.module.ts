@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { DoctorCommand } from "./cli/doctor/doctor.command.js";
 import { IdentityKeyAddCommand } from "./cli/identity-keys/identity-key-add.command.js";
 import { IdentityKeyListCommand } from "./cli/identity-keys/identity-key-list.command.js";
 import { IdentityKeyRevokeCommand } from "./cli/identity-keys/identity-key-revoke.command.js";
@@ -20,6 +21,7 @@ import {
 } from "./cli/operators/operator.commands.js";
 import { ProjectCreateCommand } from "./cli/projects/project-create.command.js";
 import { ProjectListCommand } from "./cli/projects/project-list.command.js";
+import { SecretsGenerateCommand } from "./cli/secrets/secrets-generate.command.js";
 import { SecretsReencryptCommand } from "./cli/secrets/secrets-reencrypt.command.js";
 import { databaseEntities } from "./database-entities.js";
 import { AuditModule } from "./domain/audit/audit.module.js";
@@ -51,6 +53,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     SecretsReencryptionModule,
   ],
   providers: [
+    DoctorCommand,
     KeyCreateCommand,
     KeyGenerateCommand,
     KeyListCommand,
@@ -68,6 +71,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     OperatorEnableCommand,
     ProjectCreateCommand,
     ProjectListCommand,
+    SecretsGenerateCommand,
     SecretsReencryptCommand,
   ],
 })

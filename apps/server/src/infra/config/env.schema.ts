@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { defaultDevelopmentSecretsDirectory } from "./development-secrets-file.js";
 import { encryptionKeysSchema } from "./encryption-keys.schema.js";
 import { tokenSigningKeysSchema } from "./token-signing-keys.schema.js";
 
@@ -36,6 +37,22 @@ function optionalUrl() {
   return z.preprocess((value) => (value === "" ? undefined : value), z.url().optional());
 }
 
+function optionalString() {
+  return z.preprocess((value) => (value === "" ? undefined : value), z.string().optional());
+}
+
+function commaSeparatedList() {
+  return z
+    .string()
+    .optional()
+    .transform((value) =>
+      (value ?? "")
+        .split(",")
+        .map((part) => part.trim())
+        .filter((part) => part !== ""),
+    );
+}
+
 const envObjectSchema = z.object({
   SOWA_ENV: z.enum(["development", "production"]).default("production"),
   NODE_ENV: z.string().optional(),
@@ -51,16 +68,26 @@ const envObjectSchema = z.object({
   SOWA_S3_ACCESS_KEY: nonEmptyString,
   SOWA_S3_SECRET_KEY: nonEmptyString,
   SOWA_S3_BUCKET: nonEmptyString,
+  SOWA_PUBLIC_URL: optionalUrl(),
+  SOWA_S3_PUBLIC_URL: optionalUrl(),
   SOWA_ENCRYPTION_KEYS: encryptionKeysSchema,
   SOWA_TOKEN_SIGNING_KEYS: tokenSigningKeysSchema,
   SOWA_TOKEN_SIGNING_KEY_ID: z.preprocess(
     (value) => (value === "" ? undefined : value),
     z.string().optional(),
   ),
+  SOWA_DEV_SECRETS_DIR: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.string().default(defaultDevelopmentSecretsDirectory),
+  ),
   SOWA_VISITOR_REFRESH_TTL_DAYS: integerInRange(1, 365, 30),
   SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),
   SOWA_LOG_FORMAT: z.enum(logFormats).default("json"),
   SOWA_SLOW_OPERATION_MS: integerInRange(1, 600000, 500),
+  SOWA_INIT_PROJECT: optionalString(),
+  SOWA_INIT_SERVER_KEY: optionalString(),
+  SOWA_INIT_ALLOWED_ORIGINS: commaSeparatedList(),
+  SOWA_INIT_OPERATOR_ALLOWED_ORIGINS: commaSeparatedList(),
 });
 
 type EnvObject = z.infer<typeof envObjectSchema>;
@@ -102,6 +129,17 @@ function checkTokenSigningKeysInProduction(env: EnvObject, context: z.Refinement
   });
 }
 
+function checkPublicUrlInProduction(env: EnvObject, context: z.RefinementCtx): void {
+  if (env.SOWA_ENV !== "production" || env.SOWA_PUBLIC_URL !== undefined) {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_PUBLIC_URL"],
+    message: "is required when SOWA_ENV is production",
+  });
+}
+
 function checkTokenSigningKeyId(env: EnvObject, context: z.RefinementCtx): void {
   const keyId = env.SOWA_TOKEN_SIGNING_KEY_ID;
   const keys = env.SOWA_TOKEN_SIGNING_KEYS ?? [];
@@ -125,6 +163,21 @@ function checkTokenSigningKeyId(env: EnvObject, context: z.RefinementCtx): void 
   });
 }
 
+function checkInitialServerKey(env: EnvObject, context: z.RefinementCtx): void {
+  if (
+    env.SOWA_ENV !== "production" ||
+    env.SOWA_INIT_PROJECT === undefined ||
+    env.SOWA_INIT_SERVER_KEY !== undefined
+  ) {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_INIT_SERVER_KEY"],
+    message: "is required when SOWA_INIT_PROJECT is set",
+  });
+}
+
 export const envSchema = envObjectSchema.superRefine((env, context) => {
   for (const variable of portVariables) {
     const other = findPortWithSameValue(env, variable);
@@ -139,7 +192,9 @@ export const envSchema = envObjectSchema.superRefine((env, context) => {
   checkPrettyLogFormat(env, context);
   checkEncryptionKeysInProduction(env, context);
   checkTokenSigningKeysInProduction(env, context);
+  checkPublicUrlInProduction(env, context);
   checkTokenSigningKeyId(env, context);
+  checkInitialServerKey(env, context);
 });
 
 export type Env = z.infer<typeof envSchema>;

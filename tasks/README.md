@@ -48,7 +48,7 @@
 | [EPIC-8](EPIC-8/README.md) | Шина событий и журнал аудита | на ревью |
 | [EPIC-9](EPIC-9/README.md) | Ключи и шифрование секретов | на ревью |
 | [EPIC-10](EPIC-10/README.md) | CLI | на ревью |
-| [EPIC-11](EPIC-11/README.md) | Режимы development и production | не начат |
+| [EPIC-11](EPIC-11/README.md) | Режимы development и production | на ревью |
 | [EPIC-12](EPIC-12/README.md) | Доступ бекенда и операторов | на ревью |
 | [EPIC-13](EPIC-13/README.md) | Сессия посетителя | на ревью |
 | [EPIC-14](EPIC-14/README.md) | Кэш и синхронизация реплик | на ревью |

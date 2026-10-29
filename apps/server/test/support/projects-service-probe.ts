@@ -14,6 +14,7 @@ export interface ProjectsServiceProbe {
   findByName: Mock;
   create: Mock;
   findAll: Mock;
+  lockInitialProject: Mock;
   issue: Mock;
   publish: Mock;
 }
@@ -51,16 +52,28 @@ export async function createProjectsServiceProbe(): Promise<ProjectsServiceProbe
   const findByName = vi.fn().mockResolvedValue(null);
   const create = vi.fn(async (input: Partial<Project>) => projectRow(input));
   const findAll = vi.fn().mockResolvedValue([]);
+  const lockInitialProject = vi.fn().mockResolvedValue(undefined);
   const issue = vi.fn().mockResolvedValue(issuedServerKey);
   const publish = vi.fn().mockResolvedValue(undefined);
   const moduleRef = await Test.createTestingModule({
     imports: [CacheModule.register()],
     providers: [
       ProjectsService,
-      { provide: ProjectsRepository, useValue: { findByName, create, findAll } },
+      {
+        provide: ProjectsRepository,
+        useValue: { findByName, create, findAll, lockInitialProject },
+      },
       { provide: ApiKeysService, useValue: { issue } },
       { provide: DomainEventBus, useValue: { publish } },
     ],
   }).compile();
-  return { service: moduleRef.get(ProjectsService), findByName, create, findAll, issue, publish };
+  return {
+    service: moduleRef.get(ProjectsService),
+    findByName,
+    create,
+    findAll,
+    lockInitialProject,
+    issue,
+    publish,
+  };
 }

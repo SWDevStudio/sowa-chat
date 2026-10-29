@@ -23,6 +23,7 @@ const sensitiveFields = [
   "context",
   "visitorData",
   "payload",
+  "SOWA_INIT_SERVER_KEY",
 ];
 
 export const redactPaths = [

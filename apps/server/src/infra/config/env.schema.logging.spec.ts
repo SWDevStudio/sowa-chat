@@ -7,6 +7,7 @@ const requiredEnv = {
   SOWA_S3_ACCESS_KEY: "sowa-dev",
   SOWA_S3_SECRET_KEY: "sowa-dev-secret",
   SOWA_S3_BUCKET: "sowa-chat",
+  SOWA_PUBLIC_URL: "https://chat.example.com",
   SOWA_ENCRYPTION_KEYS: "1:AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
   SOWA_TOKEN_SIGNING_KEYS:
     "test-1:MC4CAQAwBQYDK2VwBCIEIAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxgZGhscHR4f",

@@ -12,6 +12,7 @@ import { portsConfig } from "./ports.config.js";
 import { redisConfig } from "./redis.config.js";
 import { s3Config } from "./s3.config.js";
 import { slowOperationsConfig } from "./slow-operations.config.js";
+import { startupSummaryConfig } from "./startup-summary.config.js";
 import { tokenSigningConfig } from "./token-signing.config.js";
 import { visitorSessionsConfig } from "./visitor-sessions.config.js";
 
@@ -33,6 +34,7 @@ import { visitorSessionsConfig } from "./visitor-sessions.config.js";
         slowOperationsConfig,
         developmentSecretsConfig,
         initialProjectConfig,
+        startupSummaryConfig,
       ],
       validate: loadEnv,
     }),

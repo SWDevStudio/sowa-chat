@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/main.ts": {
-    "mtime": 1793276622.5495956,
-    "seen": 1793276643.872775,
-    "ast_hash": "4faf8ab00274ffabeea044cf3340bb3b",
+    "mtime": 1793277407.9206605,
+    "seen": 1793277454.511825,
+    "ast_hash": "9f7c74ba0a4af6ac0e4931780b03e4c0",
     "semantic_hash": ""
   },
   "apps/server/tsconfig.build.json": {
@@ -282,9 +282,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/config.module.ts": {
-    "mtime": 1793275548.9735396,
-    "seen": 1793275569.619053,
-    "ast_hash": "f5fdcd14bca4aa4e71412961f06c7393",
+    "mtime": 1793277407.9146178,
+    "seen": 1793277454.5106945,
+    "ast_hash": "f4bdb5cb1eb37215cfd01962c3555ca7",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/database.config.ts": {
@@ -372,9 +372,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/worker.module.ts": {
-    "mtime": 1793274122.235903,
-    "seen": 1793274512.3015163,
-    "ast_hash": "6c5994cf3f37aee6b2272bc8b053b678",
+    "mtime": 1793277407.9206605,
+    "seen": 1793277454.511825,
+    "ast_hash": "33d794ca8f1f53dcf58fa1c7c32eccb4",
     "semantic_hash": ""
   },
   "apps/server/test/logging.e2e-spec.ts": {
@@ -2766,9 +2766,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/startup/startup.module.ts": {
-    "mtime": 1793276622.5495956,
-    "seen": 1793276643.872775,
-    "ast_hash": "55aa77a3e4d697470523583fd91bd35d",
+    "mtime": 1793277407.9110956,
+    "seen": 1793277454.5101366,
+    "ast_hash": "2211fc6020169ea828c38e25639a3a4b",
     "semantic_hash": ""
   },
   "apps/server/test/development-project.e2e-spec.ts": {
@@ -2787,6 +2787,36 @@
     "mtime": 1793276622.5495956,
     "seen": 1793276643.872775,
     "ast_hash": "c34c16adaa39cdc4820dd753532fc9dc",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/startup/startup-summary.service.spec.ts": {
+    "mtime": 1793277407.9090962,
+    "seen": 1793277454.5101366,
+    "ast_hash": "42e0e3ae0e1843ef7eb7b628b885bae6",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/startup/startup-summary.service.ts": {
+    "mtime": 1793277407.9100952,
+    "seen": 1793277454.5101366,
+    "ast_hash": "322dc3969ff0ac3c4d219a4250889080",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/startup-summary.config.spec.ts": {
+    "mtime": 1793277407.91562,
+    "seen": 1793277454.5106945,
+    "ast_hash": "8681da32d2c0eeb7c5afc051ca247ba0",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/startup-summary.config.ts": {
+    "mtime": 1793277407.917619,
+    "seen": 1793277454.5106945,
+    "ast_hash": "142c48f340a561bc40dab61739715209",
+    "semantic_hash": ""
+  },
+  "apps/server/test/startup-summary.e2e-spec.ts": {
+    "mtime": 1793277407.9226763,
+    "seen": 1793277454.511825,
+    "ast_hash": "591a4f01b71deb5dba80f1f1edc1288f",
     "semantic_hash": ""
   }
 }

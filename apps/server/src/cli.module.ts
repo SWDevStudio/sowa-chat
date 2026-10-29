@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { DoctorCommand } from "./cli/doctor/doctor.command.js";
 import { IdentityKeyAddCommand } from "./cli/identity-keys/identity-key-add.command.js";
 import { IdentityKeyListCommand } from "./cli/identity-keys/identity-key-list.command.js";
 import { IdentityKeyRevokeCommand } from "./cli/identity-keys/identity-key-revoke.command.js";
@@ -52,6 +53,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     SecretsReencryptionModule,
   ],
   providers: [
+    DoctorCommand,
     KeyCreateCommand,
     KeyGenerateCommand,
     KeyListCommand,

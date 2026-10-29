@@ -32,6 +32,7 @@ export function waitForRedis(client: Redis, timeoutMs: number): Promise<void> {
     };
     const timer = setTimeout(() => {
       cleanup();
+      client.options.enableOfflineQueue = false;
       client.disconnect();
       const reason = lastError?.message ?? `no response in ${timeoutMs} ms`;
       reject(new Error(`Redis is unavailable: ${reason}`));

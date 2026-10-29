@@ -12,6 +12,7 @@ import {
 class FakeRedis extends EventEmitter {
   disconnect = vi.fn();
   quit = vi.fn().mockResolvedValue("OK");
+  options = { enableOfflineQueue: true };
 
   constructor(public status: string) {
     super();
@@ -64,6 +65,7 @@ describe("waitForRedis", () => {
     await assertion;
 
     expect(client.disconnect).toHaveBeenCalledTimes(1);
+    expect(client.options.enableOfflineQueue).toBe(false);
     expect(client.eventNames()).toEqual([]);
   });
 

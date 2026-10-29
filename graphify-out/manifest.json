@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793278338.827894,
-    "seen": 1793278387.9926865,
-    "ast_hash": "37a829e14a7419fe56ffc62672487e30",
+    "mtime": 1793281937.428823,
+    "seen": 1793281964.9582396,
+    "ast_hash": "833354b4f3d7891d6d8dbc26491136e3",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -1044,15 +1044,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/redis/redis-client.spec.ts": {
-    "mtime": 1793256879.2770631,
-    "seen": 1793258722.7028637,
-    "ast_hash": "594a6d367c1f42001425c918249f680c",
+    "mtime": 1793281937.428823,
+    "seen": 1793281964.9602368,
+    "ast_hash": "3ad165528658ee2ed0ad5f386eaeee2a",
     "semantic_hash": ""
   },
   "apps/server/src/infra/redis/redis-client.ts": {
-    "mtime": 1793256879.2790723,
-    "seen": 1793258722.7028637,
-    "ast_hash": "fd3f2e79032ef79e4a3451a17698a7fa",
+    "mtime": 1793281937.428823,
+    "seen": 1793281964.9602368,
+    "ast_hash": "699f49a740868f3dd08618f2d99224c6",
     "semantic_hash": ""
   },
   "apps/server/src/infra/redis/redis.module.ts": {
@@ -2913,6 +2913,24 @@
     "mtime": 1793281321.3689146,
     "seen": 1793281350.6976185,
     "ast_hash": "b20a6aaf55a0829e97461d6589a057af",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/doctor/doctor.command.spec.ts": {
+    "mtime": 1793281937.428823,
+    "seen": 1793281964.9582396,
+    "ast_hash": "c71cfc3c19921404d55ad8df5c628af7",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/doctor/doctor.command.ts": {
+    "mtime": 1793281937.428823,
+    "seen": 1793281964.9582396,
+    "ast_hash": "69dd87664e6ebb497b16d3b388830bf5",
+    "semantic_hash": ""
+  },
+  "apps/server/test/doctor-command.e2e-spec.ts": {
+    "mtime": 1793281937.428823,
+    "seen": 1793281964.9602368,
+    "ast_hash": "b198804178bd5cf59a18243d4171b2f6",
     "semantic_hash": ""
   }
 }

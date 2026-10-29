@@ -1,12 +1,13 @@
-import { Body, Controller, HttpCode, Inject, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, Inject, Post, UseFilters } from "@nestjs/common";
 import type { VisitorSessionResponse } from "@sowa-chat/protocol";
 import { ZodResponse } from "nestjs-zod";
 import {
   type VisitorSessionTokens,
   VisitorSessionsService,
 } from "../../domain/visitors/visitor-sessions.service.js";
-import { ApiException } from "../../infra/http/api-exception.js";
 import { Zone } from "../../infra/zones/zone.decorator.js";
+import { InvalidPublicKeyFilter } from "./invalid-public-key.filter.js";
+import { InvalidRefreshTokenFilter } from "./invalid-refresh-token.filter.js";
 import {
   VisitorSessionRefreshRequestDto,
   VisitorSessionRequestDto,
@@ -27,23 +28,19 @@ export class VisitorSessionController {
   constructor(@Inject(VisitorSessionsService) private readonly sessions: VisitorSessionsService) {}
 
   @Post()
+  @UseFilters(InvalidPublicKeyFilter)
   @ZodResponse({ status: 201, type: VisitorSessionResponseDto })
   async create(@Body() body: VisitorSessionRequestDto): Promise<VisitorSessionResponse> {
     const tokens = await this.sessions.create(body.publicKey);
-    if (tokens === undefined) {
-      throw new ApiException({ code: "unauthorized", message: "Public key is invalid" });
-    }
     return toVisitorSessionResponse(tokens);
   }
 
   @Post("refresh")
+  @UseFilters(InvalidRefreshTokenFilter)
   @HttpCode(200)
   @ZodResponse({ status: 200, type: VisitorSessionResponseDto })
   async refresh(@Body() body: VisitorSessionRefreshRequestDto): Promise<VisitorSessionResponse> {
     const tokens = await this.sessions.refresh(body.refreshToken);
-    if (tokens === undefined) {
-      throw new ApiException({ code: "unauthorized", message: "Refresh token is invalid" });
-    }
     return toVisitorSessionResponse(tokens);
   }
 }

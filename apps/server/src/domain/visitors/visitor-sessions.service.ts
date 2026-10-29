@@ -23,6 +23,20 @@ export interface VisitorSessionTokens {
   refreshToken: string;
 }
 
+type RefreshExchange = { status: "issued"; tokens: VisitorSessionTokens } | { status: "rejected" };
+
+export class InvalidPublicKeyError extends Error {
+  constructor() {
+    super("Public key is invalid");
+  }
+}
+
+export class InvalidRefreshTokenError extends Error {
+  constructor() {
+    super("Refresh token is invalid");
+  }
+}
+
 @Injectable()
 export class VisitorSessionsService {
   constructor(
@@ -35,34 +49,49 @@ export class VisitorSessionsService {
   ) {}
 
   @Transactional()
-  async create(publicKey: string): Promise<VisitorSessionTokens | undefined> {
+  async create(publicKey: string): Promise<VisitorSessionTokens> {
     if (parseKey(publicKey, "publicKey") === undefined) {
-      return undefined;
+      throw new InvalidPublicKeyError();
     }
     const project = await this.projects.findByPublicKey(publicKey);
     if (project === null) {
-      return undefined;
+      throw new InvalidPublicKeyError();
     }
     const visitor = await this.visitors.createAnonymous(project.id);
     return this.issueTokens(visitor, randomUUID());
   }
 
+  async refresh(refreshToken: string): Promise<VisitorSessionTokens> {
+    const exchange = await this.exchangeRefreshToken(refreshToken);
+    if (exchange.status === "rejected") {
+      throw new InvalidRefreshTokenError();
+    }
+    return exchange.tokens;
+  }
+
   @Transactional()
-  async refresh(refreshToken: string): Promise<VisitorSessionTokens | undefined> {
-    const session = await this.sessions.findByRefreshHashForUpdate(hashKey(refreshToken));
+  private async exchangeRefreshToken(refreshToken: string): Promise<RefreshExchange> {
+    const refreshHash = hashKey(refreshToken);
+    const familyId = await this.sessions.findFamilyIdByRefreshHash(refreshHash);
+    if (familyId === null) {
+      return { status: "rejected" };
+    }
+    await this.sessions.lockFamily(familyId);
+    const session = await this.sessions.findByRefreshHashForUpdate(refreshHash);
     if (session === null || session.revokedAt !== null) {
-      return undefined;
+      return { status: "rejected" };
     }
     if (session.usedAt !== null) {
       await this.sessions.revokeFamily(session.familyId);
-      return undefined;
+      return { status: "rejected" };
     }
     if (session.expiresAt <= new Date()) {
-      return undefined;
+      return { status: "rejected" };
     }
     await this.sessions.markUsed(session.id);
     const visitor = await this.visitors.findByIdOrFail(session.visitorId);
-    return this.issueTokens(visitor, session.familyId);
+    const tokens = await this.issueTokens(visitor, session.familyId);
+    return { status: "issued", tokens };
   }
 
   private async issueTokens(visitor: Visitor, familyId: string): Promise<VisitorSessionTokens> {

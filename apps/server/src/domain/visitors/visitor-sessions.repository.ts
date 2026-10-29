@@ -22,6 +22,18 @@ export class VisitorSessionsRepository {
     await this.txHost.tx.getRepository(VisitorSession).insert(session);
   }
 
+  async findFamilyIdByRefreshHash(refreshHash: Buffer): Promise<string | null> {
+    const session = await this.txHost.tx.getRepository(VisitorSession).findOne({
+      select: { familyId: true },
+      where: { refreshHash },
+    });
+    return session?.familyId ?? null;
+  }
+
+  async lockFamily(familyId: string): Promise<void> {
+    await this.txHost.tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", [familyId]);
+  }
+
   async findByRefreshHashForUpdate(refreshHash: Buffer): Promise<VisitorSession | null> {
     return this.txHost.tx.getRepository(VisitorSession).findOne({
       where: { refreshHash },

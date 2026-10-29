@@ -1,9 +1,30 @@
 import {
   createCheck,
   createCheckContext,
+  createCheckSettings,
   createFailingCheck,
 } from "../../../test/support/environment-checks.js";
-import { runEnvironmentChecks } from "./run-environment-checks.js";
+import { runEnvironmentChecks, softenForDevelopment } from "./run-environment-checks.js";
+
+describe("softenForDevelopment", () => {
+  it("в development превращает stop в warn и сохраняет текст", () => {
+    const finding = softenForDevelopment(
+      { level: "stop", message: "problem" },
+      createCheckSettings("development"),
+    );
+
+    expect(finding).toEqual({ level: "warn", message: "problem" });
+  });
+
+  it("в production оставляет находку как есть", () => {
+    const finding = softenForDevelopment(
+      { level: "stop", message: "problem" },
+      createCheckSettings("production"),
+    );
+
+    expect(finding).toEqual({ level: "stop", message: "problem" });
+  });
+});
 
 describe("runEnvironmentChecks", () => {
   it("собирает находки всех проверок с их именами в порядке списка", async () => {

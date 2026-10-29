@@ -171,6 +171,17 @@ describe("provideDevelopmentSecrets с недостающими секретам
     expect(readSecretsFileText(directory)).toBe(text);
   });
 
+  it("берёт значения из файла после записи, если другой процесс дописал запись раньше", () => {
+    const encryptionOnly = { SOWA_ENCRYPTION_KEYS: fileSecrets.SOWA_ENCRYPTION_KEYS };
+    vi.mocked(readDevelopmentSecrets)
+      .mockReturnValueOnce({ env: encryptionOnly })
+      .mockReturnValueOnce({ env: fileSecrets });
+
+    const secrets = provideDevelopmentSecrets(developmentSource(directory));
+
+    expect(secrets).toEqual(fileSecrets);
+  });
+
   it("не скрывает испорченный файл", () => {
     writeBrokenSecretsFile(directory);
 

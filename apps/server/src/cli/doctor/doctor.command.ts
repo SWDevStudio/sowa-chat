@@ -6,9 +6,12 @@ import { Command, CommandRunner } from "nest-commander";
 import type { DataSource } from "typeorm";
 import { environmentChecksConfig } from "../../infra/config/environment-checks.config.js";
 import { redisConfig } from "../../infra/config/redis.config.js";
-import type { CheckLevel, CheckResult } from "../../infra/environment-checks/environment-check.js";
+import type { CheckResult } from "../../infra/environment-checks/environment-check.js";
 import { registeredEnvironmentChecks } from "../../infra/environment-checks/registered-environment-checks.js";
-import { runEnvironmentChecks } from "../../infra/environment-checks/run-environment-checks.js";
+import {
+  runEnvironmentChecks,
+  softenForDevelopment,
+} from "../../infra/environment-checks/run-environment-checks.js";
 import {
   closeRedis,
   createRedisClient,
@@ -19,11 +22,8 @@ import { writeLine } from "../cli-output.js";
 
 const noProblemsReport = "no problems found";
 
-function redisConnectionLevel(env: string): CheckLevel {
-  if (env === "development") {
-    return "warn";
-  }
-  return "stop";
+function failCommandsOnClosedClient(client: Redis): void {
+  client.options.enableOfflineQueue = false;
 }
 
 function formatResult(result: CheckResult): string {
@@ -83,10 +83,10 @@ export class DoctorCommand extends CommandRunner {
       await waitForRedis(client, redisStartupTimeoutMs);
       return [];
     } catch (error) {
+      failCommandsOnClosedClient(client);
       const message = error instanceof Error ? error.message : String(error);
-      return [
-        { check: "redisConnection", level: redisConnectionLevel(this.settings.env), message },
-      ];
+      const finding = softenForDevelopment({ level: "stop", message }, this.settings);
+      return [{ check: "redisConnection", ...finding }];
     }
   }
 }

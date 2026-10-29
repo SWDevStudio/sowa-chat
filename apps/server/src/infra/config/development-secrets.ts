@@ -48,6 +48,10 @@ function generateAll(secrets: GeneratedSecret[]): Values {
   return values;
 }
 
+function readStoredEnv(directory: string): Values {
+  return readDevelopmentSecrets(directory)?.env ?? {};
+}
+
 function completeFile(
   directory: string,
   file: DevelopmentSecrets,
@@ -55,18 +59,26 @@ function completeFile(
 ): Values {
   const provided: Values = {};
   const generated: Values = {};
+  const generatedSecrets: GeneratedSecret[] = [];
   for (const secret of missing) {
     const fromFile = pickFromFile(secret, file.env);
     if (fromFile) {
       Object.assign(provided, fromFile);
     } else {
+      generatedSecrets.push(secret);
       Object.assign(generated, secret.generate("development"));
     }
   }
-  if (Object.keys(generated).length > 0) {
-    writeDevelopmentSecrets(directory, { ...file, env: { ...file.env, ...generated } });
+  if (generatedSecrets.length === 0) {
+    return provided;
   }
-  return { ...provided, ...generated };
+  writeDevelopmentSecrets(directory, { ...file, env: { ...file.env, ...generated } });
+  const stored = readStoredEnv(directory);
+  const resolved: Values = { ...generated };
+  for (const secret of generatedSecrets) {
+    Object.assign(resolved, pickFromFile(secret, stored));
+  }
+  return { ...provided, ...resolved };
 }
 
 function createFile(directory: string, missing: GeneratedSecret[]): Values {

@@ -29,8 +29,11 @@ async function findProblems(
   }
 }
 
-function softenForDevelopment(finding: CheckFinding, context: CheckContext): CheckFinding {
-  if (context.settings.env === "development") {
+export function softenForDevelopment(
+  finding: CheckFinding,
+  settings: CheckContext["settings"],
+): CheckFinding {
+  if (settings.env === "development") {
     return { ...finding, level: "warn" };
   }
   return finding;
@@ -45,7 +48,7 @@ export async function runEnvironmentChecks(
   for (const check of checksForPlace(checks, place)) {
     const findings = await findProblems(check, context);
     for (const finding of findings) {
-      results.push({ check: check.name, ...softenForDevelopment(finding, context) });
+      results.push({ check: check.name, ...softenForDevelopment(finding, context.settings) });
     }
   }
   return results;

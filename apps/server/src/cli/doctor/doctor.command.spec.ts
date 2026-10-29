@@ -16,12 +16,20 @@ vi.mock("../../infra/redis/redis-client.js", () => ({
   closeRedis: vi.fn(),
 }));
 
-vi.mock("../../infra/environment-checks/run-environment-checks.js", () => ({
-  runEnvironmentChecks: vi.fn(),
-}));
+vi.mock("../../infra/environment-checks/run-environment-checks.js", async (importOriginal) => {
+  const actual =
+    await importOriginal<
+      typeof import("../../infra/environment-checks/run-environment-checks.js")
+    >();
+  return { ...actual, runEnvironmentChecks: vi.fn() };
+});
 
 const redisUrl = "redis://sowa:secret-pass@redis.internal:6379";
-const client = { status: "ready" } as Redis;
+function createClient(): Redis {
+  return { status: "ready", options: { enableOfflineQueue: true } } as Redis;
+}
+
+let client: Redis;
 const dataSource = {} as DataSource;
 const redis: ConfigType<typeof redisConfig> = { url: redisUrl };
 
@@ -42,6 +50,7 @@ describe("DoctorCommand", () => {
 
   beforeEach(() => {
     written = "";
+    client = createClient();
     vi.mocked(createRedisClient).mockReturnValue(client);
     vi.mocked(waitForRedis).mockResolvedValue(undefined);
     vi.mocked(closeRedis).mockResolvedValue(undefined);
@@ -171,6 +180,20 @@ describe("DoctorCommand", () => {
 
       expect(runEnvironmentChecks).toHaveBeenCalledTimes(1);
       expect(closeRedis).toHaveBeenCalledWith(client);
+    });
+
+    it("выключает очередь команд клиента, чтобы проверки не зависали на недоступном Redis", async () => {
+      await expect(createCommand("production").run()).rejects.toThrow();
+
+      expect(client.options.enableOfflineQueue).toBe(false);
+    });
+
+    it("не трогает очередь команд, когда Redis доступен", async () => {
+      vi.mocked(waitForRedis).mockResolvedValue(undefined);
+
+      await createCommand("production").run();
+
+      expect(client.options.enableOfflineQueue).toBe(true);
     });
 
     it("текст ошибки без адреса и пароля попадает в отчёт как есть", async () => {

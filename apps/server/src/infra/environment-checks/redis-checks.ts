@@ -11,11 +11,18 @@ export async function readRedisSetting(redis: Redis, name: string): Promise<stri
   return reply[1];
 }
 
+function isCommandNotAllowed(error: unknown): boolean {
+  return error instanceof Error && /^(NOPERM|ERR unknown command)/.test(error.message);
+}
+
 async function readSettingOrUndefined(redis: Redis, name: string): Promise<string | undefined> {
   try {
     return await readRedisSetting(redis, name);
-  } catch {
-    return undefined;
+  } catch (error) {
+    if (isCommandNotAllowed(error)) {
+      return undefined;
+    }
+    throw error;
   }
 }
 

@@ -46,6 +46,10 @@ function finding(level: CheckFinding["level"], message: string): CheckFinding {
 }
 
 const noPermission = new Error("NOPERM this user has no permissions to run the 'config' command");
+const unknownCommand = new Error("ERR unknown command 'CONFIG', with args beginning with: 'GET'");
+const connectionClosed = new Error(
+  "Stream isn't writeable and enableOfflineQueue options is false",
+);
 const evictionReadFailed =
   "could not read maxmemory-policy (CONFIG GET is not allowed?): make sure maxmemory-policy is noeviction";
 const appendOnlyReadFailed =
@@ -118,6 +122,20 @@ describe("redisEvictionPolicyCheck", () => {
     expect(findings).toEqual([finding("warn", evictionReadFailed)]);
   });
 
+  it("при запрещённой команде CONFIG (unknown command) даёт warn could not read", async () => {
+    const findings = await redisEvictionPolicyCheck.run(
+      contextWith(redisRejecting(unknownCommand)),
+    );
+
+    expect(findings).toEqual([finding("warn", evictionReadFailed)]);
+  });
+
+  it("при другой ошибке Redis пробрасывает её, а не выдаёт за запрет CONFIG", async () => {
+    await expect(
+      redisEvictionPolicyCheck.run(contextWith(redisRejecting(connectionClosed))),
+    ).rejects.toThrow(connectionClosed.message);
+  });
+
   it("при пустом ответе config даёт warn, а не stop", async () => {
     const findings = await redisEvictionPolicyCheck.run(contextWith(redisAnswering([])));
 
@@ -163,6 +181,18 @@ describe("redisAppendOnlyCheck", () => {
     const findings = await redisAppendOnlyCheck.run(contextWith(redisRejecting(noPermission)));
 
     expect(findings).toEqual([finding("warn", appendOnlyReadFailed)]);
+  });
+
+  it("при запрещённой команде CONFIG (unknown command) даёт warn could not read appendonly", async () => {
+    const findings = await redisAppendOnlyCheck.run(contextWith(redisRejecting(unknownCommand)));
+
+    expect(findings).toEqual([finding("warn", appendOnlyReadFailed)]);
+  });
+
+  it("при другой ошибке Redis пробрасывает её, а не выдаёт за запрет CONFIG", async () => {
+    await expect(
+      redisAppendOnlyCheck.run(contextWith(redisRejecting(connectionClosed))),
+    ).rejects.toThrow(connectionClosed.message);
   });
 
   it("при пустом ответе config даёт warn could not read appendonly", async () => {

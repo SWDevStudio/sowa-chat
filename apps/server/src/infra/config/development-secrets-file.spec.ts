@@ -1,9 +1,11 @@
 import {
   chmodSync,
   existsSync,
+  linkSync,
   mkdtempSync,
   readdirSync,
   readFileSync,
+  renameSync,
   rmSync,
   statSync,
   writeFileSync,
@@ -20,6 +22,15 @@ import {
   writeDevelopmentSecrets,
 } from "./development-secrets-file.js";
 import type { DevelopmentSecrets } from "./development-secrets-file.js";
+
+vi.mock("node:fs", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("node:fs")>();
+  return {
+    ...actual,
+    linkSync: vi.fn(actual.linkSync),
+    renameSync: vi.fn(actual.renameSync),
+  };
+});
 
 const secrets: DevelopmentSecrets = {
   env: { SOWA_ENCRYPTION_KEYS: "1:secret-value-one" },
@@ -138,6 +149,27 @@ describe("createDevelopmentSecrets", () => {
     );
   });
 
+  it("не оставляет временных файлов ни после создания, ни после отказа", () => {
+    createDevelopmentSecrets(directory, secrets);
+    createDevelopmentSecrets(directory, secrets);
+
+    expect(readdirSync(directory)).toEqual([developmentSecretsFileName]);
+  });
+
+  it("файл появляется сразу с полным содержимым: ссылкой на готовый временный файл", () => {
+    vi.mocked(linkSync).mockClear();
+    let contentAtLink = "";
+    vi.mocked(linkSync).mockImplementationOnce((existing, target) => {
+      contentAtLink = readFileSync(existing, "utf8");
+      expect(existsSync(target)).toBe(false);
+    });
+
+    createDevelopmentSecrets(directory, secrets);
+
+    expect(contentAtLink).toBe(`${JSON.stringify(secrets, null, 2)}
+`);
+  });
+
   it("второй вызов возвращает false и не меняет файл", () => {
     createDevelopmentSecrets(directory, secrets);
     const before = readFileSync(developmentSecretsPath(directory), "utf8");
@@ -179,6 +211,16 @@ describe("writeDevelopmentSecrets", () => {
     expect(readFileSync(developmentSecretsPath(directory), "utf8")).toBe(
       `${JSON.stringify(updated, null, 2)}\n`,
     );
+  });
+
+  it("имя временного файла каждый раз новое, а не по номеру процесса", () => {
+    vi.mocked(renameSync).mockClear();
+
+    writeDevelopmentSecrets(directory, secrets);
+    writeDevelopmentSecrets(directory, secrets);
+
+    const names = vi.mocked(renameSync).mock.calls.map(([from]) => String(from));
+    expect(new Set(names).size).toBe(2);
   });
 
   it("не оставляет временных файлов в папке", () => {

@@ -1,4 +1,5 @@
-import { mkdirSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { linkSync, mkdirSync, readFileSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
+import { randomUUID } from "node:crypto";
 import { join } from "node:path";
 import { z } from "zod";
 
@@ -68,26 +69,29 @@ export function readDevelopmentSecrets(directory: string): DevelopmentSecrets | 
   return parseDevelopmentSecrets(text, path);
 }
 
+function writeTemporaryFile(directory: string, secrets: DevelopmentSecrets): string {
+  const temporaryPath = `${developmentSecretsPath(directory)}.${randomUUID()}.tmp`;
+  writeFileSync(temporaryPath, serialize(secrets), { flag: "wx", mode: fileMode });
+  return temporaryPath;
+}
+
 export function createDevelopmentSecrets(directory: string, secrets: DevelopmentSecrets): boolean {
   mkdirSync(directory, { recursive: true, mode: directoryMode });
+  const temporaryPath = writeTemporaryFile(directory, secrets);
   try {
-    writeFileSync(developmentSecretsPath(directory), serialize(secrets), {
-      flag: "wx",
-      mode: fileMode,
-    });
+    linkSync(temporaryPath, developmentSecretsPath(directory));
     return true;
   } catch (error) {
     if (hasErrorCode(error, "EEXIST")) {
       return false;
     }
     throw error;
+  } finally {
+    unlinkSync(temporaryPath);
   }
 }
 
 export function writeDevelopmentSecrets(directory: string, secrets: DevelopmentSecrets): void {
   mkdirSync(directory, { recursive: true, mode: directoryMode });
-  const path = developmentSecretsPath(directory);
-  const temporaryPath = `${path}.${process.pid}.tmp`;
-  writeFileSync(temporaryPath, serialize(secrets), { mode: fileMode });
-  renameSync(temporaryPath, path);
+  renameSync(writeTemporaryFile(directory, secrets), developmentSecretsPath(directory));
 }

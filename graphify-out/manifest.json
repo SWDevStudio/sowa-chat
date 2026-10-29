@@ -2196,9 +2196,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/environment-checks/registered-environment-checks.ts": {
-    "mtime": 1793277933.8768597,
-    "seen": 1793277968.3337414,
-    "ast_hash": "d141baf70ce9e0f2dc6ade4ceeb1fdfc",
+    "mtime": 1793278766.823573,
+    "seen": 1793278795.0583267,
+    "ast_hash": "9f2e8c237bb31ad020ea6037426f88d3",
     "semantic_hash": ""
   },
   "apps/server/src/infra/environment-checks/run-environment-checks.spec.ts": {
@@ -2865,6 +2865,24 @@
     "mtime": 1793278338.8419137,
     "seen": 1793278387.9947033,
     "ast_hash": "d239cb22180545823bdd38bff0cf16cf",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/environment-checks/redis-checks.spec.ts": {
+    "mtime": 1793278766.8182206,
+    "seen": 1793278795.0583267,
+    "ast_hash": "a844f33f56037c8f01e38b2286e49f62",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/environment-checks/redis-checks.ts": {
+    "mtime": 1793278766.819557,
+    "seen": 1793278795.0583267,
+    "ast_hash": "dc071bfe13709dc2088aac54a530e476",
+    "semantic_hash": ""
+  },
+  "apps/server/test/redis-checks.e2e-spec.ts": {
+    "mtime": 1793278766.8250644,
+    "seen": 1793278795.0583267,
+    "ast_hash": "4370ebb9448916529c2b9ebec9fd7235",
     "semantic_hash": ""
   }
 }

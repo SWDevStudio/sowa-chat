@@ -25,11 +25,14 @@ function stubZonePorts(ports: ZonePorts): void {
   vi.stubEnv("SOWA_MANAGEMENT_PORT", String(ports.management));
 }
 
-export async function startZoneE2eApp(controllers: Type[] = []): Promise<ZoneProbeApp> {
+export async function startZoneE2eApp(
+  controllers: Type[] = [],
+  imports: Type[] = [],
+): Promise<ZoneProbeApp> {
   const ports = await findZonePorts();
   stubZonePorts(ports);
   const moduleRef = await Test.createTestingModule({
-    imports: [ApiModule],
+    imports: [ApiModule, ...imports],
     controllers,
   }).compile();
   const app = moduleRef.createNestApplication<NestExpressApplication>({ bufferLogs: true });

@@ -32,6 +32,7 @@ import { AppConfigModule } from "./infra/config/config.module.js";
 import { SecretsReencryptionModule } from "./infra/crypto/secrets-reencryption.module.js";
 import { DatabaseModule } from "./infra/database/database.module.js";
 import { createLoggerModule } from "./infra/logging/logger.module.js";
+import { ReplicaEventsPublisherModule } from "./infra/replica-events/replica-events-publisher.module.js";
 import { TelemetryModule } from "./telemetry/telemetry.module.js";
 
 @Module({
@@ -42,6 +43,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     createLoggerModule("cli"),
     TelemetryModule,
     AppCacheModule,
+    ReplicaEventsPublisherModule,
     AuditModule,
     KeysModule,
     OperatorsModule,

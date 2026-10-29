@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793265083.0852244,
-    "seen": 1793265119.7416878,
-    "ast_hash": "396f21f1e8e557eefb803f21150d54d9",
+    "mtime": 1793269494.373414,
+    "seen": 1793269522.6563218,
+    "ast_hash": "82bf0ea432689dd851591e4f20abcbc4",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -2112,9 +2112,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/zone-e2e-app.ts": {
-    "mtime": 1793263837.8890164,
-    "seen": 1793263862.286731,
-    "ast_hash": "f98a3e44080e5bfbf709a29f211873b6",
+    "mtime": 1793269494.3860657,
+    "seen": 1793269522.6569068,
+    "ast_hash": "a2cac5458452286f842e27ba378cea70",
     "semantic_hash": ""
   },
   "packages/protocol/src/operator-role.ts": {
@@ -2331,6 +2331,54 @@
     "mtime": 1793265083.0979254,
     "seen": 1793265119.7447069,
     "ast_hash": "6978c99e8965af8416bb9cef66f2cabb",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-event-rules.spec.ts": {
+    "mtime": 1793269494.3754332,
+    "seen": 1793269522.6569068,
+    "ast_hash": "bcb84273e803d2ec9edbf2ab68837b72",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-event-rules.ts": {
+    "mtime": 1793269494.3764243,
+    "seen": 1793269522.6569068,
+    "ast_hash": "67f9eaf64c13f6b650b144e2033a12b1",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-events-publisher.module.ts": {
+    "mtime": 1793269494.3774238,
+    "seen": 1793269522.6569068,
+    "ast_hash": "b68750fdd55efc87fc18ab3b349a5b9d",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-events.publisher.spec.ts": {
+    "mtime": 1793269494.3784246,
+    "seen": 1793269522.6569068,
+    "ast_hash": "244365693ed6bd33cb1ef2fc5a0fd876",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-events.publisher.ts": {
+    "mtime": 1793269494.3794272,
+    "seen": 1793269522.6569068,
+    "ast_hash": "0bcd50c7e763b2ccfcfd30cd9a02010d",
+    "semantic_hash": ""
+  },
+  "apps/server/test/replica-cache-sync.e2e-spec.ts": {
+    "mtime": 1793269494.3810568,
+    "seen": 1793269522.6569068,
+    "ast_hash": "5e0ed719eef3d7c44e88169a06acf294",
+    "semantic_hash": ""
+  },
+  "apps/server/test/replica-events-offline-redis.e2e-spec.ts": {
+    "mtime": 1793269494.3820684,
+    "seen": 1793269522.6569068,
+    "ast_hash": "a4bbd5b4ab983afc32348dbb412d81b5",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/replica-cli-probe.ts": {
+    "mtime": 1793269494.3840919,
+    "seen": 1793269522.6569068,
+    "ast_hash": "e7b303b1415ed767b46a1304c4b6352f",
     "semantic_hash": ""
   }
 }

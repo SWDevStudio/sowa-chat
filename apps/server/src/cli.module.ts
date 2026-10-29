@@ -20,6 +20,7 @@ import {
 } from "./cli/operators/operator.commands.js";
 import { ProjectCreateCommand } from "./cli/projects/project-create.command.js";
 import { ProjectListCommand } from "./cli/projects/project-list.command.js";
+import { SecretsGenerateCommand } from "./cli/secrets/secrets-generate.command.js";
 import { SecretsReencryptCommand } from "./cli/secrets/secrets-reencrypt.command.js";
 import { databaseEntities } from "./database-entities.js";
 import { AuditModule } from "./domain/audit/audit.module.js";
@@ -68,6 +69,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     OperatorEnableCommand,
     ProjectCreateCommand,
     ProjectListCommand,
+    SecretsGenerateCommand,
     SecretsReencryptCommand,
   ],
 })

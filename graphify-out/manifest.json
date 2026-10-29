@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/main.ts": {
-    "mtime": 1793277407.9206605,
-    "seen": 1793277454.511825,
-    "ast_hash": "9f7c74ba0a4af6ac0e4931780b03e4c0",
+    "mtime": 1793278338.8399146,
+    "seen": 1793278387.9947033,
+    "ast_hash": "6146f73bc378d5f74c496fa72b9a6b36",
     "semantic_hash": ""
   },
   "apps/server/tsconfig.build.json": {
@@ -354,9 +354,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793274122.1296458,
-    "seen": 1793274512.3015163,
-    "ast_hash": "82bf0ea432689dd851591e4f20abcbc4",
+    "mtime": 1793278338.827894,
+    "seen": 1793278387.9926865,
+    "ast_hash": "37a829e14a7419fe56ffc62672487e30",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -1554,9 +1554,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/cli/cli-runner.ts": {
-    "mtime": 1793256879.0871334,
-    "seen": 1793258722.7028637,
-    "ast_hash": "9c1d705a250ba0db86e476929ebbd9db",
+    "mtime": 1793278338.829816,
+    "seen": 1793278387.9926865,
+    "ast_hash": "fa0502d1ebfeb2b6c782e46eb90d5244",
     "semantic_hash": ""
   },
   "apps/server/src/cli/keys/key-generate.command.ts": {
@@ -2841,6 +2841,30 @@
     "mtime": 1793277933.8834248,
     "seen": 1793277968.339918,
     "ast_hash": "17ca7c6c62ce14c6ff224118b9c5490c",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/secrets/secrets-generate.command.spec.ts": {
+    "mtime": 1793278338.8323584,
+    "seen": 1793278387.9926865,
+    "ast_hash": "376149faaf01e517eabdb894745203ac",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/secrets/secrets-generate.command.ts": {
+    "mtime": 1793278338.8343694,
+    "seen": 1793278387.9926865,
+    "ast_hash": "a126fe18c1e173b19f0cd450ed864d88",
+    "semantic_hash": ""
+  },
+  "apps/server/src/cli/secrets/secrets-generate.module.ts": {
+    "mtime": 1793278338.8353715,
+    "seen": 1793278387.9926865,
+    "ast_hash": "a3f189e711b685b72a9fcb4efeddb2d4",
+    "semantic_hash": ""
+  },
+  "apps/server/test/secrets-generate-command.e2e-spec.ts": {
+    "mtime": 1793278338.8419137,
+    "seen": 1793278387.9947033,
+    "ast_hash": "d239cb22180545823bdd38bff0cf16cf",
     "semantic_hash": ""
   }
 }

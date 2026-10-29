@@ -47,6 +47,24 @@ export class VisitorSessionsService {
     return this.issueTokens(visitor, randomUUID());
   }
 
+  @Transactional()
+  async refresh(refreshToken: string): Promise<VisitorSessionTokens | undefined> {
+    const session = await this.sessions.findByRefreshHashForUpdate(hashKey(refreshToken));
+    if (session === null || session.revokedAt !== null) {
+      return undefined;
+    }
+    if (session.usedAt !== null) {
+      await this.sessions.revokeFamily(session.familyId);
+      return undefined;
+    }
+    if (session.expiresAt <= new Date()) {
+      return undefined;
+    }
+    await this.sessions.markUsed(session.id);
+    const visitor = await this.visitors.findByIdOrFail(session.visitorId);
+    return this.issueTokens(visitor, session.familyId);
+  }
+
   private async issueTokens(visitor: Visitor, familyId: string): Promise<VisitorSessionTokens> {
     const refreshToken = generateRefreshToken();
     await this.sessions.create({

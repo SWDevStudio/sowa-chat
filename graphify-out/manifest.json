@@ -2190,9 +2190,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api/visitor/visitor-session.controller.ts": {
-    "mtime": 1793260324.2348537,
-    "seen": 1793260371.7351594,
-    "ast_hash": "bd88577221261bdedbbabd2e6d37aeb7",
+    "mtime": 1793262119.8090768,
+    "seen": 1793262153.7343414,
+    "ast_hash": "effaf151ebced10aefc8664ee5ae0d3a",
     "semantic_hash": ""
   },
   "apps/server/src/api/visitor/visitor-session.dto.ts": {
@@ -2208,15 +2208,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/visitors/visitor-sessions.repository.ts": {
-    "mtime": 1793260324.2456634,
-    "seen": 1793260371.7351594,
-    "ast_hash": "6f5ddf1a13cb953f889fa01c8f3c783a",
+    "mtime": 1793262119.8154547,
+    "seen": 1793262153.7343414,
+    "ast_hash": "0ea7d6021c9738f5d8210846c51b054d",
     "semantic_hash": ""
   },
   "apps/server/src/domain/visitors/visitor-sessions.service.ts": {
-    "mtime": 1793260324.247725,
-    "seen": 1793260371.7351594,
-    "ast_hash": "c5f19a676241dc32f565fcc8d0d22d9b",
+    "mtime": 1793262119.817469,
+    "seen": 1793262153.7343414,
+    "ast_hash": "d2995c5fdc9cf9edbfc4c39b973ec877",
     "semantic_hash": ""
   },
   "apps/server/src/domain/visitors/visitor-token-claims.ts": {
@@ -2232,9 +2232,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/visitors/visitors.repository.ts": {
-    "mtime": 1793260324.2527413,
-    "seen": 1793260371.7351594,
-    "ast_hash": "e5de97da56426bb0d9d956fffebad806",
+    "mtime": 1793262119.8204954,
+    "seen": 1793262153.7343414,
+    "ast_hash": "4dff9477cc0c1454e8ef17d33086b1df",
     "semantic_hash": ""
   },
   "apps/server/test/support/visitor-session-values.ts": {
@@ -2277,6 +2277,24 @@
     "mtime": 1793261210.979086,
     "seen": 1793261232.9694426,
     "ast_hash": "81aad71bf2c937a2da1e6c76017dcfcf",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/visitor-session-requests.ts": {
+    "mtime": 1793262119.8250353,
+    "seen": 1793262153.7369473,
+    "ast_hash": "a751098ce28337adb3cc05b14baac755",
+    "semantic_hash": ""
+  },
+  "apps/server/test/visitor-session-refresh-race.e2e-spec.ts": {
+    "mtime": 1793262119.8270516,
+    "seen": 1793262153.7369473,
+    "ast_hash": "c3527c5f6388fd9ac8f1703c7c9b71dd",
+    "semantic_hash": ""
+  },
+  "apps/server/test/visitor-session-refresh.e2e-spec.ts": {
+    "mtime": 1793262119.8286633,
+    "seen": 1793262153.7369473,
+    "ast_hash": "2aaed7ecc4c73b758813782cbd1af5ab",
     "semantic_hash": ""
   }
 }

@@ -14,4 +14,8 @@ export class VisitorsRepository {
     const repository = this.txHost.tx.getRepository(Visitor);
     return repository.save(repository.create({ projectId }));
   }
+
+  async findByIdOrFail(visitorId: string): Promise<Visitor> {
+    return this.txHost.tx.getRepository(Visitor).findOneByOrFail({ id: visitorId });
+  }
 }

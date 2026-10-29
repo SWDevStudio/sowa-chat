@@ -1,9 +1,17 @@
-import type { ApiKeyEvent, ProjectOriginsEvent } from "../../telemetry/events/domain-events.js";
+import type {
+  ApiKeyEvent,
+  OperatorBlockEvent,
+  ProjectOriginsEvent,
+} from "../../telemetry/events/domain-events.js";
 import { apiKeyCacheKeys, projectCacheKeys } from "../cache/cache-invalidation-rules.js";
 import { cacheKeys } from "../cache/cache-keys.js";
 import type { ReplicaEventRule, ReplicaEventRules } from "./replica-event-rules.js";
 import { replicaEventNames, replicaEventRules } from "./replica-event-rules.js";
-import { cacheInvalidateEventSchema, replicaEventPatterns } from "./replica-events.js";
+import {
+  cacheInvalidateEventSchema,
+  operatorReplicaEventSchema,
+  replicaEventPatterns,
+} from "./replica-events.js";
 
 const apiKeyEvent: ApiKeyEvent = {
   apiKeyId: "key-1",
@@ -122,5 +130,97 @@ describe("replicaEventRules", () => {
     expectTypeOf<
       Parameters<ReplicaEventRule<"project.allowedOriginsChanged">>[0]
     >().toEqualTypeOf<ProjectOriginsEvent>();
+  });
+});
+
+const operatorBlockEvent: OperatorBlockEvent = {
+  operatorId: "0b9c7f4e-3a51-4f7e-9d2c-6a8e1b2c3d4e",
+  projectId: "5f1e2d3c-4b5a-4c6d-8e7f-9a0b1c2d3e4f",
+  externalId: "ext-secret-7f3a",
+  actorKind: "cli",
+};
+
+const operatorRules = [
+  ["operator.disabled", "operatorDisabled"],
+  ["operator.enabled", "operatorEnabled"],
+] as const;
+
+describe("правила событий реплик для блокировки оператора", () => {
+  it("имена событий реплик совпадают с доменными", () => {
+    expect(replicaEventPatterns.operatorDisabled).toBe("operator.disabled");
+    expect(replicaEventPatterns.operatorEnabled).toBe("operator.enabled");
+  });
+
+  it("replicaEventNames содержит operator.disabled и operator.enabled", () => {
+    const names = replicaEventNames(replicaEventRules);
+
+    expect(names).toContain("operator.disabled");
+    expect(names).toContain("operator.enabled");
+    expect(names).toContain("apiKey.revoked");
+  });
+
+  it.each(operatorRules)("%s — событие реплик с одним operatorId", (name, patternKey) => {
+    const message = replicaEventRules[name]?.(operatorBlockEvent);
+
+    expect(message).toEqual({
+      pattern: replicaEventPatterns[patternKey],
+      data: { operatorId: operatorBlockEvent.operatorId },
+    });
+  });
+
+  it.each(operatorRules)("%s — в данных нет externalId, проекта и автора", (name) => {
+    const message = replicaEventRules[name]?.(operatorBlockEvent);
+
+    expect(Object.keys(message?.data ?? {})).toEqual(["operatorId"]);
+    expect(JSON.stringify(message)).not.toContain(operatorBlockEvent.externalId);
+    expect(JSON.stringify(message)).not.toContain(operatorBlockEvent.projectId);
+  });
+
+  it.each(operatorRules)("%s — данные проходят схему приёма на репликах", (name) => {
+    const message = replicaEventRules[name]?.(operatorBlockEvent);
+
+    expect(operatorReplicaEventSchema.safeParse(message?.data).success).toBe(true);
+  });
+
+  it("правила операторов не шлют cache.invalidate и различаются", () => {
+    const disabled = replicaEventRules["operator.disabled"]?.(operatorBlockEvent);
+    const enabled = replicaEventRules["operator.enabled"]?.(operatorBlockEvent);
+
+    expect(disabled?.pattern).not.toBe(replicaEventPatterns.cacheInvalidate);
+    expect(enabled?.pattern).not.toBe(replicaEventPatterns.cacheInvalidate);
+    expect(disabled?.pattern).not.toBe(enabled?.pattern);
+  });
+
+  it("правило типизировано данными OperatorBlockEvent", () => {
+    expectTypeOf<
+      Parameters<ReplicaEventRule<"operator.disabled">>[0]
+    >().toEqualTypeOf<OperatorBlockEvent>();
+    expectTypeOf<
+      Parameters<ReplicaEventRule<"operator.enabled">>[0]
+    >().toEqualTypeOf<OperatorBlockEvent>();
+  });
+});
+
+describe("operatorReplicaEventSchema", () => {
+  it("принимает UUID и отбрасывает лишние поля", () => {
+    const parsed = operatorReplicaEventSchema.safeParse({
+      operatorId: operatorBlockEvent.operatorId,
+      externalId: "ext-1",
+    });
+
+    expect(parsed.success).toBe(true);
+    expect(parsed.data).toEqual({ operatorId: operatorBlockEvent.operatorId });
+  });
+
+  it.each([
+    ["operatorId не UUID", { operatorId: "operator-1" }],
+    ["пустой operatorId", { operatorId: "" }],
+    ["UUID без дефисов", { operatorId: "0b9c7f4e3a514f7e9d2c6a8e1b2c3d4e" }],
+    ["operatorId число", { operatorId: 42 }],
+    ["нет operatorId", {}],
+    ["null", null],
+    ["строка вместо объекта", operatorBlockEvent.operatorId],
+  ])("отклоняет: %s", (_name, payload) => {
+    expect(operatorReplicaEventSchema.safeParse(payload).success).toBe(false);
   });
 });

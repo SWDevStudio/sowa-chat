@@ -1,5 +1,10 @@
+import { EventEmitterModule } from "@nestjs/event-emitter";
 import { Test } from "@nestjs/testing";
+import type { TestingModule } from "@nestjs/testing";
 import type { MockInstance } from "vitest";
+import { CacheBusModule } from "../../../test/support/cache-bus-module.js";
+import { DomainEventBus } from "../../telemetry/events/domain-event-bus.js";
+import type { OperatorBlockEvent } from "../../telemetry/events/domain-events.js";
 import { DisabledOperators } from "./disabled-operators.js";
 import { OperatorsRepository } from "./operators.repository.js";
 
@@ -154,5 +159,114 @@ describe("DisabledOperators", () => {
     disabledOperators.has("operator-2");
 
     expect(findDisabledIds).not.toHaveBeenCalled();
+  });
+});
+
+interface BusProbe {
+  moduleRef: TestingModule;
+  bus: DomainEventBus;
+  disabledOperators: DisabledOperators;
+}
+
+function blockEvent(operatorId: string): OperatorBlockEvent {
+  return {
+    operatorId,
+    projectId: "project-1",
+    externalId: "ext-1",
+    actorKind: "cli",
+  };
+}
+
+async function createBusProbe(initialIds: string[] = []): Promise<BusProbe> {
+  const findDisabledIds = vi
+    .fn<OperatorsRepository["findDisabledIds"]>()
+    .mockResolvedValue(initialIds);
+  const moduleRef = await Test.createTestingModule({
+    imports: [EventEmitterModule.forRoot(), CacheBusModule],
+    providers: [DisabledOperators, { provide: OperatorsRepository, useValue: { findDisabledIds } }],
+  }).compile();
+  await moduleRef.init();
+  return {
+    moduleRef,
+    bus: moduleRef.get(DomainEventBus),
+    disabledOperators: moduleRef.get(DisabledOperators),
+  };
+}
+
+describe("DisabledOperators и доменные события своего процесса", () => {
+  let probe: BusProbe | undefined;
+
+  afterEach(async () => {
+    await probe?.moduleRef.close();
+    probe = undefined;
+  });
+
+  it("operator.disabled сразу делает has истинным", async () => {
+    probe = await createBusProbe();
+
+    await probe.bus.publish("operator.disabled", blockEvent("operator-1"));
+
+    expect(probe.disabledOperators.has("operator-1")).toBe(true);
+    expect(probe.disabledOperators.has("operator-2")).toBe(false);
+  });
+
+  it("operator.enabled сразу снимает блокировку", async () => {
+    probe = await createBusProbe();
+    await probe.bus.publish("operator.disabled", blockEvent("operator-1"));
+
+    await probe.bus.publish("operator.enabled", blockEvent("operator-1"));
+
+    expect(probe.disabledOperators.has("operator-1")).toBe(false);
+  });
+
+  it("operator.enabled снимает ID, загруженный при старте, и не трогает другие", async () => {
+    probe = await createBusProbe(["operator-1", "operator-2"]);
+    expect(probe.disabledOperators.has("operator-1")).toBe(true);
+
+    await probe.bus.publish("operator.enabled", blockEvent("operator-1"));
+
+    expect(probe.disabledOperators.has("operator-1")).toBe(false);
+    expect(probe.disabledOperators.has("operator-2")).toBe(true);
+  });
+
+  it("повторное operator.disabled оставляет оператора в списке", async () => {
+    probe = await createBusProbe(["operator-1"]);
+
+    await probe.bus.publish("operator.disabled", blockEvent("operator-1"));
+
+    expect(probe.disabledOperators.has("operator-1")).toBe(true);
+  });
+
+  it("operator.enabled для оператора не из списка не бросает", async () => {
+    probe = await createBusProbe();
+
+    await expect(
+      probe.bus.publish("operator.enabled", blockEvent("operator-1")),
+    ).resolves.toBeUndefined();
+    expect(probe.disabledOperators.has("operator-1")).toBe(false);
+  });
+
+  it("другие доменные события список не меняют", async () => {
+    probe = await createBusProbe(["operator-1"]);
+
+    await probe.bus.publish("apiKey.revoked", {
+      apiKeyId: "operator-2",
+      projectId: "project-1",
+      kind: "server",
+      prefix: "sk_AbCdEfGhIjKl",
+      botId: null,
+      actorKind: "cli",
+    });
+
+    expect(probe.disabledOperators.has("operator-1")).toBe(true);
+    expect(probe.disabledOperators.has("operator-2")).toBe(false);
+  });
+
+  it("без EventEmitterModule прежний модуль собирается и список работает", async () => {
+    const { disabledOperators } = await createProbe();
+
+    disabledOperators.add("operator-1");
+
+    expect(disabledOperators.has("operator-1")).toBe(true);
   });
 });

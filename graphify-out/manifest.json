@@ -1926,15 +1926,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/disabled-operators.spec.ts": {
-    "mtime": 1793256882.8136742,
-    "seen": 1793258167.0674505,
-    "ast_hash": "58ca8b20041769af1e12bca9393043c1",
+    "mtime": 1793270886.048269,
+    "seen": 1793270926.9691997,
+    "ast_hash": "516640d2b9c0461cf61d733efc51cec5",
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/disabled-operators.ts": {
-    "mtime": 1793256882.8151307,
-    "seen": 1793258167.0674505,
-    "ast_hash": "e0844a2c2df44e9352f59a1bf521e906",
+    "mtime": 1793270886.0519414,
+    "seen": 1793270926.9691997,
+    "ast_hash": "a7ae2b6a0a0daf6f9c49e18f81208a46",
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/operator-token-claims.ts": {
@@ -2286,9 +2286,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/replica-events/replica-events.ts": {
-    "mtime": 1793263837.8767128,
-    "seen": 1793263862.286731,
-    "ast_hash": "f02266f0e642e728fc9e623c7987a39a",
+    "mtime": 1793270886.0668461,
+    "seen": 1793270926.9691997,
+    "ast_hash": "a2ae42e93f35e13fbd94b2ea3d30f748",
     "semantic_hash": ""
   },
   "apps/server/test/replica-events.e2e-spec.ts": {
@@ -2310,9 +2310,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/domain/operators/disabled-operators.module.ts": {
-    "mtime": 1793265083.0892265,
-    "seen": 1793265119.7426963,
-    "ast_hash": "44d186bc9ec25422ca9579fd1cb094b9",
+    "mtime": 1793270886.0419164,
+    "seen": 1793270926.9691997,
+    "ast_hash": "71e04bb819a549e3fa4418959b8f2e06",
     "semantic_hash": ""
   },
   "apps/server/test/operator-commands-launch.e2e-spec.ts": {
@@ -2334,15 +2334,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/replica-events/replica-event-rules.spec.ts": {
-    "mtime": 1793269494.3754332,
-    "seen": 1793269522.6569068,
-    "ast_hash": "bcb84273e803d2ec9edbf2ab68837b72",
+    "mtime": 1793270886.0600955,
+    "seen": 1793270926.9691997,
+    "ast_hash": "7fdc56fe72f35e3bf25ee7775b512d2a",
     "semantic_hash": ""
   },
   "apps/server/src/infra/replica-events/replica-event-rules.ts": {
-    "mtime": 1793269494.3764243,
-    "seen": 1793269522.6569068,
-    "ast_hash": "67f9eaf64c13f6b650b144e2033a12b1",
+    "mtime": 1793270886.0646844,
+    "seen": 1793270926.9691997,
+    "ast_hash": "530c6c4e00aecb74713afed8bf173e7b",
     "semantic_hash": ""
   },
   "apps/server/src/infra/replica-events/replica-events-publisher.module.ts": {
@@ -2379,6 +2379,30 @@
     "mtime": 1793269494.3840919,
     "seen": 1793269522.6569068,
     "ast_hash": "e7b303b1415ed767b46a1304c4b6352f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/operators/operator-replica-events.controller.spec.ts": {
+    "mtime": 1793270886.0544953,
+    "seen": 1793270926.9691997,
+    "ast_hash": "ad61f338b02309be07b7a97318f0c37b",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/operators/operator-replica-events.controller.ts": {
+    "mtime": 1793270886.0562031,
+    "seen": 1793270926.9691997,
+    "ast_hash": "cb7e332651ae6b1a53ad71d9cf915f7c",
+    "semantic_hash": ""
+  },
+  "apps/server/test/operator-block-sync.e2e-spec.ts": {
+    "mtime": 1793270886.0705256,
+    "seen": 1793270926.9712965,
+    "ast_hash": "3b784dededd6f81e7a78ab3aa65259df",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/operator-block-probe.ts": {
+    "mtime": 1793270886.0735202,
+    "seen": 1793270926.9712965,
+    "ast_hash": "2eea6b0109cbc158ba15afb5567cc0b9",
     "semantic_hash": ""
   }
 }

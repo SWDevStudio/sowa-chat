@@ -18,10 +18,18 @@ function cacheInvalidate(keys: string[]): ReplicaEventMessage {
   return { pattern: replicaEventPatterns.cacheInvalidate, data: { keys } };
 }
 
+function operatorBlock(pattern: string, operatorId: string): ReplicaEventMessage {
+  return { pattern, data: { operatorId } };
+}
+
 export const replicaEventRules: ReplicaEventRules = {
   "apiKey.revoked": (event) => cacheInvalidate(apiKeyCacheKeys(event)),
   "project.allowedOriginsChanged": (event) => cacheInvalidate(projectCacheKeys(event)),
   "project.operatorAllowedOriginsChanged": (event) => cacheInvalidate(projectCacheKeys(event)),
+  "operator.disabled": (event) =>
+    operatorBlock(replicaEventPatterns.operatorDisabled, event.operatorId),
+  "operator.enabled": (event) =>
+    operatorBlock(replicaEventPatterns.operatorEnabled, event.operatorId),
 };
 
 export function replicaEventNames(rules: ReplicaEventRules): DomainEventName[] {

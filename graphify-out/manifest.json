@@ -2196,9 +2196,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/environment-checks/registered-environment-checks.ts": {
-    "mtime": 1793278766.823573,
-    "seen": 1793278795.0583267,
-    "ast_hash": "9f2e8c237bb31ad020ea6037426f88d3",
+    "mtime": 1793279437.2758021,
+    "seen": 1793279464.3288586,
+    "ast_hash": "26da4c6fd3dd66e97714f8ef719e5968",
     "semantic_hash": ""
   },
   "apps/server/src/infra/environment-checks/run-environment-checks.spec.ts": {
@@ -2883,6 +2883,24 @@
     "mtime": 1793278766.8250644,
     "seen": 1793278795.0583267,
     "ast_hash": "4370ebb9448916529c2b9ebec9fd7235",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/environment-checks/postgres-checks.spec.ts": {
+    "mtime": 1793279437.27133,
+    "seen": 1793279464.3288586,
+    "ast_hash": "1624a71a4dd5b5af48454ac0da92f353",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/environment-checks/postgres-checks.ts": {
+    "mtime": 1793279437.2728865,
+    "seen": 1793279464.3288586,
+    "ast_hash": "12edaedb6b91e3bad082a7f70bcac8dc",
+    "semantic_hash": ""
+  },
+  "apps/server/test/postgres-checks.e2e-spec.ts": {
+    "mtime": 1793279437.2758021,
+    "seen": 1793279464.3288586,
+    "ast_hash": "39bf86e95f055e9ad3ef7889fe10599e",
     "semantic_hash": ""
   }
 }

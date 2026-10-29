@@ -57,6 +57,7 @@ const envObjectSchema = z.object({
     (value) => (value === "" ? undefined : value),
     z.string().optional(),
   ),
+  SOWA_VISITOR_REFRESH_TTL_DAYS: integerInRange(1, 365, 30),
   SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),
   SOWA_LOG_FORMAT: z.enum(logFormats).default("json"),
   SOWA_SLOW_OPERATION_MS: integerInRange(1, 600000, 500),

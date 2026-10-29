@@ -594,9 +594,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/database/database-migrations.ts": {
-    "mtime": 1793233626.987942,
-    "seen": 1793233644.797349,
-    "ast_hash": "137f0ec1b53b3c255fa46b90e741846d",
+    "mtime": 1793234330.8940625,
+    "seen": 1793234346.4650629,
+    "ast_hash": "c9277c7223aaec221566e5ec5956c2e5",
     "semantic_hash": ""
   },
   "apps/server/src/infra/preparation/preparation-runner.spec.ts": {

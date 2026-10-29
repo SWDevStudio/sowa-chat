@@ -19,6 +19,6 @@ export const databaseMigrations: DatabaseMigration[] = [
   CreateApiKeys1793300000000,
   CreateIdentityKeys1793300001000,
   AddProjectsPublicKey1793300002000,
-  AddProjectsOperatorAllowedOrigins1793300003000,
   CreateOperators1793300003000,
+  AddProjectsOperatorAllowedOrigins1793300003000,
 ];

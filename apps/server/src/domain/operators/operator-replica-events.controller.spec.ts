@@ -7,7 +7,7 @@ import { replicaEventPatterns } from "../../infra/replica-events/replica-events.
 import { DisabledOperators } from "./disabled-operators.js";
 import { DisabledOperatorsModule } from "./disabled-operators.module.js";
 import { OperatorReplicaEventsController } from "./operator-replica-events.controller.js";
-import { OperatorsRepository } from "./operators.repository.js";
+import { OperatorsService } from "./operators.service.js";
 
 const warningText = "Ignored malformed operator replica event";
 const secretMarker = "secret-marker-7f3a";
@@ -24,8 +24,8 @@ const malformedPayloads = [
 ] as const;
 
 function createDisabledOperators(): DisabledOperators {
-  const findDisabledIds = vi.fn<OperatorsRepository["findDisabledIds"]>().mockResolvedValue([]);
-  return new DisabledOperators({ findDisabledIds } as unknown as OperatorsRepository);
+  const findDisabledIds = vi.fn<OperatorsService["findDisabledIds"]>().mockResolvedValue([]);
+  return new DisabledOperators({ findDisabledIds } as unknown as OperatorsService);
 }
 
 describe("OperatorReplicaEventsController", () => {
@@ -180,13 +180,10 @@ describe("OperatorReplicaEventsController", () => {
 
 describe("OperatorReplicaEventsController в модуле Nest", () => {
   it("получает DisabledOperators через DI", async () => {
-    const findDisabledIds = vi.fn<OperatorsRepository["findDisabledIds"]>().mockResolvedValue([]);
+    const findDisabledIds = vi.fn<OperatorsService["findDisabledIds"]>().mockResolvedValue([]);
     const moduleRef = await Test.createTestingModule({
       controllers: [OperatorReplicaEventsController],
-      providers: [
-        DisabledOperators,
-        { provide: OperatorsRepository, useValue: { findDisabledIds } },
-      ],
+      providers: [DisabledOperators, { provide: OperatorsService, useValue: { findDisabledIds } }],
     }).compile();
     const operatorId = randomUUID();
 

@@ -1,13 +1,13 @@
 import { Inject, Injectable, type OnApplicationBootstrap } from "@nestjs/common";
 import { OnDomainEvent } from "../../telemetry/events/on-domain-event.decorator.js";
 import type { OperatorBlockEvent } from "../../telemetry/events/domain-events.js";
-import { OperatorsRepository } from "./operators.repository.js";
+import { OperatorsService } from "./operators.service.js";
 
 @Injectable()
 export class DisabledOperators implements OnApplicationBootstrap {
   private ids = new Set<string>();
 
-  constructor(@Inject(OperatorsRepository) private readonly operators: OperatorsRepository) {}
+  constructor(@Inject(OperatorsService) private readonly operators: OperatorsService) {}
 
   async onApplicationBootstrap(): Promise<void> {
     await this.load();

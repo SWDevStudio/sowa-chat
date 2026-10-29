@@ -1,6 +1,10 @@
 import type { JsonObject } from "@sowa-chat/protocol";
 import type { DomainEventName, DomainEvents } from "../../telemetry/events/domain-events.js";
-import { apiKeyCacheKeys, projectCacheKeys } from "../cache/cache-invalidation-rules.js";
+import {
+  cacheInvalidatedEventNames,
+  cacheInvalidationRules,
+  type CacheInvalidationRule,
+} from "../cache/cache-invalidation-rules.js";
 import { replicaEventPatterns } from "./replica-events.js";
 
 export interface ReplicaEventMessage {
@@ -22,10 +26,21 @@ function operatorBlock(pattern: string, operatorId: string): ReplicaEventMessage
   return { pattern, data: { operatorId } };
 }
 
+function cacheInvalidateRule<Name extends DomainEventName>(name: Name): ReplicaEventRule<Name> {
+  const rule = cacheInvalidationRules[name] as CacheInvalidationRule<Name>;
+  return (event) => cacheInvalidate(rule(event));
+}
+
+function cacheInvalidateRules(): ReplicaEventRules {
+  const entries = cacheInvalidatedEventNames(cacheInvalidationRules).map((name) => [
+    name,
+    cacheInvalidateRule(name),
+  ]);
+  return Object.fromEntries(entries);
+}
+
 export const replicaEventRules: ReplicaEventRules = {
-  "apiKey.revoked": (event) => cacheInvalidate(apiKeyCacheKeys(event)),
-  "project.allowedOriginsChanged": (event) => cacheInvalidate(projectCacheKeys(event)),
-  "project.operatorAllowedOriginsChanged": (event) => cacheInvalidate(projectCacheKeys(event)),
+  ...cacheInvalidateRules(),
   "operator.disabled": (event) =>
     operatorBlock(replicaEventPatterns.operatorDisabled, event.operatorId),
   "operator.enabled": (event) =>

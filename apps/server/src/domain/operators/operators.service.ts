@@ -3,6 +3,7 @@ import { Transactional } from "@nestjs-cls/transactional";
 import type { OperatorRole } from "@sowa-chat/protocol";
 import { TokensService } from "../../infra/tokens/tokens.service.js";
 import { DomainEventBus } from "../../telemetry/events/domain-event-bus.js";
+import type { OperatorBlockEvent } from "../../telemetry/events/domain-events.js";
 import type { ActorKind } from "../audit/actor-kind.js";
 import type { OperatorTokenClaims } from "./operator-token-claims.js";
 import { OperatorsRepository } from "./operators.repository.js";
@@ -44,8 +45,6 @@ export class OperatorNotFoundError extends Error {
   }
 }
 
-type OperatorBlockEventName = "operator.disabled" | "operator.enabled";
-
 @Injectable()
 export class OperatorsService {
   constructor(
@@ -57,13 +56,27 @@ export class OperatorsService {
   @Transactional()
   async disable(input: ChangeOperatorBlockInput): Promise<OperatorBlockChange> {
     const operatorId = await this.operators.markDisabled(input.projectId, input.externalId);
-    return this.publishBlockChange(input, operatorId, "operator.disabled", "disabled");
+    if (operatorId === undefined) {
+      await this.requireOperator(input);
+      return "unchanged";
+    }
+    await this.bus.publish("operator.disabled", this.blockEvent(operatorId, input));
+    return "disabled";
   }
 
   @Transactional()
   async enable(input: ChangeOperatorBlockInput): Promise<OperatorBlockChange> {
     const operatorId = await this.operators.markEnabled(input.projectId, input.externalId);
-    return this.publishBlockChange(input, operatorId, "operator.enabled", "enabled");
+    if (operatorId === undefined) {
+      await this.requireOperator(input);
+      return "unchanged";
+    }
+    await this.bus.publish("operator.enabled", this.blockEvent(operatorId, input));
+    return "enabled";
+  }
+
+  async findDisabledIds(): Promise<string[]> {
+    return this.operators.findDisabledIds();
   }
 
   async issueToken(input: IssueOperatorTokenInput): Promise<IssuedOperatorToken> {
@@ -86,23 +99,13 @@ export class OperatorsService {
     });
   }
 
-  private async publishBlockChange(
-    input: ChangeOperatorBlockInput,
-    operatorId: string | undefined,
-    eventName: OperatorBlockEventName,
-    change: Exclude<OperatorBlockChange, "unchanged">,
-  ): Promise<OperatorBlockChange> {
-    if (operatorId === undefined) {
-      await this.requireOperator(input);
-      return "unchanged";
-    }
-    await this.bus.publish(eventName, {
+  private blockEvent(operatorId: string, input: ChangeOperatorBlockInput): OperatorBlockEvent {
+    return {
       operatorId,
       projectId: input.projectId,
       externalId: input.externalId,
       actorKind: input.actorKind,
-    });
-    return change;
+    };
   }
 
   private async requireOperator(input: ChangeOperatorBlockInput): Promise<void> {

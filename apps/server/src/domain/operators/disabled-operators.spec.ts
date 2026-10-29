@@ -6,19 +6,19 @@ import { CacheBusModule } from "../../../test/support/cache-bus-module.js";
 import { DomainEventBus } from "../../telemetry/events/domain-event-bus.js";
 import type { OperatorBlockEvent } from "../../telemetry/events/domain-events.js";
 import { DisabledOperators } from "./disabled-operators.js";
-import { OperatorsRepository } from "./operators.repository.js";
+import { OperatorsService } from "./operators.service.js";
 
 interface Probe {
   disabledOperators: DisabledOperators;
-  findDisabledIds: MockInstance<OperatorsRepository["findDisabledIds"]>;
+  findDisabledIds: MockInstance<OperatorsService["findDisabledIds"]>;
 }
 
 async function createProbe(initialIds: string[] = []): Promise<Probe> {
   const findDisabledIds = vi
-    .fn<OperatorsRepository["findDisabledIds"]>()
+    .fn<OperatorsService["findDisabledIds"]>()
     .mockResolvedValue(initialIds);
   const moduleRef = await Test.createTestingModule({
-    providers: [DisabledOperators, { provide: OperatorsRepository, useValue: { findDisabledIds } }],
+    providers: [DisabledOperators, { provide: OperatorsService, useValue: { findDisabledIds } }],
   }).compile();
   return { disabledOperators: moduleRef.get(DisabledOperators), findDisabledIds };
 }
@@ -179,11 +179,11 @@ function blockEvent(operatorId: string): OperatorBlockEvent {
 
 async function createBusProbe(initialIds: string[] = []): Promise<BusProbe> {
   const findDisabledIds = vi
-    .fn<OperatorsRepository["findDisabledIds"]>()
+    .fn<OperatorsService["findDisabledIds"]>()
     .mockResolvedValue(initialIds);
   const moduleRef = await Test.createTestingModule({
     imports: [EventEmitterModule.forRoot(), CacheBusModule],
-    providers: [DisabledOperators, { provide: OperatorsRepository, useValue: { findDisabledIds } }],
+    providers: [DisabledOperators, { provide: OperatorsService, useValue: { findDisabledIds } }],
   }).compile();
   await moduleRef.init();
   return {

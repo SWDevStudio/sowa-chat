@@ -37,6 +37,22 @@ function optionalUrl() {
   return z.preprocess((value) => (value === "" ? undefined : value), z.url().optional());
 }
 
+function optionalString() {
+  return z.preprocess((value) => (value === "" ? undefined : value), z.string().optional());
+}
+
+function commaSeparatedList() {
+  return z
+    .string()
+    .optional()
+    .transform((value) =>
+      (value ?? "")
+        .split(",")
+        .map((part) => part.trim())
+        .filter((part) => part !== ""),
+    );
+}
+
 const envObjectSchema = z.object({
   SOWA_ENV: z.enum(["development", "production"]).default("production"),
   NODE_ENV: z.string().optional(),
@@ -66,6 +82,10 @@ const envObjectSchema = z.object({
   SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),
   SOWA_LOG_FORMAT: z.enum(logFormats).default("json"),
   SOWA_SLOW_OPERATION_MS: integerInRange(1, 600000, 500),
+  SOWA_INIT_PROJECT: optionalString(),
+  SOWA_INIT_SERVER_KEY: optionalString(),
+  SOWA_INIT_ALLOWED_ORIGINS: commaSeparatedList(),
+  SOWA_INIT_OPERATOR_ALLOWED_ORIGINS: commaSeparatedList(),
 });
 
 type EnvObject = z.infer<typeof envObjectSchema>;
@@ -130,6 +150,21 @@ function checkTokenSigningKeyId(env: EnvObject, context: z.RefinementCtx): void 
   });
 }
 
+function checkInitialServerKey(env: EnvObject, context: z.RefinementCtx): void {
+  if (
+    env.SOWA_ENV !== "production" ||
+    env.SOWA_INIT_PROJECT === undefined ||
+    env.SOWA_INIT_SERVER_KEY !== undefined
+  ) {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_INIT_SERVER_KEY"],
+    message: "is required when SOWA_INIT_PROJECT is set",
+  });
+}
+
 export const envSchema = envObjectSchema.superRefine((env, context) => {
   for (const variable of portVariables) {
     const other = findPortWithSameValue(env, variable);
@@ -145,6 +180,7 @@ export const envSchema = envObjectSchema.superRefine((env, context) => {
   checkEncryptionKeysInProduction(env, context);
   checkTokenSigningKeysInProduction(env, context);
   checkTokenSigningKeyId(env, context);
+  checkInitialServerKey(env, context);
 });
 
 export type Env = z.infer<typeof envSchema>;

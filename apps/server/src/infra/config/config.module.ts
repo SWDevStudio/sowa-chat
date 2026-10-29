@@ -5,6 +5,7 @@ import { databaseConfig } from "./database.config.js";
 import { developmentSecretsConfig } from "./development-secrets.config.js";
 import { encryptionConfig } from "./encryption.config.js";
 import { environmentChecksConfig } from "./environment-checks.config.js";
+import { initialProjectConfig } from "./initial-project.config.js";
 import { loadEnv } from "./load-env.js";
 import { loggingConfig } from "./logging.config.js";
 import { portsConfig } from "./ports.config.js";
@@ -31,6 +32,7 @@ import { visitorSessionsConfig } from "./visitor-sessions.config.js";
         loggingConfig,
         slowOperationsConfig,
         developmentSecretsConfig,
+        initialProjectConfig,
       ],
       validate: loadEnv,
     }),

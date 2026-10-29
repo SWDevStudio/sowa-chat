@@ -68,6 +68,8 @@ const envObjectSchema = z.object({
   SOWA_S3_ACCESS_KEY: nonEmptyString,
   SOWA_S3_SECRET_KEY: nonEmptyString,
   SOWA_S3_BUCKET: nonEmptyString,
+  SOWA_PUBLIC_URL: optionalUrl(),
+  SOWA_S3_PUBLIC_URL: optionalUrl(),
   SOWA_ENCRYPTION_KEYS: encryptionKeysSchema,
   SOWA_TOKEN_SIGNING_KEYS: tokenSigningKeysSchema,
   SOWA_TOKEN_SIGNING_KEY_ID: z.preprocess(
@@ -127,6 +129,17 @@ function checkTokenSigningKeysInProduction(env: EnvObject, context: z.Refinement
   });
 }
 
+function checkPublicUrlInProduction(env: EnvObject, context: z.RefinementCtx): void {
+  if (env.SOWA_ENV !== "production" || env.SOWA_PUBLIC_URL !== undefined) {
+    return;
+  }
+  context.addIssue({
+    code: "custom",
+    path: ["SOWA_PUBLIC_URL"],
+    message: "is required when SOWA_ENV is production",
+  });
+}
+
 function checkTokenSigningKeyId(env: EnvObject, context: z.RefinementCtx): void {
   const keyId = env.SOWA_TOKEN_SIGNING_KEY_ID;
   const keys = env.SOWA_TOKEN_SIGNING_KEYS ?? [];
@@ -179,6 +192,7 @@ export const envSchema = envObjectSchema.superRefine((env, context) => {
   checkPrettyLogFormat(env, context);
   checkEncryptionKeysInProduction(env, context);
   checkTokenSigningKeysInProduction(env, context);
+  checkPublicUrlInProduction(env, context);
   checkTokenSigningKeyId(env, context);
   checkInitialServerKey(env, context);
 });

@@ -14,7 +14,7 @@
 | 2 | [Начальный проект создаётся один раз при одновременном старте реплик](TASK-2.md) | sonnet | opus | обычная | — | готова |
 | 3 | [Реестр проверок окружения и запуск проверок при старте `api` и `worker`](TASK-3.md) | sonnet | sonnet | обычная | — | готова |
 | 4 | [Секреты development подставляются в конфиг при старте](TASK-4.md) | sonnet | opus | обычная | 1, 3 | готова |
-| 5 | [Переменные `SOWA_INIT_*` в конфиге](TASK-5.md) | haiku | sonnet | обычная | 4 | не начата |
+| 5 | [Переменные `SOWA_INIT_*` в конфиге](TASK-5.md) | haiku | sonnet | обычная | 4 | готова |
 | 6 | [Переменные `SOWA_PUBLIC_URL` и `SOWA_S3_PUBLIC_URL`, адрес сервиса обязателен в production](TASK-6.md) | sonnet | sonnet | простая | 5 | не начата |
 | 7 | [Проект `main` и его ключи при старте `api` в development](TASK-7.md) | sonnet | sonnet | обычная | 2, 3, 4, 5 | не начата |
 | 8 | [Остановка в production на http-адресах и секретах из `.env.example`](TASK-8.md) | sonnet | sonnet | обычная | 3, 6, 7 | не начата |

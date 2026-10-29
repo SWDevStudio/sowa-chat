@@ -12,6 +12,7 @@ import { ApiHttpModule } from "./infra/http/api-http.module.js";
 import { HealthModule } from "./infra/health/health.module.js";
 import { createLoggerModule } from "./infra/logging/logger.module.js";
 import { RedisModule } from "./infra/redis/redis.module.js";
+import { ReplicaEventsModule } from "./infra/replica-events/replica-events.module.js";
 import { RequestContextModule } from "./infra/request-context/request-context.module.js";
 import { ZonesModule } from "./infra/zones/zones.module.js";
 import { TelemetryModule } from "./telemetry/telemetry.module.js";
@@ -26,6 +27,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     createLoggerModule("api"),
     TelemetryModule,
     AppCacheModule,
+    ReplicaEventsModule,
     AuditModule,
     ZonesModule,
     ApiHttpModule,

@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/main.ts": {
-    "mtime": 1793256883.030718,
-    "seen": 1793258167.0674505,
-    "ast_hash": "af9fe0dfb2901fdf34f3c90ba2b91453",
+    "mtime": 1793263837.878728,
+    "seen": 1793263862.286731,
+    "ast_hash": "77a042c79f1afa0d0a47a94136ebf7cc",
     "semantic_hash": ""
   },
   "apps/server/tsconfig.build.json": {
@@ -348,9 +348,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api.module.ts": {
-    "mtime": 1793259074.7726755,
-    "seen": 1793259114.574949,
-    "ast_hash": "44183a69ff95d180233fb2e56b5750aa",
+    "mtime": 1793263837.8588078,
+    "seen": 1793263862.286731,
+    "ast_hash": "eb7c070e20bcbe3a658749d0ccf65010",
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
@@ -372,9 +372,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/worker.module.ts": {
-    "mtime": 1793259074.8081696,
-    "seen": 1793259114.5769603,
-    "ast_hash": "3070bdc07e04628606b62617186f1291",
+    "mtime": 1793263837.8807423,
+    "seen": 1793263862.286731,
+    "ast_hash": "8aa40724fdf1d0872325aee64833f893",
     "semantic_hash": ""
   },
   "apps/server/test/logging.e2e-spec.ts": {
@@ -2112,9 +2112,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/zone-e2e-app.ts": {
-    "mtime": 1793256883.1723535,
-    "seen": 1793258167.0674505,
-    "ast_hash": "57a9af40426a56512b1fb8a2956fae42",
+    "mtime": 1793263837.8890164,
+    "seen": 1793263862.286731,
+    "ast_hash": "f98a3e44080e5bfbf709a29f211873b6",
     "semantic_hash": ""
   },
   "packages/protocol/src/operator-role.ts": {
@@ -2241,6 +2241,66 @@
     "mtime": 1793263242.7051232,
     "seen": 1793263277.9056485,
     "ast_hash": "1d100f027a02cb7b9cb907d7787a9d22",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/cache-invalidate.controller.spec.ts": {
+    "mtime": 1793263837.8623383,
+    "seen": 1793263862.286731,
+    "ast_hash": "4c25324d6b01098de64edc9692b14d8f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/cache-invalidate.controller.ts": {
+    "mtime": 1793263837.8634877,
+    "seen": 1793263862.286731,
+    "ast_hash": "2ca8b65db0a192488904b6cf71e6c5c1",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/redis-transport-options.spec.ts": {
+    "mtime": 1793263837.8670208,
+    "seen": 1793263862.286731,
+    "ast_hash": "604064b3f294d88fc6cd13bff78e9e4c",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/redis-transport-options.ts": {
+    "mtime": 1793263837.8690362,
+    "seen": 1793263862.286731,
+    "ast_hash": "897d4e44ca8a5d56000173b361a2d7d9",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-events-transport.spec.ts": {
+    "mtime": 1793263837.8710883,
+    "seen": 1793263862.286731,
+    "ast_hash": "f92c7611f7a24ee95adf1a611e20706f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-events-transport.ts": {
+    "mtime": 1793263837.872664,
+    "seen": 1793263862.286731,
+    "ast_hash": "2649b423e4e08f8d3bf3cf8b82547bf0",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-events.module.ts": {
+    "mtime": 1793263837.8747005,
+    "seen": 1793263862.286731,
+    "ast_hash": "3a65d5d957ea2c3b07572fac04da4d60",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/replica-events/replica-events.ts": {
+    "mtime": 1793263837.8767128,
+    "seen": 1793263862.286731,
+    "ast_hash": "f02266f0e642e728fc9e623c7987a39a",
+    "semantic_hash": ""
+  },
+  "apps/server/test/replica-events.e2e-spec.ts": {
+    "mtime": 1793263837.8839517,
+    "seen": 1793263862.286731,
+    "ast_hash": "b3402eb07cf5fd01598aea8943246a04",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/replica-events-probe.ts": {
+    "mtime": 1793263837.8870003,
+    "seen": 1793263862.286731,
+    "ast_hash": "ad3b87a4b0bb73d0db9f446639d9c21f",
     "semantic_hash": ""
   }
 }

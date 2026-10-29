@@ -6,6 +6,7 @@ import { AppClsModule } from "./infra/cls/app-cls.module.js";
 import { AppConfigModule } from "./infra/config/config.module.js";
 import { DatabaseModule } from "./infra/database/database.module.js";
 import { createLoggerModule } from "./infra/logging/logger.module.js";
+import { ReplicaEventsModule } from "./infra/replica-events/replica-events.module.js";
 import { TelemetryModule } from "./telemetry/telemetry.module.js";
 import { RedisModule } from "./infra/redis/redis.module.js";
 
@@ -18,6 +19,7 @@ import { RedisModule } from "./infra/redis/redis.module.js";
     createLoggerModule("worker"),
     TelemetryModule,
     AppCacheModule,
+    ReplicaEventsModule,
     AuditModule,
   ],
 })

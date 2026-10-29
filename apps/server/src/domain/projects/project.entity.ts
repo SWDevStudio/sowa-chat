@@ -13,6 +13,9 @@ export class Project {
   @Column({ name: "allowed_origins", type: "text", array: true, default: () => "'{}'" })
   allowedOrigins!: string[];
 
+  @Column({ name: "operator_allowed_origins", type: "text", array: true, default: () => "'{}'" })
+  operatorAllowedOrigins!: string[];
+
   @Column({ name: "public_key", type: "text", nullable: true })
   publicKey!: string | null;
 

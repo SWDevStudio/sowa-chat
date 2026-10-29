@@ -7,7 +7,7 @@ import type { DestinationStream } from "pino";
 import type { ServerMode } from "../../server-mode.js";
 import type { LogLevel } from "../config/env.schema.js";
 import { loggingConfig } from "../config/logging.config.js";
-import { createStdoutDestination } from "./log-destination.js";
+import { createLogDestination, logFileDescriptor } from "./log-destination.js";
 import { redactPaths } from "./redact-paths.js";
 
 const serviceName = "sowa-chat-server";
@@ -23,12 +23,15 @@ function baseOptions(mode: ServerMode, level: LogLevel, cls: ClsService): Option
   };
 }
 
-function prettyOptions(options: Options): Options {
-  return { ...options, transport: { target: "pino-pretty" } };
+function prettyOptions(options: Options, mode: ServerMode): Options {
+  return {
+    ...options,
+    transport: { target: "pino-pretty", options: { destination: logFileDescriptor(mode) } },
+  };
 }
 
-function jsonOptions(options: Options): [Options, DestinationStream] {
-  return [options, createStdoutDestination()];
+function jsonOptions(options: Options, mode: ServerMode): [Options, DestinationStream] {
+  return [options, createLogDestination(mode)];
 }
 
 export function createLoggerModule(mode: ServerMode): DynamicModule {
@@ -38,7 +41,8 @@ export function createLoggerModule(mode: ServerMode): DynamicModule {
       const options = baseOptions(mode, logging.level, cls);
       return {
         renameContext: "loggerName",
-        pinoHttp: logging.format === "pretty" ? prettyOptions(options) : jsonOptions(options),
+        pinoHttp:
+          logging.format === "pretty" ? prettyOptions(options, mode) : jsonOptions(options, mode),
       };
     },
   });

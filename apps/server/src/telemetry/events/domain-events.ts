@@ -7,9 +7,41 @@ export interface ApiKeyEvent {
   actorKind: "cli" | "system";
 }
 
+export interface IdentityKeyEvent {
+  identityKeyId: string;
+  projectId: string;
+  kid: string;
+  alg: "EdDSA" | "ES256";
+  actorKind: "cli" | "system";
+}
+
+export interface ProjectCreatedEvent {
+  projectId: string;
+  name: string;
+  actorKind: "cli" | "system";
+}
+
+export interface ProjectOriginsEvent {
+  projectId: string;
+  origins: string[];
+  actorKind: "cli" | "system";
+}
+
+export interface SecretsReencryptedEvent {
+  reencrypted: number;
+  undecryptable: number;
+  actorKind: "cli";
+}
+
 export interface DomainEvents {
   "apiKey.issued": ApiKeyEvent;
   "apiKey.revoked": ApiKeyEvent;
+  "identityKey.added": IdentityKeyEvent;
+  "identityKey.revoked": IdentityKeyEvent;
+  "project.created": ProjectCreatedEvent;
+  "project.allowedOriginsChanged": ProjectOriginsEvent;
+  "project.operatorAllowedOriginsChanged": ProjectOriginsEvent;
+  "secrets.reencrypted": SecretsReencryptedEvent;
 }
 
 export type DomainEventName = keyof DomainEvents & string;

@@ -38,6 +38,13 @@ export interface RevokeApiKeyInput {
   actorKind: KeyActorKind;
 }
 
+export interface ApiKeySummary {
+  prefix: string;
+  createdAt: Date;
+  lastUsedAt: Date | null;
+  revokedAt: Date | null;
+}
+
 export const keyTypeByKind: Record<ApiKeyKind, KeyType> = {
   server: "serverKey",
   bot: "botKey",
@@ -78,6 +85,11 @@ export class ApiKeysService {
     return { apiKeyId: row.id, projectId: row.projectId, botId: row.botId };
   }
 
+  async list(projectId: string, kind: ApiKeyKind): Promise<ApiKeySummary[]> {
+    const rows = await this.repository.findByProject(projectId, kind);
+    return rows.map(toSummary);
+  }
+
   @Transactional()
   async revoke(input: RevokeApiKeyInput): Promise<boolean> {
     const row = await this.repository.revokeByPrefix(input.prefix);
@@ -92,6 +104,15 @@ export class ApiKeysService {
 function hashMatches(key: string, storedHash: Buffer): boolean {
   const hash = hashKey(key);
   return hash.length === storedHash.length && timingSafeEqual(hash, storedHash);
+}
+
+function toSummary(row: ApiKey): ApiKeySummary {
+  return {
+    prefix: row.prefix,
+    createdAt: row.createdAt,
+    lastUsedAt: row.lastUsedAt,
+    revokedAt: row.revokedAt,
+  };
 }
 
 function toEvent(row: ApiKey, actorKind: KeyActorKind): ApiKeyEvent {

@@ -43,6 +43,10 @@ export class EncryptionService {
     }
   }
 
+  get currentVersion(): number | undefined {
+    return this.currentKey?.version;
+  }
+
   encrypt(plaintext: string): string {
     if (this.currentKey === undefined) {
       throw new Error("SOWA_ENCRYPTION_KEYS is not set");

@@ -6,6 +6,9 @@
   "private": true,
   "license": "UNLICENSED",
   "type": "module",
+  "bin": {
+    "sowa-chat": "dist/sowa-chat.js"
+  },
   "scripts": {
     "build": "nest build",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",

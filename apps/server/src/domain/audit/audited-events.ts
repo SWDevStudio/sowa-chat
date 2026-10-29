@@ -1,4 +1,10 @@
-import type { ApiKeyEvent } from "../../telemetry/events/domain-events.js";
+import type {
+  ApiKeyEvent,
+  IdentityKeyEvent,
+  ProjectCreatedEvent,
+  ProjectOriginsEvent,
+  SecretsReencryptedEvent,
+} from "../../telemetry/events/domain-events.js";
 import type { AuditRecord, AuditRules } from "./audit-rule.js";
 
 function apiKeyAuditRecord(event: ApiKeyEvent): AuditRecord {
@@ -12,7 +18,57 @@ function apiKeyAuditRecord(event: ApiKeyEvent): AuditRecord {
   };
 }
 
+function identityKeyAuditRecord(event: IdentityKeyEvent): AuditRecord {
+  return {
+    projectId: event.projectId,
+    actorKind: event.actorKind,
+    actorId: null,
+    targetKind: "identityKey",
+    targetId: event.identityKeyId,
+    data: { kid: event.kid, alg: event.alg },
+  };
+}
+
+function projectCreatedAuditRecord(event: ProjectCreatedEvent): AuditRecord {
+  return {
+    projectId: event.projectId,
+    actorKind: event.actorKind,
+    actorId: null,
+    targetKind: "project",
+    targetId: event.projectId,
+    data: { name: event.name },
+  };
+}
+
+function projectOriginsAuditRecord(event: ProjectOriginsEvent): AuditRecord {
+  return {
+    projectId: event.projectId,
+    actorKind: event.actorKind,
+    actorId: null,
+    targetKind: "project",
+    targetId: event.projectId,
+    data: { origins: event.origins },
+  };
+}
+
+function secretsReencryptedAuditRecord(event: SecretsReencryptedEvent): AuditRecord {
+  return {
+    projectId: null,
+    actorKind: event.actorKind,
+    actorId: null,
+    targetKind: "encryptedSecrets",
+    targetId: null,
+    data: { reencrypted: event.reencrypted, undecryptable: event.undecryptable },
+  };
+}
+
 export const auditedEvents: AuditRules = {
   "apiKey.issued": apiKeyAuditRecord,
   "apiKey.revoked": apiKeyAuditRecord,
+  "identityKey.added": identityKeyAuditRecord,
+  "identityKey.revoked": identityKeyAuditRecord,
+  "project.created": projectCreatedAuditRecord,
+  "project.allowedOriginsChanged": projectOriginsAuditRecord,
+  "project.operatorAllowedOriginsChanged": projectOriginsAuditRecord,
+  "secrets.reencrypted": secretsReencryptedAuditRecord,
 };

@@ -4,7 +4,7 @@ import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Logger } from "nestjs-pino";
 import { configureApiApp } from "./api-app.js";
 import { ApiModule } from "./api.module.js";
-import { CliModule } from "./cli.module.js";
+import { runCliCommand } from "./cli/cli-runner.js";
 import { PreparationRunner } from "./infra/preparation/preparation-runner.js";
 import { ZoneServers } from "./infra/zones/zone-servers.js";
 import { MigrateModule } from "./migrate.module.js";
@@ -33,11 +33,6 @@ async function runWorker() {
   await createContext(WorkerModule);
 }
 
-async function runToCompletion(rootModule: Type) {
-  const app = await createContext(rootModule);
-  await app.close();
-}
-
 async function runMigrate() {
   const app = await createContext(MigrateModule);
   try {
@@ -47,8 +42,8 @@ async function runMigrate() {
   }
 }
 
-function runCli() {
-  return runToCompletion(CliModule);
+async function runCli() {
+  process.exitCode = await runCliCommand(process.argv.slice(3));
 }
 
 const runners: Record<ServerMode, () => Promise<void>> = {

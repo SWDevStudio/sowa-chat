@@ -232,6 +232,32 @@ describe("EncryptionService key rotation", () => {
   });
 });
 
+describe("EncryptionService.currentVersion", () => {
+  const key7: EncryptionKey = { version: 7, key: Buffer.alloc(32, 0x77) };
+
+  it("is the version of the only key", () => {
+    expect(createService([key1]).currentVersion).toBe(1);
+  });
+
+  it("is the highest version among the keys", () => {
+    expect(createService([key1, key2]).currentVersion).toBe(2);
+  });
+
+  it("is the highest version regardless of key order and gaps", () => {
+    expect(createService([key7, key1, key2]).currentVersion).toBe(7);
+  });
+
+  it("matches the version that encrypt writes", () => {
+    const service = createService([key2, key1]);
+
+    expect(service.encrypt(plaintext).startsWith(`v${service.currentVersion}.`)).toBe(true);
+  });
+
+  it("is undefined when there are no keys", () => {
+    expect(createService([]).currentVersion).toBeUndefined();
+  });
+});
+
 @Global()
 @Module({
   providers: [{ provide: encryptionConfig.KEY, useValue: { keys: [key1, key2] } }],

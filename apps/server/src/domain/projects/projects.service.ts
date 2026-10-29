@@ -1,5 +1,8 @@
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Inject, Injectable } from "@nestjs/common";
 import { Transactional } from "@nestjs-cls/transactional";
+import type { Cache } from "cache-manager";
+import { cacheKeys } from "../../infra/cache/cache-keys.js";
 import { DomainEventBus } from "../../telemetry/events/domain-event-bus.js";
 import type { DomainEventName } from "../../telemetry/events/domain-events.js";
 import type { ActorKind } from "../audit/actor-kind.js";
@@ -8,6 +11,8 @@ import { generateKey } from "../keys/key-format.js";
 import type { OriginList } from "./origin-list.js";
 import { normalizeOrigin, normalizeOrigins } from "./origin.js";
 import type { Project } from "./project.entity.js";
+import { toProjectSnapshot } from "./project-snapshot.js";
+import type { ProjectSnapshot } from "./project-snapshot.js";
 import { ProjectsRepository } from "./projects.repository.js";
 
 const PROJECT_NAME_PATTERN = /^[a-z0-9][a-z0-9-]{0,62}$/;
@@ -88,6 +93,7 @@ export class ProjectsService {
     @Inject(ProjectsRepository) private readonly repository: ProjectsRepository,
     @Inject(ApiKeysService) private readonly apiKeys: ApiKeysService,
     @Inject(DomainEventBus) private readonly bus: DomainEventBus,
+    @Inject(CACHE_MANAGER) private readonly cache: Cache,
   ) {}
 
   @Transactional()
@@ -135,6 +141,31 @@ export class ProjectsService {
     return this.repository.findAll();
   }
 
+  async findSnapshotById(projectId: string): Promise<ProjectSnapshot | undefined> {
+    const cached = await this.cache.get<ProjectSnapshot>(cacheKeys.project(projectId));
+    if (cached) {
+      return cached;
+    }
+    const project = await this.repository.findById(projectId);
+    if (!project) {
+      return undefined;
+    }
+    return this.cacheSnapshot(project);
+  }
+
+  async findSnapshotByPublicKey(publicKey: string): Promise<ProjectSnapshot | undefined> {
+    const projectId = await this.cache.get<string>(cacheKeys.projectIdByPublicKey(publicKey));
+    if (projectId) {
+      return this.findSnapshotById(projectId);
+    }
+    const project = await this.repository.findByPublicKey(publicKey);
+    if (!project) {
+      return undefined;
+    }
+    await this.cache.set(cacheKeys.projectIdByPublicKey(publicKey), project.id);
+    return this.cacheSnapshot(project);
+  }
+
   private async insertProject(
     input: CreateProjectInput,
     origins: NormalizedOrigins,
@@ -156,6 +187,12 @@ export class ProjectsService {
       serverKey: issued.key,
       serverKeyPrefix: issued.prefix,
     };
+  }
+
+  private async cacheSnapshot(project: Project): Promise<ProjectSnapshot> {
+    const snapshot = toProjectSnapshot(project);
+    await this.cache.set(cacheKeys.project(snapshot.id), snapshot);
+    return snapshot;
   }
 
   private async publishOriginsChange(

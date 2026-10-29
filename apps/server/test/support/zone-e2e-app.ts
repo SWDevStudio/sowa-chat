@@ -3,6 +3,7 @@ import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Test } from "@nestjs/testing";
 import { configureApiApp } from "../../src/api-app.js";
 import { ApiModule } from "../../src/api.module.js";
+import { connectReplicaEvents } from "../../src/infra/replica-events/replica-events-transport.js";
 import { ZoneServers } from "../../src/infra/zones/zone-servers.js";
 import type { ZonePorts } from "../../src/infra/zones/zone.js";
 import { findFreePort } from "./e2e-server.js";
@@ -24,16 +25,21 @@ function stubZonePorts(ports: ZonePorts): void {
   vi.stubEnv("SOWA_MANAGEMENT_PORT", String(ports.management));
 }
 
-export async function startZoneE2eApp(controllers: Type[] = []): Promise<ZoneProbeApp> {
+export async function startZoneE2eApp(
+  controllers: Type[] = [],
+  imports: Type[] = [],
+): Promise<ZoneProbeApp> {
   const ports = await findZonePorts();
   stubZonePorts(ports);
   const moduleRef = await Test.createTestingModule({
-    imports: [ApiModule],
+    imports: [ApiModule, ...imports],
     controllers,
   }).compile();
   const app = moduleRef.createNestApplication<NestExpressApplication>({ bufferLogs: true });
   configureApiApp(app);
+  connectReplicaEvents(app);
   await app.init();
+  await app.startAllMicroservices();
   await app.get(ZoneServers).listen(app);
   return { app, ports };
 }

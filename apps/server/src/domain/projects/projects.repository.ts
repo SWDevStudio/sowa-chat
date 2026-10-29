@@ -40,8 +40,16 @@ export class ProjectsRepository {
     ]);
   }
 
+  async findById(id: string): Promise<Project | null> {
+    return this.txHost.tx.getRepository(Project).findOneBy({ id });
+  }
+
   async findByName(name: string): Promise<Project | null> {
     return this.txHost.tx.getRepository(Project).findOneBy({ name });
+  }
+
+  async findByPublicKey(publicKey: string): Promise<Project | null> {
+    return this.txHost.tx.getRepository(Project).findOneBy({ publicKey });
   }
 
   async findAll(): Promise<Project[]> {

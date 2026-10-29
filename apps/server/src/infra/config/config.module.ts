@@ -11,6 +11,7 @@ import { redisConfig } from "./redis.config.js";
 import { s3Config } from "./s3.config.js";
 import { slowOperationsConfig } from "./slow-operations.config.js";
 import { tokenSigningConfig } from "./token-signing.config.js";
+import { visitorSessionsConfig } from "./visitor-sessions.config.js";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { tokenSigningConfig } from "./token-signing.config.js";
         encryptionConfig,
         environmentChecksConfig,
         tokenSigningConfig,
+        visitorSessionsConfig,
         redisConfig,
         s3Config,
         loggingConfig,

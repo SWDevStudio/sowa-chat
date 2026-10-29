@@ -1,3 +1,4 @@
+import { CacheModule } from "@nestjs/cache-manager";
 import { Test } from "@nestjs/testing";
 import { TransactionHost } from "@nestjs-cls/transactional";
 import type { Mock } from "vitest";
@@ -55,6 +56,7 @@ export async function createProjectsServiceProbe(): Promise<ProjectsServiceProbe
   const issue = vi.fn().mockResolvedValue(issuedServerKey);
   const publish = vi.fn().mockResolvedValue(undefined);
   const moduleRef = await Test.createTestingModule({
+    imports: [CacheModule.register()],
     providers: [
       ProjectsService,
       {

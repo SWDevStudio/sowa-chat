@@ -1,5 +1,6 @@
 import type { INestApplicationContext, Type } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
+import type { AsyncMicroserviceOptions } from "@nestjs/microservices";
 import type { NestExpressApplication } from "@nestjs/platform-express";
 import { Logger } from "nestjs-pino";
 import { configureApiApp } from "./api-app.js";
@@ -7,6 +8,10 @@ import { ApiModule } from "./api.module.js";
 import { runCliCommand } from "./cli/cli-runner.js";
 import { EnvironmentChecksService } from "./infra/environment-checks/environment-checks.service.js";
 import { PreparationRunner } from "./infra/preparation/preparation-runner.js";
+import {
+  connectReplicaEvents,
+  replicaEventsMicroservice,
+} from "./infra/replica-events/replica-events-transport.js";
 import { ZoneServers } from "./infra/zones/zone-servers.js";
 import { MigrateModule } from "./migrate.module.js";
 import { parseServerMode, serverModes } from "./server-mode.js";
@@ -26,14 +31,21 @@ async function createContext(rootModule: Type) {
 async function runApi() {
   const app = await NestFactory.create<NestExpressApplication>(ApiModule, { bufferLogs: true });
   configureApiApp(app);
+  connectReplicaEvents(app);
   await app.init();
   await app.get(EnvironmentChecksService).verifyAtStartup();
+  await app.startAllMicroservices();
   await app.get(ZoneServers).listen(app);
 }
 
 async function runWorker() {
-  const app = await createContext(WorkerModule);
+  const app = await NestFactory.createMicroservice<AsyncMicroserviceOptions>(WorkerModule, {
+    bufferLogs: true,
+    ...replicaEventsMicroservice,
+  });
+  useAppLogger(app);
   await app.get(EnvironmentChecksService).verifyAtStartup();
+  await app.listen();
 }
 
 async function runMigrate() {

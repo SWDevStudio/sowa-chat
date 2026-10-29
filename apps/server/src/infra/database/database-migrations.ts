@@ -8,6 +8,7 @@ import { AddProjectsPublicKey1793300002000 } from "./migrations/1793300002000-Ad
 import { CreateOperators1793300003000 } from "./migrations/1793300003000-CreateOperators.js";
 import { CreateIdentityKeys1793300001000 } from "./migrations/1793300001000-CreateIdentityKeys.js";
 import { CreateProjects1793193549883 } from "./migrations/1793193549883-CreateProjects.js";
+import { CreateVisitorSessions1793300004000 } from "./migrations/1793300004000-CreateVisitorSessions.js";
 
 export type DatabaseMigration = new () => MigrationInterface;
 
@@ -21,4 +22,5 @@ export const databaseMigrations: DatabaseMigration[] = [
   AddProjectsPublicKey1793300002000,
   CreateOperators1793300003000,
   AddProjectsOperatorAllowedOrigins1793300003000,
+  CreateVisitorSessions1793300004000,
 ];

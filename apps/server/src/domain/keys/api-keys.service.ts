@@ -1,6 +1,9 @@
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
 import { Inject, Injectable } from "@nestjs/common";
 import { Transactional } from "@nestjs-cls/transactional";
+import type { Cache } from "cache-manager";
 import { timingSafeEqual } from "node:crypto";
+import { cacheKeys } from "../../infra/cache/cache-keys.js";
 import { DomainEventBus } from "../../telemetry/events/domain-event-bus.js";
 import type { ApiKeyEvent } from "../../telemetry/events/domain-events.js";
 import type { ActorKind } from "../audit/actor-kind.js";
@@ -34,6 +37,14 @@ export interface VerifiedApiKey {
   botId: string | null;
 }
 
+interface CachedApiKey {
+  apiKeyId: string;
+  projectId: string;
+  botId: string | null;
+  kind: ApiKeyKind;
+  keyHash: string;
+}
+
 export interface RevokeApiKeyInput {
   prefix: string;
   actorKind: KeyActorKind;
@@ -62,6 +73,7 @@ export class ApiKeysService {
   constructor(
     @Inject(ApiKeysRepository) private readonly repository: ApiKeysRepository,
     @Inject(DomainEventBus) private readonly bus: DomainEventBus,
+    @Inject(CACHE_MANAGER) private readonly cache: Cache,
   ) {}
 
   @Transactional()
@@ -87,11 +99,25 @@ export class ApiKeysService {
     if (!parsed) {
       return undefined;
     }
-    const row = await this.repository.findByPrefix(parsed.lookupPrefix);
+    const cacheKey = cacheKeys.apiKey(parsed.lookupPrefix);
+    const cached = await this.cache.get<CachedApiKey>(cacheKey);
+    if (cached) {
+      return verifyCached(cached, key, kind);
+    }
+    return this.verifyStored(parsed.lookupPrefix, key, kind);
+  }
+
+  private async verifyStored(
+    lookupPrefix: string,
+    key: string,
+    kind: ApiKeyKind,
+  ): Promise<VerifiedApiKey | undefined> {
+    const row = await this.repository.findByPrefix(lookupPrefix);
     if (!row || row.kind !== kind || !hashMatches(key, row.keyHash) || row.revokedAt) {
       return undefined;
     }
     await this.repository.touchLastUsedAt(row.id);
+    await this.cache.set(cacheKeys.apiKey(lookupPrefix), toCachedApiKey(row));
     return { apiKeyId: row.id, projectId: row.projectId, botId: row.botId };
   }
 
@@ -114,6 +140,27 @@ export class ApiKeysService {
 function hashMatches(key: string, storedHash: Buffer): boolean {
   const hash = hashKey(key);
   return hash.length === storedHash.length && timingSafeEqual(hash, storedHash);
+}
+
+function verifyCached(
+  cached: CachedApiKey,
+  key: string,
+  kind: ApiKeyKind,
+): VerifiedApiKey | undefined {
+  if (cached.kind !== kind || !hashMatches(key, Buffer.from(cached.keyHash, "hex"))) {
+    return undefined;
+  }
+  return { apiKeyId: cached.apiKeyId, projectId: cached.projectId, botId: cached.botId };
+}
+
+function toCachedApiKey(row: ApiKey): CachedApiKey {
+  return {
+    apiKeyId: row.id,
+    projectId: row.projectId,
+    botId: row.botId,
+    kind: row.kind,
+    keyHash: row.keyHash.toString("hex"),
+  };
 }
 
 function toSummary(row: ApiKey): ApiKeySummary {

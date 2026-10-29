@@ -1,11 +1,13 @@
 import { Module } from "@nestjs/common";
 import { databaseEntities } from "./database-entities.js";
 import { AuditModule } from "./domain/audit/audit.module.js";
+import { AppCacheModule } from "./infra/cache/app-cache.module.js";
 import { AppClsModule } from "./infra/cls/app-cls.module.js";
 import { AppConfigModule } from "./infra/config/config.module.js";
 import { DatabaseModule } from "./infra/database/database.module.js";
 import { EnvironmentChecksModule } from "./infra/environment-checks/environment-checks.module.js";
 import { createLoggerModule } from "./infra/logging/logger.module.js";
+import { ReplicaEventsModule } from "./infra/replica-events/replica-events.module.js";
 import { TelemetryModule } from "./telemetry/telemetry.module.js";
 import { RedisModule } from "./infra/redis/redis.module.js";
 
@@ -18,6 +20,8 @@ import { RedisModule } from "./infra/redis/redis.module.js";
     EnvironmentChecksModule,
     createLoggerModule("worker"),
     TelemetryModule,
+    AppCacheModule,
+    ReplicaEventsModule,
     AuditModule,
   ],
 })

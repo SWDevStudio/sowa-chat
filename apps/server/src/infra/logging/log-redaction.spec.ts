@@ -26,6 +26,7 @@ const tokenAndKeyFields = [
   "secret",
   "password",
   "key",
+  "SOWA_INIT_SERVER_KEY",
 ];
 const messageAndContactFields = ["text", "body", "email", "phone", "name"];
 const integratorDataFields = ["context", "visitorData", "payload"];

@@ -17,6 +17,7 @@ import {
   writeCompactSecretsFile,
 } from "../../../test/support/development-secrets-env.js";
 import { projectRow } from "../../../test/support/projects-service-probe.js";
+import type { ApiKeysService } from "../keys/api-keys.service.js";
 import type { CreatedProject, ProjectsService } from "../projects/projects.service.js";
 import {
   developmentAllowedOrigins,
@@ -61,7 +62,8 @@ describe("InitialProjectService.setUp", () => {
     };
     const developmentSecrets: ConfigType<typeof developmentSecretsConfig> = { directory };
     const projects = { createInitial, getByName } as unknown as ProjectsService;
-    return new InitialProjectService(app, initialProject, developmentSecrets, projects);
+    const apiKeys = {} as unknown as ApiKeysService;
+    return new InitialProjectService(app, initialProject, developmentSecrets, projects, apiKeys);
   }
 
   function missingKeyWarning(publicKey: string): string {

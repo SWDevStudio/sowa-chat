@@ -9,6 +9,8 @@ import {
 } from "../../infra/config/development-secrets-file.js";
 import type { DevelopmentMainProject } from "../../infra/config/development-secrets-file.js";
 import { initialProjectConfig } from "../../infra/config/initial-project.config.js";
+import { ApiKeysService } from "../keys/api-keys.service.js";
+import { parseKey, toLookupPrefix } from "../keys/key-format.js";
 import { ProjectsService } from "../projects/projects.service.js";
 
 export const developmentProjectName = "main";
@@ -26,12 +28,55 @@ export class InitialProjectService {
     @Inject(developmentSecretsConfig.KEY)
     private readonly developmentSecrets: ConfigType<typeof developmentSecretsConfig>,
     @Inject(ProjectsService) private readonly projects: ProjectsService,
+    @Inject(ApiKeysService) private readonly apiKeys: ApiKeysService,
   ) {}
 
   async setUp(): Promise<void> {
     if (this.app.env === "development") {
       await this.setUpDevelopmentProject();
+      return;
     }
+    await this.setUpProductionProject();
+  }
+
+  private async setUpProductionProject(): Promise<void> {
+    const { projectName, serverKey, allowedOrigins, operatorAllowedOrigins } = this.initialProject;
+    if (projectName === undefined) {
+      return;
+    }
+    if (serverKey === undefined) {
+      throw new Error("SOWA_INIT_SERVER_KEY is required when SOWA_INIT_PROJECT is set");
+    }
+    if (parseKey(serverKey, "serverKey") === undefined) {
+      throw new Error(
+        "SOWA_INIT_SERVER_KEY must be a serverKey (sk_...) with a valid checksum: " +
+          "generate one with sowa-chat key:generate",
+      );
+    }
+    const created = await this.projects.createInitial({
+      name: projectName,
+      allowedOrigins,
+      operatorAllowedOrigins,
+      serverKey,
+      actorKind: "system",
+    });
+    if (created) {
+      this.logger.log(`Initial project ${projectName} created from SOWA_INIT_PROJECT`);
+      return;
+    }
+    await this.warnIfServerKeyDiffers(projectName, serverKey);
+  }
+
+  private async warnIfServerKeyDiffers(projectName: string, serverKey: string): Promise<void> {
+    const project = await this.projects.getByName(projectName);
+    const keys = await this.apiKeys.list(project.id, "server");
+    const prefix = toLookupPrefix(serverKey);
+    if (keys.some((key) => key.prefix === prefix && key.revokedAt === null)) {
+      return;
+    }
+    this.logger.warn(
+      `SOWA_INIT_SERVER_KEY does not match any active serverKey of project ${projectName}`,
+    );
   }
 
   private async setUpDevelopmentProject(): Promise<void> {

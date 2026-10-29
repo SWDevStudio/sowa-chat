@@ -7,6 +7,7 @@ export interface ProjectFixture {
   name?: string;
   allowedOrigins?: string[];
   settings?: JsonObject;
+  publicKey?: string;
 }
 
 export function createProject(
@@ -19,6 +20,7 @@ export function createProject(
       name: fixture.name ?? `project-${randomUUID()}`,
       allowedOrigins: fixture.allowedOrigins,
       settings: fixture.settings,
+      publicKey: fixture.publicKey,
     }),
   );
 }

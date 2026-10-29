@@ -348,15 +348,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/api.module.ts": {
-    "mtime": 1793256882.6271799,
-    "seen": 1793258167.0674505,
-    "ast_hash": "eb0ed38319784b84a686a7d2ae0f9ca0",
+    "mtime": 1793259074.7726755,
+    "seen": 1793259114.574949,
+    "ast_hash": "44183a69ff95d180233fb2e56b5750aa",
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
-    "mtime": 1793256882.693007,
-    "seen": 1793258167.0674505,
-    "ast_hash": "7f1bb291425b2e32f0ec53a5e167a7a2",
+    "mtime": 1793259074.77469,
+    "seen": 1793259114.574949,
+    "ast_hash": "510656dc3d0782c9cd1b3e7475ea0510",
     "semantic_hash": ""
   },
   "apps/server/src/migrate.module.ts": {
@@ -372,9 +372,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/worker.module.ts": {
-    "mtime": 1793256883.0646822,
-    "seen": 1793258167.0674505,
-    "ast_hash": "d114ee82f3b27baca313b64da061c36a",
+    "mtime": 1793259074.8081696,
+    "seen": 1793259114.5769603,
+    "ast_hash": "3070bdc07e04628606b62617186f1291",
     "semantic_hash": ""
   },
   "apps/server/test/logging.e2e-spec.ts": {
@@ -2133,6 +2133,60 @@
     "mtime": 1793256883.276046,
     "seen": 1793258167.0674505,
     "ast_hash": "871725487a036425f76e3fca3349d3fa",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/cache/app-cache.module.spec.ts": {
+    "mtime": 1793259074.787181,
+    "seen": 1793259114.57596,
+    "ast_hash": "295faba910ba715619d7c69f9be3f9a6",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/cache/app-cache.module.ts": {
+    "mtime": 1793259074.7922277,
+    "seen": 1793259114.57596,
+    "ast_hash": "0f64cd3804a9d9cc0416dcb437608db3",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/cache/cache-invalidation-rules.spec.ts": {
+    "mtime": 1793259074.794255,
+    "seen": 1793259114.57596,
+    "ast_hash": "19e94d678d8688b7930ad0d350fefbdf",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/cache/cache-invalidation-rules.ts": {
+    "mtime": 1793259074.796301,
+    "seen": 1793259114.57596,
+    "ast_hash": "b2555f76b11f88c893e250350f593018",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/cache/cache-keys.spec.ts": {
+    "mtime": 1793259074.7983255,
+    "seen": 1793259114.57596,
+    "ast_hash": "24d93004630f812c02b3a842c0c81e85",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/cache/cache-keys.ts": {
+    "mtime": 1793259074.8003502,
+    "seen": 1793259114.57596,
+    "ast_hash": "b05ad496c5c7e34aabfdc8704a7ce4ed",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/cache/local-cache-invalidation.listener.spec.ts": {
+    "mtime": 1793259074.802372,
+    "seen": 1793259114.57596,
+    "ast_hash": "189e7f5cc30c3609712f5a479c603e55",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/cache/local-cache-invalidation.listener.ts": {
+    "mtime": 1793259074.8043892,
+    "seen": 1793259114.57596,
+    "ast_hash": "b6675df8bb2b7620be04187f011fdf86",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/cache-bus-module.ts": {
+    "mtime": 1793259074.8122237,
+    "seen": 1793259114.5779595,
+    "ast_hash": "06d8e8b189299dd8d3b335b66e3beac5",
     "semantic_hash": ""
   }
 }

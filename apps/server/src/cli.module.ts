@@ -21,6 +21,7 @@ import { databaseEntities } from "./database-entities.js";
 import { AuditModule } from "./domain/audit/audit.module.js";
 import { KeysModule } from "./domain/keys/keys.module.js";
 import { ProjectsModule } from "./domain/projects/projects.module.js";
+import { AppCacheModule } from "./infra/cache/app-cache.module.js";
 import { AppClsModule } from "./infra/cls/app-cls.module.js";
 import { AppConfigModule } from "./infra/config/config.module.js";
 import { SecretsReencryptionModule } from "./infra/crypto/secrets-reencryption.module.js";
@@ -35,6 +36,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     DatabaseModule.forRoot(databaseEntities),
     createLoggerModule("cli"),
     TelemetryModule,
+    AppCacheModule,
     AuditModule,
     KeysModule,
     ProjectsModule,

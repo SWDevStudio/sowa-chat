@@ -5,6 +5,7 @@ import { CreateChatTables1793215389271 } from "./migrations/1793215389271-Create
 import { CreateApiKeys1793300000000 } from "./migrations/1793300000000-CreateApiKeys.js";
 import { AddProjectsOperatorAllowedOrigins1793300003000 } from "./migrations/1793300003000-AddProjectsOperatorAllowedOrigins.js";
 import { AddProjectsPublicKey1793300002000 } from "./migrations/1793300002000-AddProjectsPublicKey.js";
+import { CreateOperators1793300003000 } from "./migrations/1793300003000-CreateOperators.js";
 import { CreateIdentityKeys1793300001000 } from "./migrations/1793300001000-CreateIdentityKeys.js";
 import { CreateProjects1793193549883 } from "./migrations/1793193549883-CreateProjects.js";
 
@@ -19,4 +20,5 @@ export const databaseMigrations: DatabaseMigration[] = [
   CreateIdentityKeys1793300001000,
   AddProjectsPublicKey1793300002000,
   AddProjectsOperatorAllowedOrigins1793300003000,
+  CreateOperators1793300003000,
 ];

@@ -16,6 +16,9 @@ const validEnv = {
   SOWA_S3_SECRET_KEY: "sowa-dev-secret",
   SOWA_S3_BUCKET: "sowa-chat",
   SOWA_ENCRYPTION_KEYS: "1:AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
+  SOWA_TOKEN_SIGNING_KEYS:
+    "test-1:MC4CAQAwBQYDK2VwBCIEIAABAgMEBQYHCAkKCwwNDg8QERITFBUWFxgZGhscHR4f",
+  SOWA_TOKEN_SIGNING_KEY_ID: "test-1",
 };
 
 type Env = Record<string, string | undefined>;
@@ -101,6 +104,15 @@ describe("запуск сервера с неверным окружением",
       reason: "в production без SOWA_ENCRYPTION_KEYS",
       overrides: { SOWA_ENV: "production", SOWA_ENCRYPTION_KEYS: undefined },
       named: /SOWA_ENCRYPTION_KEYS/,
+    },
+    {
+      reason: "в production без SOWA_TOKEN_SIGNING_KEYS",
+      overrides: {
+        SOWA_ENV: "production",
+        SOWA_TOKEN_SIGNING_KEYS: undefined,
+        SOWA_TOKEN_SIGNING_KEY_ID: undefined,
+      },
+      named: /SOWA_TOKEN_SIGNING_KEYS/,
     },
   ])("$reason не стартует и называет переменную", async ({ overrides, named }) => {
     const result = await runServer(serverEnvironment(overrides), workingDirectory);

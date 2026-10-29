@@ -3,7 +3,7 @@ import type { ArgumentsHost, ExceptionFilter } from "@nestjs/common";
 import type { Response } from "express";
 import { ZodSerializationException } from "nestjs-zod";
 import { ZodError } from "zod";
-import { requestIdHeader } from "../request-id/request-id.js";
+import { requestIdOfResponse } from "../request-id/request-id.js";
 import { toErrorResponse } from "./error-response.js";
 
 const responseMismatchMessage = "Response does not match schema";
@@ -17,7 +17,7 @@ export class HttpErrorFilter implements ExceptionFilter {
       throw exception;
     }
     const response = host.switchToHttp().getResponse<Response>();
-    const body = toErrorResponse(exception, requestIdOf(response));
+    const body = toErrorResponse(exception, requestIdOfResponse(response));
     if (body.statusCode >= 500) {
       this.logServerError(exception);
     }
@@ -43,9 +43,4 @@ function responseZodErrorOf(exception: unknown): ZodError | undefined {
   }
   const zodError = exception.getZodError();
   return zodError instanceof ZodError ? zodError : undefined;
-}
-
-function requestIdOf(response: Response): string {
-  const requestId = response.getHeader(requestIdHeader);
-  return typeof requestId === "string" ? requestId : "";
 }

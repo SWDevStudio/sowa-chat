@@ -6,6 +6,7 @@ import { Message } from "./domain/conversations/message.entity.js";
 import { Participant } from "./domain/conversations/participant.entity.js";
 import { ApiKey } from "./domain/keys/api-key.entity.js";
 import { IdentityKey } from "./domain/keys/identity-key.entity.js";
+import { Operator } from "./domain/operators/operator.entity.js";
 import { Project } from "./domain/projects/project.entity.js";
 import { Visitor } from "./domain/visitors/visitor.entity.js";
 import type { DatabaseEntity } from "./infra/database/database-options.js";
@@ -21,4 +22,5 @@ export const databaseEntities: DatabaseEntity[] = [
   AuditLogEntry,
   ApiKey,
   IdentityKey,
+  Operator,
 ];

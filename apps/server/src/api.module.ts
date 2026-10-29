@@ -5,6 +5,7 @@ import { ServerAuthModule } from "./api/server/server-auth.module.js";
 import { VisitorApiModule } from "./api/visitor/visitor-api.module.js";
 import { databaseEntities } from "./database-entities.js";
 import { AuditModule } from "./domain/audit/audit.module.js";
+import { StartupModule } from "./domain/startup/startup.module.js";
 import { AppCacheModule } from "./infra/cache/app-cache.module.js";
 import { AppClsModule } from "./infra/cls/app-cls.module.js";
 import { AppConfigModule } from "./infra/config/config.module.js";
@@ -32,6 +33,7 @@ import { TelemetryModule } from "./telemetry/telemetry.module.js";
     AppCacheModule,
     ReplicaEventsModule,
     AuditModule,
+    StartupModule,
     ZonesModule,
     ApiHttpModule,
     HealthModule,

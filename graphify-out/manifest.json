@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/main.ts": {
-    "mtime": 1793274472.940478,
-    "seen": 1793274512.3015163,
-    "ast_hash": "052d7b6ff0002250acf389987a67dc4d",
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "4faf8ab00274ffabeea044cf3340bb3b",
     "semantic_hash": ""
   },
   "apps/server/tsconfig.build.json": {
@@ -48,9 +48,9 @@
     "semantic_hash": ""
   },
   "apps/server/vitest.config.e2e.ts": {
-    "mtime": 1793256879.4826605,
-    "seen": 1793258722.7028637,
-    "ast_hash": "c76ca86071059ac54a4447eb70650924",
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "4dcad01d0793a66a28ae145f64deb96a",
     "semantic_hash": ""
   },
   "apps/server/vitest.config.ts": {
@@ -348,9 +348,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/api.module.ts": {
-    "mtime": 1793274122.1042902,
-    "seen": 1793274512.3015163,
-    "ast_hash": "53a976fbec1e788524085d3d503cae7c",
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "ab063dc9bd84f70f9b6d5587ff4af911",
     "semantic_hash": ""
   },
   "apps/server/src/cli.module.ts": {
@@ -2751,6 +2751,42 @@
     "mtime": 1793276001.1379137,
     "seen": 1793276022.1109695,
     "ast_hash": "0318865e37a94beb2100b7248cd7c6f8",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/startup/initial-project.development.spec.ts": {
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "94b01d37827bdcb10cf2adb66d03b430",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/startup/initial-project.service.ts": {
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "bc2602fdb475b19a551b65e868c8229e",
+    "semantic_hash": ""
+  },
+  "apps/server/src/domain/startup/startup.module.ts": {
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "55aa77a3e4d697470523583fd91bd35d",
+    "semantic_hash": ""
+  },
+  "apps/server/test/development-project.e2e-spec.ts": {
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "9815b35a6e35b7a52917910b00f6412d",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/dev-secrets-dir.setup.ts": {
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "4688e7e27c520286bee064ddf2a6cc6a",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/startup-server.ts": {
+    "mtime": 1793276622.5495956,
+    "seen": 1793276643.872775,
+    "ast_hash": "c34c16adaa39cdc4820dd753532fc9dc",
     "semantic_hash": ""
   }
 }

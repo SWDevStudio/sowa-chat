@@ -6,6 +6,7 @@ import { Logger } from "nestjs-pino";
 import { configureApiApp } from "./api-app.js";
 import { ApiModule } from "./api.module.js";
 import { runCliCommand } from "./cli/cli-runner.js";
+import { InitialProjectService } from "./domain/startup/initial-project.service.js";
 import { EnvironmentChecksService } from "./infra/environment-checks/environment-checks.service.js";
 import { PreparationRunner } from "./infra/preparation/preparation-runner.js";
 import {
@@ -34,6 +35,7 @@ async function runApi() {
   connectReplicaEvents(app);
   await app.init();
   await app.get(EnvironmentChecksService).verifyAtStartup();
+  await app.get(InitialProjectService).setUp();
   await app.startAllMicroservices();
   await app.get(ZoneServers).listen(app);
 }

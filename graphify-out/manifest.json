@@ -636,9 +636,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/projects-table.e2e-spec.ts": {
-    "mtime": 1793222545.8235793,
-    "seen": 1793222563.3891082,
-    "ast_hash": "2e109da795b99db4fed2d4e1d5322919",
+    "mtime": 1793234424.8025453,
+    "seen": 1793234476.7288816,
+    "ast_hash": "9c5c4de1221c958f2b1b3204e8161dc0",
     "semantic_hash": ""
   },
   "apps/server/src/domain/projects/project.entity.ts": {

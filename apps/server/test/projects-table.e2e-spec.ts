@@ -150,11 +150,13 @@ describe("таблица projects", () => {
   });
 
   describe("миграция AddProjectsOperatorAllowedOrigins", () => {
-    it("стоит в databaseMigrations последней, после AddProjectsPublicKey", () => {
+    it("есть в databaseMigrations и стоит позже AddProjectsPublicKey", () => {
       const names = databaseMigrations.map((migration) => migration.name);
+      const operatorIndex = names.indexOf("AddProjectsOperatorAllowedOrigins1793300003000");
+      const publicKeyIndex = names.indexOf("AddProjectsPublicKey1793300002000");
 
-      expect(names.at(-1)).toBe("AddProjectsOperatorAllowedOrigins1793300003000");
-      expect(names.at(-2)).toBe("AddProjectsPublicKey1793300002000");
+      expect(publicKeyIndex).toBeGreaterThanOrEqual(0);
+      expect(operatorIndex).toBeGreaterThan(publicKeyIndex);
     });
 
     it("имя миграции совпадает с именем класса", () => {

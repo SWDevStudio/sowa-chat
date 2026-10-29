@@ -20,8 +20,8 @@
 | 8 | [Остановка в production на http-адресах и секретах из `.env.example`](TASK-8.md) | sonnet | sonnet | обычная | 3, 6, 7 | готова |
 | 9 | [Первый проект из `SOWA_INIT_*` при старте `api` в production](TASK-9.md) | sonnet | opus | обычная | 7, 8 | не начата |
 | 10 | [Сводка в логе при старте `api` и `worker`](TASK-10.md) | sonnet | sonnet | обычная | 4, 5, 7 | готова |
-| 11 | [Проверки Redis: `maxmemory-policy noeviction` и AOF](TASK-11.md) | haiku | sonnet | обычная | 8 | не начата |
+| 11 | [Проверки Redis: `maxmemory-policy noeviction` и AOF](TASK-11.md) | haiku | sonnet | обычная | 8 | в работе |
 | 12 | [Проверки PostgreSQL: версия 18+ и права пользователя приложения](TASK-12.md) | haiku | sonnet | обычная | 11 | не начата |
 | 13 | [Ротация ключа шифрования и ключа подписи из текущего env](TASK-13.md) | haiku | sonnet | обычная | 1 | готова |
-| 14 | [Команда `secrets:generate` без конфига, БД и Redis](TASK-14.md) | sonnet | sonnet | обычная | 1, 6, 10, 13 | в работе |
+| 14 | [Команда `secrets:generate` без конфига, БД и Redis](TASK-14.md) | sonnet | sonnet | обычная | 1, 6, 10, 13 | готова |
 | 15 | [Команда `doctor`: все проверки окружения и отчёт](TASK-15.md) | haiku | sonnet | обычная | 12, 14 | не начата |

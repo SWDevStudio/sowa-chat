@@ -2112,9 +2112,9 @@
     "semantic_hash": ""
   },
   "apps/server/test/support/zone-e2e-app.ts": {
-    "mtime": 1793256881.5239189,
-    "seen": 1793257636.9205928,
-    "ast_hash": "57a9af40426a56512b1fb8a2956fae42",
+    "mtime": 1793261210.979086,
+    "seen": 1793261232.9694426,
+    "ast_hash": "64abe0bf1c51832920cfdbb35cad7170",
     "semantic_hash": ""
   },
   "packages/protocol/src/operator-role.ts": {
@@ -2247,6 +2247,36 @@
     "mtime": 1793260324.2685058,
     "seen": 1793260371.7351594,
     "ast_hash": "557ce73e89ff1fd41bd8b836532e7730",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/visitor/visitor-auth.guard.ts": {
+    "mtime": 1793261210.9685879,
+    "seen": 1793261232.9673789,
+    "ast_hash": "7c6a3a3a1a24432ed8d80ba114c88031",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/visitor/visitor-auth.module.ts": {
+    "mtime": 1793261210.9685879,
+    "seen": 1793261232.9673789,
+    "ast_hash": "31457536a9d3977b19d13a9d52c81929",
+    "semantic_hash": ""
+  },
+  "apps/server/src/api/visitor/visitor-controller.decorator.ts": {
+    "mtime": 1793261210.9775023,
+    "seen": 1793261232.9673789,
+    "ast_hash": "ec5cdc774f75b9fe9080934a11e14480",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/visitor-guard-probe.ts": {
+    "mtime": 1793261210.979086,
+    "seen": 1793261232.9694426,
+    "ast_hash": "c7b3c3b9c4e408ab2a1f1fd324c402bb",
+    "semantic_hash": ""
+  },
+  "apps/server/test/visitor-auth-guard.e2e-spec.ts": {
+    "mtime": 1793261210.979086,
+    "seen": 1793261232.9694426,
+    "ast_hash": "81aad71bf2c937a2da1e6c76017dcfcf",
     "semantic_hash": ""
   }
 }

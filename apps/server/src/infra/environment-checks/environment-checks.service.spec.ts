@@ -2,7 +2,11 @@ import { Logger } from "@nestjs/common";
 import type { Redis } from "ioredis";
 import type { DataSource } from "typeorm";
 import type { MockInstance } from "vitest";
-import { createCheck, createFailingCheck } from "../../../test/support/environment-checks.js";
+import {
+  createCheck,
+  createCheckSettings,
+  createFailingCheck,
+} from "../../../test/support/environment-checks.js";
 import type { EnvironmentCheck } from "./environment-check.js";
 import { EnvironmentCheckError } from "./environment-check.js";
 import { EnvironmentChecksService } from "./environment-checks.service.js";
@@ -11,7 +15,12 @@ function createService(
   checks: EnvironmentCheck[],
   env: "development" | "production" = "production",
 ): EnvironmentChecksService {
-  return new EnvironmentChecksService({ env }, {} as DataSource, {} as Redis, checks);
+  return new EnvironmentChecksService(
+    createCheckSettings(env),
+    {} as DataSource,
+    {} as Redis,
+    checks,
+  );
 }
 
 describe("EnvironmentChecksService.verifyAtStartup", () => {
@@ -126,12 +135,17 @@ describe("EnvironmentChecksService.verifyAtStartup", () => {
     const dataSource = {} as DataSource;
     const redis = {} as Redis;
     const check = createCheck("contextCheck", []);
-    const service = new EnvironmentChecksService({ env: "production" }, dataSource, redis, [check]);
+    const service = new EnvironmentChecksService(
+      createCheckSettings("production"),
+      dataSource,
+      redis,
+      [check],
+    );
 
     await service.verifyAtStartup();
 
     expect(check.run).toHaveBeenCalledWith({
-      settings: { env: "production" },
+      settings: createCheckSettings("production"),
       dataSource,
       redis,
     });

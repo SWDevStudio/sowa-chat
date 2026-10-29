@@ -6,9 +6,22 @@ import type {
   EnvironmentCheck,
 } from "../../src/infra/environment-checks/environment-check.js";
 
+export function createCheckSettings(
+  env: CheckContext["settings"]["env"],
+): CheckContext["settings"] {
+  return {
+    env,
+    publicUrl: undefined,
+    s3PublicUrl: undefined,
+    databaseUrl: "postgres://sowa:own-password@db.internal:5432/sowa",
+    migrationDatabaseUrl: undefined,
+    s3SecretKey: "own-s3-secret",
+  };
+}
+
 export function createCheckContext(env: CheckContext["settings"]["env"]): CheckContext {
   return {
-    settings: { env },
+    settings: createCheckSettings(env),
     dataSource: {} as DataSource,
     redis: {} as Redis,
   };

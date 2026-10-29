@@ -18,10 +18,10 @@
 | 6 | [Переменные `SOWA_PUBLIC_URL` и `SOWA_S3_PUBLIC_URL`, адрес сервиса обязателен в production](TASK-6.md) | sonnet | sonnet | простая | 5 | готова |
 | 7 | [Проект `main` и его ключи при старте `api` в development](TASK-7.md) | sonnet | sonnet | обычная | 2, 3, 4, 5 | готова |
 | 8 | [Остановка в production на http-адресах и секретах из `.env.example`](TASK-8.md) | sonnet | sonnet | обычная | 3, 6, 7 | готова |
-| 9 | [Первый проект из `SOWA_INIT_*` при старте `api` в production](TASK-9.md) | sonnet | opus | обычная | 7, 8 | не начата |
+| 9 | [Первый проект из `SOWA_INIT_*` при старте `api` в production](TASK-9.md) | sonnet | opus | обычная | 7, 8 | готова |
 | 10 | [Сводка в логе при старте `api` и `worker`](TASK-10.md) | sonnet | sonnet | обычная | 4, 5, 7 | готова |
 | 11 | [Проверки Redis: `maxmemory-policy noeviction` и AOF](TASK-11.md) | haiku | sonnet | обычная | 8 | готова |
 | 12 | [Проверки PostgreSQL: версия 18+ и права пользователя приложения](TASK-12.md) | haiku | sonnet | обычная | 11 | готова |
 | 13 | [Ротация ключа шифрования и ключа подписи из текущего env](TASK-13.md) | haiku | sonnet | обычная | 1 | готова |
 | 14 | [Команда `secrets:generate` без конфига, БД и Redis](TASK-14.md) | sonnet | sonnet | обычная | 1, 6, 10, 13 | готова |
-| 15 | [Команда `doctor`: все проверки окружения и отчёт](TASK-15.md) | haiku | sonnet | обычная | 12, 14 | не начата |
+| 15 | [Команда `doctor`: все проверки окружения и отчёт](TASK-15.md) | haiku | sonnet | обычная | 12, 14 | в работе |

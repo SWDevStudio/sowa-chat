@@ -276,15 +276,15 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/config.module.spec.ts": {
-    "mtime": 1793256879.1852903,
-    "seen": 1793258722.7028637,
-    "ast_hash": "cb0997e99793a3203e0817d308b8a415",
+    "mtime": 1793275120.3743641,
+    "seen": 1793275141.2418497,
+    "ast_hash": "4480f35ddaafd954d50c3454203cef33",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/config.module.ts": {
-    "mtime": 1793274122.1987014,
-    "seen": 1793274512.3015163,
-    "ast_hash": "65f37d2162be128ef1d1b3d295d1853d",
+    "mtime": 1793275120.3743641,
+    "seen": 1793275141.2418497,
+    "ast_hash": "c233b8105dc2463629295f2387f4e97e",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/database.config.ts": {
@@ -300,9 +300,9 @@
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/env.schema.ts": {
-    "mtime": 1793274122.2003496,
-    "seen": 1793274512.3015163,
-    "ast_hash": "1a49b360f7639a8499bec40df1d03a13",
+    "mtime": 1793275120.3789203,
+    "seen": 1793275141.2418497,
+    "ast_hash": "c5a48624a7dbcc848c9974ec7f883bd0",
     "semantic_hash": ""
   },
   "apps/server/src/infra/config/parse-env.ts": {
@@ -2697,6 +2697,42 @@
     "mtime": 1793274122.323126,
     "seen": 1793274512.3015163,
     "ast_hash": "a6459db590d7f4cdaf5874cc6a681980",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/config.module.development-secrets.spec.ts": {
+    "mtime": 1793275120.3729076,
+    "seen": 1793275141.2418497,
+    "ast_hash": "c1cb6d1dd5ae234385d7db7ca15e88fe",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/development-secrets.config.ts": {
+    "mtime": 1793275120.3743641,
+    "seen": 1793275141.2418497,
+    "ast_hash": "b3fbc7c34632ab1dbdfa5c5ed31f9b69",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/development-secrets.spec.ts": {
+    "mtime": 1793275120.3743641,
+    "seen": 1793275141.2418497,
+    "ast_hash": "36c46f6ff93fd1aa79656ce2b65b066f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/development-secrets.ts": {
+    "mtime": 1793275120.3743641,
+    "seen": 1793275141.2418497,
+    "ast_hash": "cc2ef25a949da8389fb7fc32bb06266f",
+    "semantic_hash": ""
+  },
+  "apps/server/src/infra/config/load-env.ts": {
+    "mtime": 1793275120.3789203,
+    "seen": 1793275141.2418497,
+    "ast_hash": "7ce2265e321f6ace8c236d2fbe9b6006",
+    "semantic_hash": ""
+  },
+  "apps/server/test/support/development-secrets-env.ts": {
+    "mtime": 1793275120.3789203,
+    "seen": 1793275141.2418497,
+    "ast_hash": "b00bdb12b45007a136ad2cabb0324607",
     "semantic_hash": ""
   }
 }

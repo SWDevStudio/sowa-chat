@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { defaultDevelopmentSecretsDirectory } from "./development-secrets-file.js";
 import { encryptionKeysSchema } from "./encryption-keys.schema.js";
 import { tokenSigningKeysSchema } from "./token-signing-keys.schema.js";
 
@@ -56,6 +57,10 @@ const envObjectSchema = z.object({
   SOWA_TOKEN_SIGNING_KEY_ID: z.preprocess(
     (value) => (value === "" ? undefined : value),
     z.string().optional(),
+  ),
+  SOWA_DEV_SECRETS_DIR: z.preprocess(
+    (value) => (value === "" ? undefined : value),
+    z.string().default(defaultDevelopmentSecretsDirectory),
   ),
   SOWA_VISITOR_REFRESH_TTL_DAYS: integerInRange(1, 365, 30),
   SOWA_LOG_LEVEL: z.enum(logLevels).default("info"),

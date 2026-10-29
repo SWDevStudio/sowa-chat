@@ -16,7 +16,7 @@
 | 4 | [Секреты development подставляются в конфиг при старте](TASK-4.md) | sonnet | opus | обычная | 1, 3 | готова |
 | 5 | [Переменные `SOWA_INIT_*` в конфиге](TASK-5.md) | haiku | sonnet | обычная | 4 | готова |
 | 6 | [Переменные `SOWA_PUBLIC_URL` и `SOWA_S3_PUBLIC_URL`, адрес сервиса обязателен в production](TASK-6.md) | sonnet | sonnet | простая | 5 | готова |
-| 7 | [Проект `main` и его ключи при старте `api` в development](TASK-7.md) | sonnet | sonnet | обычная | 2, 3, 4, 5 | не начата |
+| 7 | [Проект `main` и его ключи при старте `api` в development](TASK-7.md) | sonnet | sonnet | обычная | 2, 3, 4, 5 | готова |
 | 8 | [Остановка в production на http-адресах и секретах из `.env.example`](TASK-8.md) | sonnet | sonnet | обычная | 3, 6, 7 | не начата |
 | 9 | [Первый проект из `SOWA_INIT_*` при старте `api` в production](TASK-9.md) | sonnet | opus | обычная | 7, 8 | не начата |
 | 10 | [Сводка в логе при старте `api` и `worker`](TASK-10.md) | sonnet | sonnet | обычная | 4, 5, 7 | не начата |

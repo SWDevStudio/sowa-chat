@@ -51,7 +51,7 @@
 | [EPIC-11](EPIC-11/README.md) | Режимы development и production | не начат |
 | [EPIC-12](EPIC-12/README.md) | Доступ бекенда и операторов | на ревью |
 | [EPIC-13](EPIC-13/README.md) | Сессия посетителя | не начат |
-| [EPIC-14](EPIC-14/README.md) | Кэш и синхронизация реплик | не начат |
+| [EPIC-14](EPIC-14/README.md) | Кэш и синхронизация реплик | в работе |
 | [EPIC-15](EPIC-15/README.md) | Телеметрия запросов | на ревью |
 | [EPIC-16](EPIC-16/README.md) | Лимиты запросов и CORS | не начат |
 | [EPIC-17](EPIC-17/README.md) | Docker и docker-compose | не начат |
